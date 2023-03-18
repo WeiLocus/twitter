@@ -76,19 +76,52 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export const Container = styled.div`
-  max-width: 320px;
-  margin: 0 auto;
-  padding: 1rem 0;
+export const breakpoint = {
+  xs: '320px',
+  sm: '768px',
+  md: '992px',
+  lg: '1200px',
+};
 
-  @media screen and (min-width: 768px) {
+export const device = {
+  xs: `min-width: ${breakpoint.xs}`,
+  sm: `min-width: ${breakpoint.sm}`,
+  md: `min-width: ${breakpoint.md}`,
+  lg: `min-width: ${breakpoint.lg}`,
+};
+
+export const Container = styled.div`
+  background-color: var(--color-theme);
+  max-width: 100%;
+  padding: 0 24px;
+  margin: 0 auto;
+
+  @media screen and (${device.md}) {
+    max-width: 960px;
+    padding: unset;
   }
 
-  @media screen and (min-width: 1280px) {
+  @media screen and (${device.lg}) {
+    max-width: 1140px;
   }
 `;
 
-// export const GridContainer = styled(Container)`
-//   @media screen and (min-width: 768px) {
-//   }
-// `;
+export const GridContainer = styled(Container)`
+  .fr1 {
+    background-color: aqua;
+  }
+  .fr2 {
+    background-color: antiquewhite;
+  }
+  .fr3 {
+    background-color: blue;
+  }
+  @media screen and (${device.md}) {
+    display: grid;
+    grid-template-columns: 1fr 4fr 3fr;
+  }
+
+  @media screen and (${device.lg}) {
+    grid-template-columns: 1fr 3fr 1.5fr;
+  }
+`;
