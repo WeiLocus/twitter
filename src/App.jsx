@@ -1,19 +1,59 @@
-import { GlobalStyle, GridContainer } from './globalStyles';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { GlobalStyle } from './globalStyles';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import AdminPage from './pages/AdminPage';
+import AdminTweetList from './components/AdminTweetList';
+import AdminUserList from './components/AdminUserList';
+import SettingsPage from './pages/SettingsPage';
+import AdminLayout from './components/layouts/AdminLayout';
+import TweetLayout from './components/layouts/TweetLayout';
+import TweetPage from './pages/TweetPage';
+import ReplyPage from './pages/ReplyPage';
+import UserPage from './pages/UserPage';
+import TweetList from './components/TweetList';
+import FollowList from './components/FollowList';
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <GlobalStyle />
-      <GridContainer>
-        <h1 className="fr1">
-          Vite + React 1234 Vite + React Vite + React Vite + React
-        </h1>
-        <h2 className="fr2">這是包含數字 123456 和一般的文字</h2>
-        <h3 className="fr3">
-          english and number have different font 345445 三四五六七
-        </h3>
-      </GridContainer>
-    </>
+      <Routes>
+        <Route path="*" element={<HomePage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="signup" element={<SignupPage />} />
+        <Route path="admin">
+          <Route index element={<AdminPage />} />
+          <Route element={<AdminLayout />}>
+            <Route path="tweets" element={<AdminTweetList />} />
+            <Route path="users" element={<AdminUserList />} />
+          </Route>
+        </Route>
+        <Route element={<TweetLayout />}>
+          <Route path="tweets">
+            <Route index element={<TweetPage />} />
+            <Route path=":id" element={<ReplyPage />} />
+          </Route>
+          <Route element={<UserPage />}>
+            <Route path="users/:id">
+              <Route path="tweets" element={<TweetList type="tweets" />} />
+              <Route path="replies" element={<TweetList type="replies" />} />
+              <Route path="likes" element={<TweetList type="likes" />} />
+              <Route
+                path="followers"
+                element={<FollowList type="followers" />}
+              />
+              <Route
+                path="followings"
+                element={<FollowList type="followings" />}
+              />
+            </Route>
+          </Route>
+          <Route path="settings" element={<SettingsPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
