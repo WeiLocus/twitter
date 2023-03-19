@@ -15,9 +15,11 @@ import UserPage from './pages/UserPage';
 import TweetList from './components/TweetList';
 import FollowList from './components/FollowList';
 
+const basename = import.meta.env.VITE_PUBLIC_URL;
+
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <GlobalStyle />
       <Routes>
         <Route path="*" element={<HomePage />} />
