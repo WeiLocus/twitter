@@ -62,7 +62,7 @@ export default function AuthInput({
 }) {
   return (
     <>
-      <StyledContainer className={clsx('', { error: value.length > 50 })}>
+      <StyledContainer>
         <StyledLabel>{label}</StyledLabel>
         <StyledInput
           type={type || 'text'}
@@ -73,14 +73,14 @@ export default function AuthInput({
           }}
         />
       </StyledContainer>
-      <StyledInputCheckContainer>
+      {/* <StyledInputCheckContainer>
         {InputLength > 0 && (
           <StyledInputCount>{InputLength}/50</StyledInputCount>
         )}
         {InputLength > 50 && (
           <StyledInputLimit>字數超出上限！</StyledInputLimit>
         )}
-      </StyledInputCheckContainer>
+      </StyledInputCheckContainer> */}
     </>
   );
 }
