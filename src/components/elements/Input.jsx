@@ -39,19 +39,38 @@ const StyledInput = styled.input`
   }
 `;
 
-const StyledInputLimit = styled.div`
+const StyledInputCount = styled.div`
   text-align: end;
   color: var(--color-gray-700);
 `;
+const StyledInputLimit = styled.div`
+  text-align: end;
+  color: red;
+`;
 
-export default function AuthInput({ type, label, placeholder }) {
+export default function AuthInput({
+  type,
+  label,
+  placeholder,
+  value,
+  onChange,
+  InputLength,
+}) {
   return (
     <>
       <StyledContainer>
         <StyledLabel>{label}</StyledLabel>
-        <StyledInput type={type || 'text'} placeholder={placeholder} />
+        <StyledInput
+          type={type || 'text'}
+          placeholder={placeholder}
+          value={value}
+          onChange={(event) => {
+            onChange(event.target.value);
+          }}
+        />
       </StyledContainer>
-      <StyledInputLimit>0/50</StyledInputLimit>
+      {InputLength > 0 && <StyledInputCount>{InputLength}/50</StyledInputCount>}
+      {/* {InputLength >= 50 && <StyledInputLimit>字數超出上限！</StyledInputLimit>} */}
     </>
   );
 }

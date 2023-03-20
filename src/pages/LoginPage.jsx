@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
 import {
   AuthContainer,
@@ -16,6 +17,17 @@ const StyledTitle = styled.div`
   font-weight: 700;
 `;
 export default function LoginPage() {
+  const [account, setAccount] = useState('');
+  const [password, setPassword] = useState('');
+  const [accountLength, setAccountLength] = useState(null);
+
+  const handleAccountValue = (value) => {
+    setAccount(value);
+    setAccountLength(value.length);
+  };
+  const handlePasswordValue = (value) => {
+    setPassword(value);
+  };
   return (
     <AuthContainer>
       <div>
@@ -23,10 +35,22 @@ export default function LoginPage() {
       </div>
       <StyledTitle>登入 Alphitter</StyledTitle>
       <AuthInputContainer>
-        <AuthInput label="帳號" placeholder="請輸入帳號" />
+        <AuthInput
+          label="帳號"
+          placeholder="請輸入帳號"
+          value={account}
+          InputLength={accountLength}
+          onChange={handleAccountValue}
+        />
       </AuthInputContainer>
       <AuthInputContainer>
-        <AuthInput type="password" label="密碼" placeholder="請輸入密碼" />
+        <AuthInput
+          type="password"
+          label="密碼"
+          value={password}
+          placeholder="請輸入密碼"
+          onChange={handlePasswordValue}
+        />
       </AuthInputContainer>
       <AuthButton>登入</AuthButton>
       <AuthLinkContainer>
