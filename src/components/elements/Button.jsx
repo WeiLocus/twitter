@@ -4,7 +4,7 @@ import { device } from '../../globalStyles';
 const StyledAuthButton = styled.button`
   width: 100%;
   margin: 2rem 0;
-  padding: 6px 0;
+  padding: 0.375rem 0;
   border: none;
   border-radius: 30px;
   color: #fff;

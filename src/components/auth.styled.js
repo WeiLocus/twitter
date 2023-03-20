@@ -37,9 +37,9 @@ const StyledLinkContainer = styled.div`
 
 // LinkText
 const StyledLinkText = styled.div`
-  margin: 0 12px;
+  margin: 0 0.75rem;
   text-decoration: underline;
-  color: #0062ff;
+  color: var(--color-primary);
   font-size: var(--fs-basic);
   font-weight: 400;
   &:hover {
