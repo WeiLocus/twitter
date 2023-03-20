@@ -4,7 +4,7 @@ export default function SettingsPage() {
   return (
     <>
       <div>SettingsPage</div>
-      <Header />
+      <Header headerText="帳戶設定" />
     </>
   );
 }
