@@ -1,3 +1,24 @@
-export default function Button() {
-  return <div>Button</div>;
+import styled from 'styled-components';
+import { device } from '../../globalStyles';
+
+const StyledAuthButton = styled.button`
+  width: 100%;
+  margin: 2rem 0;
+  padding: 6px 0;
+  border: none;
+  border-radius: 30px;
+  color: #fff;
+  background-color: var(--color-theme);
+  font-weight: 400;
+
+  &:hover {
+    cursor: pointer;
+  }
+  @media screen and (${device.sm}) {
+    width: 60%;
+  }
+`;
+
+export default function AuthButton() {
+  return <StyledAuthButton>登入</StyledAuthButton>;
 }
