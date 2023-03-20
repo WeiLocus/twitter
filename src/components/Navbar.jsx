@@ -2,8 +2,11 @@ import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
 import { ReactComponent as HomeIcon } from '../assets/Home.svg';
+import { ReactComponent as HomeBlackIcon } from '../assets/Home-black.svg';
 import { ReactComponent as PersonIcon } from '../assets/Person.svg';
+import { ReactComponent as PersonBlackIcon } from '../assets/Person-black.svg';
 import { ReactComponent as SettingIcon } from '../assets/Setting.svg';
+import { ReactComponent as SettingBlackIcon } from '../assets/Setting-black.svg';
 import { ReactComponent as LogoutIcon } from '../assets/Logout.svg';
 
 const StyledNav = styled.nav`
@@ -20,6 +23,7 @@ const StyledNav = styled.nav`
 `;
 
 const StyledLi = styled.li`
+  cursor: pointer;
   display: flex;
   gap: 1rem;
   padding: 0.75rem 0.5rem;
@@ -37,7 +41,7 @@ const StyledLi = styled.li`
   }
 
   :hover {
-    color: var(--color-gray-700);
+    color: var(--color-theme);
   }
 `;
 
@@ -66,7 +70,12 @@ export default function Navbar() {
           <NavLink to="/tweets">
             <StyledLi>
               <div className="icon">
-                <HomeIcon />
+                {pathname.includes('/tweets') &&
+                !pathname.includes('/users') ? (
+                  <HomeBlackIcon />
+                ) : (
+                  <HomeIcon />
+                )}
               </div>
               <span>首頁</span>
             </StyledLi>
@@ -77,9 +86,12 @@ export default function Navbar() {
           >
             <StyledLi>
               <div className="icon">
-                <PersonIcon />
+                {pathname.includes(`users/${user.id}`) ? (
+                  <PersonBlackIcon />
+                ) : (
+                  <PersonIcon />
+                )}
               </div>
-
               <span>個人資料</span>
             </StyledLi>
           </NavLink>
@@ -87,9 +99,12 @@ export default function Navbar() {
           <NavLink to="/settings">
             <StyledLi>
               <div className="icon">
-                <SettingIcon />
+                {pathname.includes('/settings') ? (
+                  <SettingBlackIcon />
+                ) : (
+                  <SettingIcon />
+                )}
               </div>
-
               <span>設定</span>
             </StyledLi>
           </NavLink>
