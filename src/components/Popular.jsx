@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const StyledPopularAside = styled.aside`
@@ -69,8 +70,8 @@ export default function Popular() {
     <StyledPopularAside>
       <h2>推薦跟隨</h2>
       <ul>
-        <PopularItem isFollowing />
-        <PopularItem isFollowing />
+        {/* <PopularItem isFollowing /> */}
+        {/* <PopularItem isFollowing /> */}
         <PopularItem />
         <PopularItem />
         <PopularItem />
@@ -84,7 +85,11 @@ export default function Popular() {
   );
 }
 
-function PopularItem({ isFollowing }) {
+function PopularItem() {
+  const [isFollowing, setIsFollowing] = useState(false);
+  const handleFollow = () => {
+    setIsFollowing((prev) => !prev);
+  };
   return (
     <StyledLi isFollowing>
       <div className="avatar">
@@ -94,7 +99,11 @@ function PopularItem({ isFollowing }) {
         <b>Meowwwwww</b>
         <p>@Meow</p>
       </div>
-      <button className={isFollowing && 'active'} type="button">
+      <button
+        className={isFollowing && 'active'}
+        type="button"
+        onClick={handleFollow}
+      >
         {isFollowing ? '正在跟隨' : '跟隨'}
       </button>
     </StyledLi>
