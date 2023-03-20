@@ -49,7 +49,7 @@ export const GlobalStyle = createGlobalStyle`
     --fs-h1: 4.25rem;
     --fs-h2: 2.625rem;
     --fs-h3: 1.75rem;
-    --fs-h4: 1.6rem;
+    --fs-h4: 1.5rem;
     --fs-h5: 1.125rem;
 
     /* colors */
@@ -99,7 +99,7 @@ export const device = {
 };
 
 export const Container = styled.div`
-  background-color: var(--color-theme);
+  /* background-color: var(--color-theme); */
   max-width: 100%;
   padding: 0 24px;
   margin: 0 auto;
@@ -122,7 +122,7 @@ export const GridContainer = styled(Container)`
     background-color: antiquewhite;
   }
   .fr3 {
-    background-color: blue;
+    /* background-color: blue; */
   }
   @media screen and (${device.md}) {
     display: grid;
