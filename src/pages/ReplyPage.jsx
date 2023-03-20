@@ -1,5 +1,13 @@
-import React from 'react';
+import Header from '../components/Header';
+import TweetContent from '../components/TweetContent';
+import TweetList from '../components/TweetList';
 
 export default function ReplyPage() {
-  return <div>ReplyPage</div>;
+  return (
+    <>
+      <Header headerText="推文" goBack />
+      <TweetContent />
+      <TweetList />
+    </>
+  );
 }
