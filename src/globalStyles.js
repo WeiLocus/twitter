@@ -25,6 +25,14 @@ export const GlobalStyle = createGlobalStyle`
   p, h1, h2, h3, h4, h5, h6 {
     overflow-wrap: break-word;
   }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
   #root, #__next {
     isolation: isolate;
   }
