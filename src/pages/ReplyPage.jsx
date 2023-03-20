@@ -7,7 +7,7 @@ export default function ReplyPage() {
     <>
       <Header headerText="推文" goBack />
       <TweetContent />
-      <TweetList />
+      <TweetList reply />
     </>
   );
 }
