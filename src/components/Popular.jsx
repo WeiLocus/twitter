@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 const StyledPopularAside = styled.aside`
+  height: calc(100vh - 2rem);
+  overflow-y: scroll;
   margin: 1rem;
   border-radius: 1rem;
   background-color: var(--color-gray-100);
@@ -69,6 +71,11 @@ export default function Popular() {
       <ul>
         <PopularItem isFollowing />
         <PopularItem isFollowing />
+        <PopularItem />
+        <PopularItem />
+        <PopularItem />
+        <PopularItem />
+        <PopularItem />
         <PopularItem />
         <PopularItem />
         <PopularItem />
