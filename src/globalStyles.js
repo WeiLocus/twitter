@@ -130,6 +130,6 @@ export const GridContainer = styled(Container)`
   }
 
   @media screen and (${device.lg}) {
-    grid-template-columns: 1fr 3fr 1.5fr;
+    grid-template-columns: 1fr 3fr 1.75fr;
   }
 `;
