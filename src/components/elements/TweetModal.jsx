@@ -16,7 +16,8 @@ const StyledModal = styled.div`
   position: absolute;
   inset: 3.5rem 0;
   width: 650px;
-  height: 300px; // or 500px
+  height: ${(props) => (props.reply ? '450px' : '300px')};
+  /* height: 300px; // or 450px */
   margin: 0 auto;
   border-radius: 1rem;
   background-color: white;
@@ -33,7 +34,7 @@ const StyledModal = styled.div`
   }
 `;
 
-const StyledContent = styled.div`
+const StyledTextarea = styled.div`
   flex: 1;
   padding: 1rem;
   display: grid;
@@ -73,7 +74,55 @@ const StyledContent = styled.div`
   }
 `;
 
-export default function TweetModal({ onClose }) {
+const StyledTweetContent = styled.div`
+  display: grid;
+  grid-template-columns: calc(50px + 0.75rem) 1fr;
+  padding: 1rem;
+
+  img {
+    width: 50px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .user {
+    b {
+      margin-right: 0.25rem;
+    }
+    span {
+      color: var(--color-secondary);
+      font-size: var(--fs-secondary);
+    }
+  }
+
+  .content {
+    margin-block: 0.5rem;
+    color: var(--color-gray-900);
+    position: relative;
+
+    &::after {
+      content: '';
+      width: 2px;
+      height: 110%;
+      position: absolute;
+      top: calc((50px / 2) + 0.5rem);
+      left: calc(-0.75rem - 25px);
+      background-color: var(--color-gray-500);
+    }
+  }
+
+  .reply-to {
+    color: var(--color-secondary);
+
+    .account {
+      margin-left: 0.25rem;
+      color: var(--color-theme);
+    }
+  }
+`;
+
+export function TweetModal({ onClose }) {
   return (
     <StyledDiv>
       <StyledModal>
@@ -82,7 +131,7 @@ export default function TweetModal({ onClose }) {
             <CrossIcon />
           </button>
         </div>
-        <StyledContent>
+        <StyledTextarea>
           <img src="https://placekitten.com/700/700" alt="avatar" />
           <form>
             <textarea placeholder="有什麼新鮮事？" />
@@ -90,7 +139,50 @@ export default function TweetModal({ onClose }) {
               推文
             </button>
           </form>
-        </StyledContent>
+        </StyledTextarea>
+      </StyledModal>
+    </StyledDiv>
+  );
+}
+
+export function ReplyModal({ onClose }) {
+  return (
+    <StyledDiv>
+      <StyledModal reply>
+        <div className="close">
+          <button type="button" onClick={onClose}>
+            <CrossIcon />
+          </button>
+        </div>
+        <StyledTweetContent>
+          <img src="https://placekitten.com/1000/1000" alt="avatar" />
+          <div>
+            <div className="user">
+              <b>Apple</b>
+              <span>@apple</span>
+              <span>．</span>
+              <span>3 小時</span>
+            </div>
+            <p className="content">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita
+              excepturi corrupti velit vitae quasi. Ad corrupti laudantium qui
+              Lorem ipsum dolor sit.
+            </p>
+            <div className="reply-to">
+              <span>回覆給</span>
+              <span className="account">@Mitsubishi</span>
+            </div>
+          </div>
+        </StyledTweetContent>
+        <StyledTextarea>
+          <img src="https://placekitten.com/700/700" alt="avatar" />
+          <form>
+            <textarea placeholder="推你的回覆" />
+            <button type="submit" onClick={onClose}>
+              回覆
+            </button>
+          </form>
+        </StyledTextarea>
       </StyledModal>
     </StyledDiv>
   );

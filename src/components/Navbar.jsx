@@ -9,7 +9,7 @@ import { ReactComponent as PersonBlackIcon } from '../assets/Person-black.svg';
 import { ReactComponent as SettingIcon } from '../assets/Setting.svg';
 import { ReactComponent as SettingBlackIcon } from '../assets/Setting-black.svg';
 import { ReactComponent as LogoutIcon } from '../assets/Logout.svg';
-import TweetModal from './elements/TweetModal';
+import { TweetModal } from './elements/TweetModal';
 
 const StyledNav = styled.nav`
   height: 100vh;
