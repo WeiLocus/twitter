@@ -49,7 +49,7 @@ const StyledInputLimit = styled.div`
   top: 0;
   bottom: 0;
   text-align: end;
-  color: red;
+  color: var(--color-error);
 `;
 
 export default function AuthInput({
@@ -62,7 +62,7 @@ export default function AuthInput({
 }) {
   return (
     <>
-      <StyledContainer>
+      <StyledContainer className={clsx('', { error: InputLength > 50 })}>
         <StyledLabel>{label}</StyledLabel>
         <StyledInput
           type={type || 'text'}
@@ -73,14 +73,14 @@ export default function AuthInput({
           }}
         />
       </StyledContainer>
-      {/* <StyledInputCheckContainer>
+      <StyledInputCheckContainer>
         {InputLength > 0 && (
           <StyledInputCount>{InputLength}/50</StyledInputCount>
         )}
         {InputLength > 50 && (
           <StyledInputLimit>字數超出上限！</StyledInputLimit>
         )}
-      </StyledInputCheckContainer> */}
+      </StyledInputCheckContainer>
     </>
   );
 }
