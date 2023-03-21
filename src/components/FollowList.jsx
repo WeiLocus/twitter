@@ -81,6 +81,7 @@ const StyledTab = styled.div`
   justify-content: start;
   border: 1px solid var(--color-gray-200);
   color: var(--color-secondary);
+  background-color: white;
   font-weight: 700;
 
   .category {
@@ -113,12 +114,17 @@ function FollowTab({ id }) {
 export default function FollowList() {
   const user = { id: 5 };
   return (
-    <StyledList>
+    <>
       <FollowTab id={user.id} />
-      <FollowItem />
-      <FollowItem />
-      <FollowItem />
-      <FollowItem />
-    </StyledList>
+      <StyledList>
+        <FollowItem />
+        <FollowItem />
+        <FollowItem />
+        <FollowItem />
+        <FollowItem />
+        <FollowItem />
+        <FollowItem />
+      </StyledList>
+    </>
   );
 }
