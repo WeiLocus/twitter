@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CrossIcon } from '../../assets/Cross.svg';
 
@@ -123,6 +124,13 @@ const StyledTweetContent = styled.div`
 `;
 
 export function TweetModal({ onClose }) {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'visible';
+    };
+  }, []);
+
   return (
     <StyledDiv>
       <StyledModal>
@@ -146,6 +154,13 @@ export function TweetModal({ onClose }) {
 }
 
 export function ReplyModal({ onClose }) {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'visible';
+    };
+  }, []);
+
   return (
     <StyledDiv>
       <StyledModal reply>
