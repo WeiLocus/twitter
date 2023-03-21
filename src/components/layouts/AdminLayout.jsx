@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
 import { GridContainer, device } from '../../globalStyles';
-import Navbar from '../Navbar';
+import { AdminNavbar } from '../Navbar';
 
 const AdminContainer = styled(GridContainer)`
   @media screen and (${device.md}) {
@@ -17,7 +17,7 @@ export default function AdminLayout() {
   return (
     <AdminContainer>
       <div className="fr1">
-        <Navbar />
+        <AdminNavbar />
       </div>
       <div className="fr2">
         <Outlet />

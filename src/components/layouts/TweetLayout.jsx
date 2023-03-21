@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { GridContainer } from '../../globalStyles';
-import Navbar from '../Navbar';
+import { Navbar } from '../Navbar';
 import Popular from '../Popular';
 
 export default function TweetLayout() {
