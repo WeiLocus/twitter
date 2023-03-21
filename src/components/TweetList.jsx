@@ -15,7 +15,7 @@ const StyledListItem = styled.li`
   padding: 1rem;
   border: 1px solid var(--color-gray-200);
   background-color: white;
-  /* border-bottom: 1px solid tomato; */
+
   img {
     width: 50px;
     aspect-ratio: 1/1;
@@ -39,7 +39,18 @@ const StyledListItem = styled.li`
     font-size: var(--fs-secondary);
   }
 
-  p {
+  .reply {
+    margin-block: 0.25rem;
+    color: var(--color-secondary);
+    font-size: var(--fs-secondary);
+
+    span {
+      margin-left: 0.25rem;
+      color: var(--color-theme);
+    }
+  }
+
+  .content {
     color: var(--color-gray-900);
   }
 
@@ -72,7 +83,7 @@ function TweetItem() {
           <span>．</span>
           <span>3 小時</span>
         </div>
-        <p>
+        <p className="content">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita
           excepturi corrupti velit vitae quasi. Ad corrupti laudantium qui,
           molestiae inventore maiores architecto quasi possimus ut accusamus,
@@ -95,14 +106,42 @@ function TweetItem() {
   );
 }
 
-export default function TweetList() {
+function ReplyItem() {
+  return (
+    <StyledListItem>
+      <NavLink to="/users/3">
+        <img src="https://placekitten.com/600/600" alt="avatar" />
+      </NavLink>
+      <div>
+        <div className="user">
+          <b>Apple</b>
+          <span>@apple</span>
+          <span>．</span>
+          <span>3 小時</span>
+        </div>
+        <p className="reply">
+          回覆
+          <span>@Apple</span>
+        </p>
+        <p className="content">
+          Molestiae inventore maiores architecto quasi possimus ut accusamus,
+          enim, neque consequuntur ea?
+        </p>
+      </div>
+    </StyledListItem>
+  );
+}
+
+export default function TweetList({ reply }) {
+  const renderedItem = reply ? <ReplyItem /> : <TweetItem />;
+
   return (
     <StyledList>
-      <TweetItem />
-      <TweetItem />
-      <TweetItem />
-      <TweetItem />
-      <TweetItem />
+      {renderedItem}
+      {renderedItem}
+      {renderedItem}
+      {renderedItem}
+      {renderedItem}
     </StyledList>
   );
 }

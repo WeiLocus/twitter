@@ -5,7 +5,7 @@ import TweetList from '../components/TweetList';
 export default function TweetPage() {
   return (
     <>
-      <Header />
+      <Header headerText="首頁" />
       <TweetInput />
       <TweetList />
     </>
