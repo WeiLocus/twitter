@@ -52,11 +52,13 @@ export default function LoginPage() {
       </AuthInputContainer>
       <AuthButton>登入</AuthButton>
       <AuthLinkContainer>
-        <Link to="/signup">
+        <Link to="/signup" style={{ textDecoration: 'none' }}>
           <AuthLinkText>註冊</AuthLinkText>
         </Link>
         <div>・</div>
-        <AuthLinkText>後台登入</AuthLinkText>
+        <Link to="/admin" style={{ textDecoration: 'none' }}>
+          <AuthLinkText>後台登入</AuthLinkText>
+        </Link>
       </AuthLinkContainer>
     </AuthContainer>
   );

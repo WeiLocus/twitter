@@ -39,6 +39,7 @@ const StyledLinkContainer = styled.div`
 const StyledLinkText = styled.div`
   margin: 0 0.75rem;
   text-decoration: underline;
+  text-underline-offset: 3px;
   color: var(--color-primary);
   font-size: var(--fs-basic);
   font-weight: 400;
