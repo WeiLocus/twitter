@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
 import {
   AuthContainer,
@@ -25,9 +26,6 @@ export default function LoginPage() {
     setAccount(value);
     setAccountLength(value.length);
   };
-  const handlePasswordValue = (value) => {
-    setPassword(value);
-  };
   return (
     <AuthContainer>
       <div>
@@ -49,12 +47,14 @@ export default function LoginPage() {
           label="密碼"
           value={password}
           placeholder="請輸入密碼"
-          onChange={handlePasswordValue}
+          onChange={(passwordInput) => setPassword(passwordInput)}
         />
       </AuthInputContainer>
       <AuthButton>登入</AuthButton>
       <AuthLinkContainer>
-        <AuthLinkText>註冊</AuthLinkText>
+        <Link to="/signup">
+          <AuthLinkText>註冊</AuthLinkText>
+        </Link>
         <div>・</div>
         <AuthLinkText>後台登入</AuthLinkText>
       </AuthLinkContainer>

@@ -49,7 +49,7 @@ const StyledInputLimit = styled.div`
   top: 0;
   bottom: 0;
   text-align: end;
-  color: red;
+  color: var(--color-error);
 `;
 
 export default function AuthInput({
@@ -62,7 +62,7 @@ export default function AuthInput({
 }) {
   return (
     <>
-      <StyledContainer className={clsx('', { error: value.length > 50 })}>
+      <StyledContainer className={clsx('', { error: InputLength > 50 })}>
         <StyledLabel>{label}</StyledLabel>
         <StyledInput
           type={type || 'text'}
