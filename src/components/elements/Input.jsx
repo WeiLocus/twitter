@@ -8,24 +8,17 @@ const StyledContainer = styled.div`
   justify-content: space-around;
   width: 100%;
   height: 4rem;
-  padding: 0.125rem 0.625rem;
-  border-bottom: 2px solid #657786;
   background-color: var(--color-gray-100);
-  &:hover,
-  focus {
-    border-bottom: 2px solid var(--color-light-blue);
-  }
-  &.error {
-    border-bottom: 2px solid var(--color-error);
-  }
 `;
 
 const StyledLabel = styled.label`
+  padding: 0.125rem 0.625rem;
   font-size: var(--fs-secondary);
   color: var(--color-gray-700);
 `;
 
 const StyledInput = styled.input`
+  padding: 0.125rem 0.625rem;
   border: none;
   background-color: var(--color-gray-100);
   line-height: 1.6rem;
@@ -33,17 +26,29 @@ const StyledInput = styled.input`
   ::-webkit-input-placeholder {
     color: var(--color-gray-500);
   }
+  border-bottom: 2px solid var(--color-gray-700);
+  :focus {
+    border-bottom: 2px solid var(--color-light-blue);
+    outline: none;
+  }
+  :hover {
+    border-bottom: 2px solid var(--color-light-blue);
+  }
+  &.error {
+    border-bottom: 2px solid var(--color-error);
+  }
 `;
 
 const StyledInputCheckContainer = styled.div`
   position: relative;
   margin-top: 0.5rem;
-  /* background-color: pink; */
 `;
+
 const StyledInputCount = styled.div`
   text-align: end;
   color: var(--color-gray-700);
 `;
+
 const StyledInputLimit = styled.div`
   position: absolute;
   top: 0;
@@ -62,9 +67,10 @@ export default function AuthInput({
 }) {
   return (
     <>
-      <StyledContainer className={clsx('', { error: InputLength > 50 })}>
+      <StyledContainer>
         <StyledLabel>{label}</StyledLabel>
         <StyledInput
+          className={clsx('', { error: InputLength > 50 })}
           type={type || 'text'}
           placeholder={placeholder}
           value={value}

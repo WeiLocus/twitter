@@ -18,14 +18,10 @@ const StyledTitle = styled.div`
   font-weight: 700;
 `;
 export default function LoginPage() {
+  // 用state儲存account、password
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
-  const [accountLength, setAccountLength] = useState(null);
-
-  const handleAccountValue = (value) => {
-    setAccount(value);
-    setAccountLength(value.length);
-  };
+  
   return (
     <AuthContainer>
       <div>
@@ -37,8 +33,7 @@ export default function LoginPage() {
           label="帳號"
           placeholder="請輸入帳號"
           value={account}
-          InputLength={accountLength}
-          onChange={handleAccountValue}
+          onChange={(accountInput) => setAccount(accountInput)}
         />
       </AuthInputContainer>
       <AuthInputContainer>
@@ -52,11 +47,11 @@ export default function LoginPage() {
       </AuthInputContainer>
       <AuthButton>登入</AuthButton>
       <AuthLinkContainer>
-        <Link to="/signup" style={{ textDecoration: 'none' }}>
+        <Link to="/signup">
           <AuthLinkText>註冊</AuthLinkText>
         </Link>
         <div>・</div>
-        <Link to="/admin" style={{ textDecoration: 'none' }}>
+        <Link to="/admin">
           <AuthLinkText>後台登入</AuthLinkText>
         </Link>
       </AuthLinkContainer>

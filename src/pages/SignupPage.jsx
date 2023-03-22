@@ -35,13 +35,8 @@ export default function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [nameLength, setNameLength] = useState(null);
-
   // 確認名稱長度
-  const handleNameValue = (value) => {
-    setUsername(value);
-    setNameLength(value.length);
-  };
+  const nameLength = username.length;
 
   return (
     <StyedSignupContainer>
@@ -63,7 +58,7 @@ export default function SignupPage() {
           placeholder="請輸入使用者名稱"
           value={username}
           InputLength={nameLength}
-          onChange={handleNameValue}
+          onChange={(nameInput) => setUsername(nameInput)}
         />
       </AuthInputContainer>
       <AuthInputContainer>
