@@ -9,7 +9,7 @@ const StyedContainer = styled(Container)`
   align-items: center;
   width: 100%;
   min-width: 400px;
-  margin-top: 3rem;
+  padding-top: 3rem;
   background-color: #fff;
   @media screen and (${device.md}) {
     width: 60%;

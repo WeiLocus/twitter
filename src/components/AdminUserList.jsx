@@ -10,7 +10,8 @@ const StyledContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-template-rows: auto;
-  height: 100vh;
+  height: calc(100vh - 68px);
+  overflow-y: scroll;
   padding: 1rem;
   background-color: #fff;
   border-top: 1px solid var(--color-gray-200);
