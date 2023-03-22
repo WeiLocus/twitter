@@ -3,9 +3,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const StyledList = styled.ul`
-  height: 100vh; /* 需再調整 */
   background-color: white;
-  overflow-y: scroll;
 `;
 
 const StyledListItem = styled.li`

@@ -82,6 +82,31 @@ export const GlobalStyle = createGlobalStyle`
     font-variant-numeric: tabular-nums;
     font-size: var(--fs-basic);
   }
+
+  ::-webkit-scrollbar-track-piece{
+    background-color: #fff;
+    border-radius: 0;
+  }
+  
+  ::-webkit-scrollbar {
+	  width: 8px;
+	  height: 8px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    height: 50px;
+    background-color: #999;
+    border-radius: 4px;
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+    border: 2px solid #fff;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+	  height:50px;
+	  background-color:#9f9f9f;
+	  border-radius:4px;
+}
 `;
 
 export const breakpoint = {
