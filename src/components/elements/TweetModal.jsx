@@ -18,7 +18,6 @@ const StyledModal = styled.div`
   inset: 3.5rem 0;
   width: 650px;
   height: ${(props) => (props.reply ? '450px' : '300px')};
-  /* height: 300px; // or 450px */
   margin: 0 auto;
   border-radius: 1rem;
   background-color: white;
