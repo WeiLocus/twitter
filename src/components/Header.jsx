@@ -27,7 +27,6 @@ const StyledHeader = styled.header`
       display: block;
       margin-top: -0.25rem;
       color: var(--color-secondary);
-      font-family: 'Noto sans tc';
       font-size: var(--fs-secondary);
 
       span {

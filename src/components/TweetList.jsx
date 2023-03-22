@@ -96,7 +96,7 @@ function TweetItem() {
   return (
     <>
       <StyledListItem>
-        <NavLink to="/users/3">
+        <NavLink to="/users/3/tweets">
           <img src="https://placekitten.com/350/350" alt="avatar" />
         </NavLink>
         <div>
@@ -140,7 +140,7 @@ function TweetItem() {
 function ReplyItem() {
   return (
     <StyledListItem>
-      <NavLink to="/users/3">
+      <NavLink to="/users/3/tweets">
         <img src="https://placekitten.com/600/600" alt="avatar" />
       </NavLink>
       <div>

@@ -47,7 +47,6 @@ const StyledDiv = styled.div`
     padding-block: 0.5rem;
     border-bottom: 1px solid var(--color-gray-200);
     color: var(--color-secondary);
-    font-family: 'Noto sans tc';
     font-size: var(--fs-secondary);
   }
 
