@@ -99,7 +99,6 @@ export const device = {
 };
 
 export const Container = styled.div`
-  /* background-color: var(--color-theme); */
   max-width: 100%;
   padding: 0 24px;
   margin: 0 auto;
@@ -115,15 +114,6 @@ export const Container = styled.div`
 `;
 
 export const GridContainer = styled(Container)`
-  .fr1 {
-    background-color: aqua;
-  }
-  .fr2 {
-    background-color: antiquewhite;
-  }
-  .fr3 {
-    /* background-color: blue; */
-  }
   @media screen and (${device.md}) {
     display: grid;
     grid-template-columns: 1fr 4fr 3fr;
