@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 import AuthInput from './Input';
 import { ReactComponent as CrossIcon } from '../../assets/Cross.svg';
+import { ReactComponent as ChangeImgIcon } from '../../assets/ChangeImg.svg';
 
 const StyledDiv = styled.div`
   position: absolute;
@@ -23,40 +24,13 @@ const StyledModal = styled.div`
   border-radius: 1rem;
   background-color: white;
 
-  .close {
-    display: grid;
-    grid-template-columns: 3rem 1fr auto;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    border-bottom: 1px solid var(--color-gray-200);
-
-    p {
-      font-weight: 700;
-    }
-
-    .close-btn {
-      all: unset;
-      cursor: pointer;
-      color: var(--color-theme);
-    }
-
-    .save-btn {
-      all: unset;
-      cursor: pointer;
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--color-theme);
-      border-radius: 3.125rem;
-      color: white;
-      background-color: var(--color-theme);
-    }
-  }
-
   .content {
     position: relative;
     display: flex;
     flex-direction: column;
 
     .cover {
+      position: relative;
       img {
         width: 100%;
         height: 200px;
@@ -64,11 +38,6 @@ const StyledModal = styled.div`
         object-position: bottom;
       }
     }
-  }
-
-  .inputs {
-    margin-top: 5rem;
-    padding: 1rem;
   }
 
   .avatar {
@@ -83,6 +52,58 @@ const StyledModal = styled.div`
   }
 `;
 
+const StyledCloseDiv = styled.div`
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--color-gray-200);
+
+  p {
+    font-weight: 700;
+  }
+
+  .close-btn {
+    all: unset;
+    cursor: pointer;
+    color: var(--color-theme);
+  }
+
+  .save-btn {
+    all: unset;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-theme);
+    border-radius: 3.125rem;
+    color: white;
+    background-color: var(--color-theme);
+  }
+`;
+
+const StyledFilterDiv = styled.div`
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  .icons {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    .icon {
+      cursor: pointer;
+    }
+  }
+`;
+
+const StyledInputContainer = styled.div`
+  margin-top: 5rem;
+  padding: 1rem;
+`;
+
 export default function EditModal({ onClose }) {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -95,7 +116,7 @@ export default function EditModal({ onClose }) {
     <StyledDiv>
       <StyledModal>
         <form>
-          <div className="close">
+          <StyledCloseDiv>
             <button className="close-btn" type="button" onClick={onClose}>
               <CrossIcon />
             </button>
@@ -103,24 +124,33 @@ export default function EditModal({ onClose }) {
             <button className="save-btn" type="submit" onClick={onClose}>
               儲存
             </button>
-          </div>
+          </StyledCloseDiv>
           <div className="content">
             <div className="cover">
               <img src="https://picsum.photos/id/49/700/300" alt="user-cover" />
+              <StyledFilterDiv>
+                <div className="icons">
+                  <ChangeImgIcon className="icon" />
+                  <CrossIcon className="icon" onClick={onClose} />
+                </div>
+              </StyledFilterDiv>
             </div>
-            <div className="inputs">
+            <StyledInputContainer>
               <AuthInput type="text" label="名稱" placeholder="John Doe" />
               <AuthInput
                 type="text"
                 label="自我介紹"
                 placeholder="Hello! My name is John Doe"
               />
+            </StyledInputContainer>
+            <div className="avatar">
+              <img src="https://placekitten.com/700/700" alt="avatar" />
+              <StyledFilterDiv>
+                <div className="icons">
+                  <ChangeImgIcon className="icon" />
+                </div>
+              </StyledFilterDiv>
             </div>
-            <img
-              className="avatar"
-              src="https://placekitten.com/700/700"
-              alt="avatar"
-            />
           </div>
         </form>
       </StyledModal>
