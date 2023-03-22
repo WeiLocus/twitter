@@ -107,8 +107,6 @@ export default function AdminUserList() {
         <UserCard />
         <UserCard />
         <UserCard />
-        <UserCard />
-        <UserCard />
       </StyledContainer>
     </>
   );
