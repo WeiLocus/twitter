@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const StyledList = styled.ul`
@@ -55,27 +56,6 @@ const StyledListItem = styled.li`
   }
 `;
 
-function FollowItem() {
-  return (
-    <StyledListItem>
-      <img src="https://placekitten.com/800/800" alt="avatar" />
-      <div>
-        <div className="user">
-          <b>Apple</b>
-          <button className="active" type="button">
-            正在跟隨
-          </button>
-        </div>
-        <p className="content">
-          Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
-          cillum dolor. Voluptate exercitation incididunt aliquip deserunt
-          reprehenderit elit laborum.
-        </p>
-      </div>
-    </StyledListItem>
-  );
-}
-
 const StyledTab = styled.div`
   display: flex;
   justify-content: start;
@@ -108,6 +88,35 @@ function FollowTab({ id }) {
         <p>正在追蹤</p>
       </NavLink>
     </StyledTab>
+  );
+}
+
+function FollowItem() {
+  const [isFollowing, setIsFollowing] = useState(false);
+  const handleFollow = () => {
+    setIsFollowing((prev) => !prev);
+  };
+  return (
+    <StyledListItem>
+      <img src="https://placekitten.com/800/800" alt="avatar" />
+      <div>
+        <div className="user">
+          <b>Apple</b>
+          <button
+            className={`user ${isFollowing && 'active'}`}
+            type="button"
+            onClick={handleFollow}
+          >
+            {isFollowing ? '正在跟隨' : '跟隨'}
+          </button>
+        </div>
+        <p className="content">
+          Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
+          cillum dolor. Voluptate exercitation incididunt aliquip deserunt
+          reprehenderit elit laborum.
+        </p>
+      </div>
+    </StyledListItem>
   );
 }
 
