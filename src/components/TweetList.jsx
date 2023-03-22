@@ -7,9 +7,7 @@ import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
 import { ReplyModal } from './elements/TweetModal';
 
 const StyledList = styled.ul`
-  height: calc(100vh - 225px);
-  background-color: aliceblue;
-  overflow-y: scroll;
+  background-color: white;
 `;
 
 const StyledListItem = styled.li`
