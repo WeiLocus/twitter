@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { ReactComponent as CommentIcon } from '../assets/Comment.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
+import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
 import { ReplyModal } from './elements/TweetModal';
 
 const StyledList = styled.ul`
@@ -69,15 +70,27 @@ const StyledListItem = styled.li`
       align-items: center;
       gap: 0.25rem;
     }
+
+    .icon {
+      cursor: pointer;
+      width: 15px;
+      height: 15px;
+    }
   }
 `;
 
 function TweetItem() {
   const [showModal, setShowModal] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   const handleShowModal = () => {
     const nextShowModal = !showModal;
     setShowModal(nextShowModal);
+  };
+
+  const handleLike = () => {
+    const nextIsLiked = !isLiked;
+    setIsLiked(nextIsLiked);
   };
 
   return (
@@ -104,12 +117,16 @@ function TweetItem() {
           <div className="stats">
             <NavLink onClick={handleShowModal} className="stat">
               <span>
-                <CommentIcon width="14px" height="14px" />
+                <CommentIcon width="15px" height="15px" />
               </span>
               <span>13</span>
             </NavLink>
             <div className="stat">
-              <LikeIcon width="14px" height="14px" />
+              {isLiked ? (
+                <LikeBlackIcon className="icon" onClick={handleLike} />
+              ) : (
+                <LikeIcon className="icon" onClick={handleLike} />
+              )}
               <span>76</span>
             </div>
           </div>
