@@ -132,8 +132,8 @@ function ReplyItem() {
   );
 }
 
-export default function TweetList({ reply }) {
-  const renderedItem = reply ? <ReplyItem /> : <TweetItem />;
+export default function TweetList({ type }) {
+  const renderedItem = type === 'reply' ? <ReplyItem /> : <TweetItem />;
 
   return (
     <StyledList>

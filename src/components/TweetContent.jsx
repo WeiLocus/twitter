@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CommentIcon } from '../assets/Comment.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
+import { ReplyModal } from './elements/TweetModal';
 
 const StyledDiv = styled.div`
   padding: 1rem;
@@ -69,40 +71,58 @@ const StyledDiv = styled.div`
     gap: 9rem;
     padding-top: 1rem;
     color: var(--color-secondary);
+
+    button {
+      all: unset;
+      cursor: pointer;
+    }
   }
 `;
 
 export default function TweetContent() {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => {
+    const nextShowModal = !showModal;
+    setShowModal(nextShowModal);
+  };
   return (
-    <StyledDiv>
-      <div className="user">
-        <img src="https://placekitten.com/325/325" alt="avatar" />
-        <div>
-          <b>Apple</b>
-          <span>@apple</span>
+    <>
+      <StyledDiv>
+        <div className="user">
+          <img src="https://placekitten.com/325/325" alt="avatar" />
+          <div>
+            <b>Apple</b>
+            <span>@apple</span>
+          </div>
         </div>
-      </div>
-      <p className="content">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita
-        excepturi corrupti velit vitae quasi. Ad corrupti laudantium qui
-      </p>
-      <div className="time-stamp">
-        <span>上午 10:05</span>
-        <span>．</span>
-        <span>2021年11月10日</span>
-      </div>
-      <div className="stats">
-        <p>
-          <span>34</span>回覆
+        <p className="content">
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita
+          excepturi corrupti velit vitae quasi. Ad corrupti laudantium qui
         </p>
-        <p>
-          <span>808</span>喜歡次數
-        </p>
-      </div>
-      <div className="reaction">
-        <CommentIcon />
-        <LikeIcon />
-      </div>
-    </StyledDiv>
+        <div className="time-stamp">
+          <span>上午 10:05</span>
+          <span>．</span>
+          <span>2021年11月10日</span>
+        </div>
+        <div className="stats">
+          <p>
+            <span>34</span>回覆
+          </p>
+          <p>
+            <span>808</span>喜歡次數
+          </p>
+        </div>
+        <div className="reaction">
+          <button type="button" onClick={handleShowModal}>
+            <CommentIcon />
+          </button>
+          <button type="button">
+            <LikeIcon />
+          </button>
+        </div>
+      </StyledDiv>
+      {showModal && <ReplyModal onClose={handleShowModal} />}
+    </>
   );
 }

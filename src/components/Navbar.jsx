@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
@@ -8,6 +9,7 @@ import { ReactComponent as PersonBlackIcon } from '../assets/Person-black.svg';
 import { ReactComponent as SettingIcon } from '../assets/Setting.svg';
 import { ReactComponent as SettingBlackIcon } from '../assets/Setting-black.svg';
 import { ReactComponent as LogoutIcon } from '../assets/Logout.svg';
+import { TweetModal } from './elements/TweetModal';
 
 const StyledNav = styled.nav`
   height: 100vh;
@@ -59,66 +61,75 @@ const StyledNavButton = styled.button`
 export default function Navbar() {
   const { pathname } = useLocation();
   const user = { id: 5 }; // 暫時假定
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => {
+    const nextShowModal = !showModal;
+    setShowModal(nextShowModal);
+  };
 
   return (
-    <StyledNav>
-      <div>
-        <div className="logo">
-          <LogoIcon />
+    <>
+      <StyledNav>
+        <div>
+          <div className="logo">
+            <LogoIcon />
+          </div>
+          <ul>
+            <NavLink to="/tweets">
+              <StyledLi>
+                <div className="icon">
+                  {pathname.includes('/tweets') &&
+                  !pathname.includes('/users') ? (
+                    <HomeBlackIcon />
+                  ) : (
+                    <HomeIcon />
+                  )}
+                </div>
+                <span>首頁</span>
+              </StyledLi>
+            </NavLink>
+            <NavLink
+              to={`/users/${user.id}/tweets`}
+              className={pathname.includes(`users/${user.id}`) && 'active'}
+            >
+              <StyledLi>
+                <div className="icon">
+                  {pathname.includes(`users/${user.id}`) ? (
+                    <PersonBlackIcon />
+                  ) : (
+                    <PersonIcon />
+                  )}
+                </div>
+                <span>個人資料</span>
+              </StyledLi>
+            </NavLink>
+
+            <NavLink to="/settings">
+              <StyledLi>
+                <div className="icon">
+                  {pathname.includes('/settings') ? (
+                    <SettingBlackIcon />
+                  ) : (
+                    <SettingIcon />
+                  )}
+                </div>
+                <span>設定</span>
+              </StyledLi>
+            </NavLink>
+          </ul>
+          <StyledNavButton onClick={handleShowModal}>推文</StyledNavButton>
         </div>
         <ul>
-          <NavLink to="/tweets">
-            <StyledLi>
-              <div className="icon">
-                {pathname.includes('/tweets') &&
-                !pathname.includes('/users') ? (
-                  <HomeBlackIcon />
-                ) : (
-                  <HomeIcon />
-                )}
-              </div>
-              <span>首頁</span>
-            </StyledLi>
-          </NavLink>
-          <NavLink
-            to={`/users/${user.id}/tweets`}
-            className={pathname.includes(`users/${user.id}`) && 'active'}
-          >
-            <StyledLi>
-              <div className="icon">
-                {pathname.includes(`users/${user.id}`) ? (
-                  <PersonBlackIcon />
-                ) : (
-                  <PersonIcon />
-                )}
-              </div>
-              <span>個人資料</span>
-            </StyledLi>
-          </NavLink>
-
-          <NavLink to="/settings">
-            <StyledLi>
-              <div className="icon">
-                {pathname.includes('/settings') ? (
-                  <SettingBlackIcon />
-                ) : (
-                  <SettingIcon />
-                )}
-              </div>
-              <span>設定</span>
-            </StyledLi>
-          </NavLink>
+          <StyledLi>
+            <div className="icon">
+              <LogoutIcon />
+            </div>
+            <span>登出</span>
+          </StyledLi>
         </ul>
-        <StyledNavButton>推文</StyledNavButton>
-      </div>
-      <ul>
-        <StyledLi>
-          <div className="icon">
-            <LogoutIcon />
-          </div>
-          <span>登出</span>
-        </StyledLi>
-      </ul>
-    </StyledNav>
+      </StyledNav>
+      {showModal && <TweetModal onClose={handleShowModal} />}
+    </>
   );
 }
