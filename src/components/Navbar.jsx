@@ -58,7 +58,7 @@ const StyledNavButton = styled.button`
   background-color: var(--color-theme);
 `;
 
-export default function Navbar() {
+export function Navbar() {
   const { pathname } = useLocation();
   const user = { id: 5 }; // 暫時假定
   const [showModal, setShowModal] = useState(false);
@@ -131,5 +131,56 @@ export default function Navbar() {
       </StyledNav>
       {showModal && <TweetModal onClose={handleShowModal} />}
     </>
+  );
+}
+
+export function AdminNavbar() {
+  const { pathname } = useLocation();
+
+  return (
+    <StyledNav>
+      <div>
+        <div className="logo">
+          <LogoIcon />
+        </div>
+        <ul>
+          <NavLink to="/admin/tweets">
+            <StyledLi>
+              <div className="icon">
+                {pathname.includes('/tweets') ? (
+                  <HomeBlackIcon />
+                ) : (
+                  <HomeIcon />
+                )}
+              </div>
+              <span>推文清單</span>
+            </StyledLi>
+          </NavLink>
+          <NavLink
+            to="/admin/users"
+            className={pathname.includes('uses') && 'active'}
+          >
+            <StyledLi>
+              <div className="icon">
+                {pathname.includes('users') ? (
+                  <PersonBlackIcon />
+                ) : (
+                  <PersonIcon />
+                )}
+              </div>
+              <span>使用者列表</span>
+            </StyledLi>
+          </NavLink>
+        </ul>
+      </div>
+      <ul>
+        <StyledLi>
+          <div className="icon">
+            <LogoutIcon />
+          </div>
+          <span>登出</span>
+        </StyledLi>
+      </ul>
+    </StyledNav>
   );
 }
