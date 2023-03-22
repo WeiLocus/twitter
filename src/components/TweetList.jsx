@@ -145,3 +145,5 @@ export default function TweetList({ type }) {
     </StyledList>
   );
 }
+
+export { StyledListItem };
