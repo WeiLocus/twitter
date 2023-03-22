@@ -32,7 +32,7 @@ export default function AdminPage() {
       </AuthInputContainer>
       <AuthButton>登入</AuthButton>
       <AuthLinkContainer>
-        <Link to="/login" style={{ textDecoration: 'none' }}>
+        <Link to="/login">
           <AuthLinkText>前台登入</AuthLinkText>
         </Link>
       </AuthLinkContainer>
