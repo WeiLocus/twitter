@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import AuthInput from './Input';
+import AuthInput, { StyledInputCount } from './Input';
 import { ReactComponent as CrossIcon } from '../../assets/Cross.svg';
 import { ReactComponent as ChangeImgIcon } from '../../assets/ChangeImg.svg';
 
@@ -19,7 +19,7 @@ const StyledModal = styled.div`
   position: absolute;
   inset: 3.5rem 0;
   width: 634px;
-  height: 610px;
+  height: 650px;
   margin: 0 auto;
   border-radius: 1rem;
   background-color: white;
@@ -102,9 +102,46 @@ const StyledFilterDiv = styled.div`
 const StyledInputContainer = styled.div`
   margin-top: 5rem;
   padding: 1rem;
+  .introduction {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.4rem;
+    background-color: var(--color-gray-100);
+    label {
+      padding: 0.125rem 0.625rem;
+      font-size: var(--fs-secondary);
+      color: var(--color-gray-700);
+    }
+  }
+`;
+
+// introduction
+const StyledInput = styled.textarea`
+  padding: 0.125rem 0.625rem;
+  border: none;
+  resize: none;
+  background-color: var(--color-gray-100);
+  line-height: 1.6rem;
+  font-size: var(--fs-basic);
+  ::-webkit-input-placeholder {
+    color: var(--color-gray-500);
+  }
+  border-bottom: 2px solid var(--color-gray-700);
+  :focus {
+    border-bottom: 2px solid var(--color-light-blue);
+    outline: none;
+  }
+  :hover {
+    border-bottom: 2px solid var(--color-light-blue);
+  }
 `;
 
 export default function EditModal({ onClose }) {
+  const [username, setUsername] = useState('');
+  const [introduction, setInTroduction] = useState('');
+  const nameLength = username.length;
+  const introductionLength = introduction.length;
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -136,12 +173,25 @@ export default function EditModal({ onClose }) {
               </StyledFilterDiv>
             </div>
             <StyledInputContainer>
-              <AuthInput type="text" label="名稱" placeholder="John Doe" />
               <AuthInput
-                type="text"
-                label="自我介紹"
-                placeholder="Hello! My name is John Doe"
+                label="名稱"
+                placeholder="John Doe"
+                value={username}
+                onChange={(nameInput) => setUsername(nameInput)}
+                InputLength={nameLength}
               />
+              <div className="introduction">
+                <label>自我介紹</label>
+                <StyledInput
+                  rows="3"
+                  placeholder="Hello! My name is John Doe"
+                  value={introduction}
+                  onChange={(event) => setInTroduction(event.target.value)}
+                />
+              </div>
+              {introductionLength > 0 && (
+                <StyledInputCount>{introductionLength}/160</StyledInputCount>
+              )}
             </StyledInputContainer>
             <div className="avatar">
               <img src="https://placekitten.com/700/700" alt="avatar" />

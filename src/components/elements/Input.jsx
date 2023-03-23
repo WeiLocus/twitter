@@ -41,12 +41,12 @@ const StyledInput = styled.input`
 
 const StyledInputCheckContainer = styled.div`
   position: relative;
-  margin-top: 0.5rem;
 `;
 
 const StyledInputCount = styled.div`
   text-align: end;
   color: var(--color-gray-700);
+  margin-top: 0.5rem;
 `;
 
 const StyledInputLimit = styled.div`
@@ -70,7 +70,7 @@ export default function AuthInput({
       <StyledContainer>
         <StyledLabel>{label}</StyledLabel>
         <StyledInput
-          className={clsx('', { error: InputLength > 50 })}
+          className={clsx('', { error: label === '名稱' && InputLength > 50 })}
           type={type || 'text'}
           placeholder={placeholder}
           value={value}
@@ -90,3 +90,5 @@ export default function AuthInput({
     </>
   );
 }
+
+export { StyledInputCount, StyledInput };
