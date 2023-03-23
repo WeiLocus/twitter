@@ -4,7 +4,7 @@ import axios from 'axios';
 const baseURL = 'https://murmuring-plains-40389.herokuapp.com/api';
 
 const axiosInstance = axios.create({
-  baseURL: baseURL,
+  baseURL,
 });
 
 axiosInstance.interceptors.request.use(
@@ -23,6 +23,15 @@ axiosInstance.interceptors.request.use(
 export async function getTweets() {
   try {
     const res = await axiosInstance.get(`${baseURL}/tweets`);
+    return res.data;
+  } catch (error) {
+    console.error('[Get Tweets failed]: ', error);
+  }
+}
+
+export async function getSingleTweet(id) {
+  try {
+    const res = await axiosInstance.get(`${baseURL}/tweets/${id}`);
     return res.data;
   } catch (error) {
     console.error('[Get Tweets failed]: ', error);
