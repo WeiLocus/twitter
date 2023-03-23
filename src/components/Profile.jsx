@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import EditModal from './elements/EditModal';
 
 const StyledDiv = styled.div`
   position: relative;
@@ -101,48 +103,59 @@ const StyledDiv = styled.div`
 `;
 
 export default function Profile({ id }) {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => {
+    const nextShowModal = !showModal;
+    setShowModal(nextShowModal);
+  };
   return (
-    <StyledDiv>
-      <div className="cover">
-        <img src="https://picsum.photos/id/120/700/300" alt="user-cover" />
-      </div>
-      <img
-        className="avatar"
-        src="https://placekitten.com/700/700"
-        alt="avatar"
-      />
-      <div className="content">
-        <div className="edit">
-          <button type="button">編輯個人資料</button>
+    <>
+      <StyledDiv>
+        <div className="cover">
+          <img src="https://picsum.photos/id/120/700/300" alt="user-cover" />
         </div>
-        <div className="user">
-          <b>Apple</b>
-          <p>@apple</p>
+        <img
+          className="avatar"
+          src="https://placekitten.com/700/700"
+          alt="avatar"
+        />
+        <div className="content">
+          <div className="edit">
+            <button type="button" onClick={handleShowModal}>
+              編輯個人資料
+            </button>
+          </div>
+          <div className="user">
+            <b>Apple</b>
+            <p>@apple</p>
+          </div>
+          <p className="intro">
+            Maecenas blandit volutpat hendrerit. Fusce at elementum urna,
+            ullamcorper mattis libero. Donec rutrum tempor felis id condimentum.
+          </p>
+          <div className="stats">
+            <NavLink to={`/users/${id}/followings`}>
+              <span>34</span>個跟隨中
+            </NavLink>
+            <NavLink to={`/users/${id}/followers`}>
+              <span>59</span>個跟隨者
+            </NavLink>
+          </div>
         </div>
-        <p className="intro">
-          Maecenas blandit volutpat hendrerit. Fusce at elementum urna,
-          ullamcorper mattis libero. Donec rutrum tempor felis id condimentum.
-        </p>
-        <div className="stats">
-          <NavLink to={`/users/${id}/followings`}>
-            <span>34</span>個跟隨中
+        <div className="tabs">
+          <NavLink className="category" to={`/users/${id}/tweets`}>
+            <p>推文</p>
           </NavLink>
-          <NavLink to={`/users/${id}/followers`}>
-            <span>59</span>個跟隨者
+          <NavLink className="category" to={`/users/${id}/replies`}>
+            <p>回覆</p>
+          </NavLink>
+          <NavLink className="category" to={`/users/${id}/likes`}>
+            <p>喜歡的內容</p>
           </NavLink>
         </div>
-      </div>
-      <div className="tabs">
-        <NavLink className="category" to={`/users/${id}/tweets`}>
-          <p>推文</p>
-        </NavLink>
-        <NavLink className="category" to={`/users/${id}/replies`}>
-          <p>回覆</p>
-        </NavLink>
-        <NavLink className="category" to={`/users/${id}/likes`}>
-          <p>喜歡的內容</p>
-        </NavLink>
-      </div>
-    </StyledDiv>
+      </StyledDiv>
+      {showModal && <EditModal onClose={handleShowModal} />}
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Header from '../components/Header';
 import AuthInput from '../components/elements/Input';
+import Alert from '../components/elements/Alert';
 
 const StyedSettingsContainer = styled.div`
   height: calc(100vh - 68px);
@@ -56,6 +57,7 @@ export default function SettingsPage() {
         <StyledButtonDiv>
           <button type="button">儲存</button>
         </StyledButtonDiv>
+        <Alert type="success" message="登入成功" />
       </StyedSettingsContainer>
     </>
   );
