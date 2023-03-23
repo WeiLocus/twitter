@@ -19,6 +19,6 @@ const StyledAuthButton = styled.button`
   }
 `;
 
-export default function AuthButton() {
-  return <StyledAuthButton>登入</StyledAuthButton>;
+export default function AuthButton({ onClick }) {
+  return <StyledAuthButton onClick={onClick}>登入</StyledAuthButton>;
 }
