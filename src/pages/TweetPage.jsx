@@ -36,7 +36,7 @@ export default function TweetPage() {
       <Header headerText="首頁" />
       <StyledDiv>
         <TweetInput user={loginUser} />
-        <TweetList tweets={tweets} type="tweet" />
+        <TweetList user={loginUser} tweets={tweets} type="tweet" />
       </StyledDiv>
     </>
   );

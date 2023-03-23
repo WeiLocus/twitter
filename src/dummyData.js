@@ -1,9 +1,8 @@
 const tweets = [
   {
     id: 60,
-    description:
-      'Mauris vehicula mauris sit amet leo vestibulum suscipit. Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut. Morbi pellentesque aliquet risus et commodo. ',
-    createdAt: '2023-03-23T09:58:29.000Z',
+    description: '那些老屁股的見解太迂腐了，我要反對他們！',
+    createdAt: '2023-03-23T13:58:29.000Z',
     replyCounts: 2,
     likeCounts: 0,
     isLiked: 0,
@@ -17,7 +16,7 @@ const tweets = [
   {
     id: 61,
     description:
-      'Mauris vehicula mauris sit amet leo vestibulum suscipit. Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut. Morbi pellentesque aliquet risus et commodo. ',
+      '我想到一個一定得獎的作品，就是用QR Code當作山水畫的皴法。有沒有畫山水的我們來合作一下。',
     createdAt: '2023-03-22T03:24:29.000Z',
     replyCounts: 2,
     likeCounts: 3,
@@ -32,7 +31,7 @@ const tweets = [
   {
     id: 62,
     description:
-      'Mauris vehicula mauris sit amet leo vestibulum suscipit. Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut. Morbi pellentesque aliquet risus et commodo. ',
+      '這樣那些感到害怕或認為自己無法實現目標的人看到我衝過馬拉松的終點線，就會對自己說：我也能做到。',
     createdAt: '2023-03-23T05:24:29.000Z',
     replyCounts: 2,
     likeCounts: 5,
@@ -47,7 +46,7 @@ const tweets = [
   {
     id: 63,
     description:
-      'Mauris vehicula mauris sit amet leo vestibulum suscipit. Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut. Morbi pellentesque aliquet risus et commodo. ',
+      '今天去看of an age, 超好看！台詞還有提到凱特布蘭琪、妮可基嫚、王家衛電影，很有意思。',
     createdAt: '2023-03-23T02:34:29.000Z',
     replyCounts: 2,
     likeCounts: 0,
@@ -62,8 +61,8 @@ const tweets = [
   {
     id: 64,
     description:
-      'Mauris vehicula mauris sit amet leo vestibulum suscipit. Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut. Morbi pellentesque aliquet risus et commodo. ',
-    createdAt: '2023-03-20T03:24:29.000Z',
+      '天轉熱了 可以喝冰咖啡了 建議用我家的義式咖啡 煮濃一些 加冰塊 很不錯',
+    createdAt: '2023-03-20T13:24:29.000Z',
     replyCounts: 2,
     likeCounts: 0,
     isLiked: 0,
@@ -77,7 +76,7 @@ const tweets = [
   {
     id: 65,
     description:
-      'Mauris vehicula mauris sit amet leo vestibulum suscipit. Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut. Morbi pellentesque aliquet risus et commodo. ',
+      '以前讀過一個網路廣傳的文章，大意是說哈佛大學學生之所以優秀，是因為他們都睡很少晚上都還在唸書，配圖還搭上哈佛圖書館整晚通亮的樣子。',
     createdAt: '2023-03-23T05:24:59.000Z',
     replyCounts: 2,
     likeCounts: 5,
@@ -94,8 +93,7 @@ const tweets = [
 const replies = [
   {
     id: 20,
-    description:
-      'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
+    description: '不能再同意更多',
     createdAt: '2023-03-23T05:24:59.000Z',
     User: {
       id: 101,
@@ -106,8 +104,7 @@ const replies = [
   },
   {
     id: 21,
-    description:
-      'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
+    description: '超級同意 der',
     createdAt: '2023-03-22T05:24:59.000Z',
     User: {
       id: 103,
@@ -118,8 +115,7 @@ const replies = [
   },
   {
     id: 22,
-    description:
-      'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
+    description: '你再繼續胡說八道',
     createdAt: '2023-03-23T01:24:59.000Z',
     User: {
       id: 104,
@@ -130,8 +126,7 @@ const replies = [
   },
   {
     id: 23,
-    description:
-      'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
+    description: '一切都是謊言',
     createdAt: '2023-03-22T12:24:59.000Z',
     User: {
       id: 104,
@@ -142,8 +137,7 @@ const replies = [
   },
   {
     id: 24,
-    description:
-      'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
+    description: 'Agree',
     createdAt: '2023-03-23T05:00:59.000Z',
     User: {
       id: 105,
@@ -154,8 +148,7 @@ const replies = [
   },
   {
     id: 25,
-    description:
-      'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
+    description: '不是吧！！！！',
     createdAt: '2023-03-20T01:24:59.000Z',
     User: {
       id: 200,

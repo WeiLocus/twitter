@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CrossIcon } from '../../assets/Cross.svg';
+import { countTimeDiff } from '../../utilities';
 
 const StyledDiv = styled.div`
   position: absolute;
@@ -118,7 +119,7 @@ const StyledTweetContent = styled.div`
     &::after {
       content: '';
       width: 2px;
-      height: 110%;
+      height: 125%;
       position: absolute;
       top: calc((50px / 2) + 0.5rem);
       left: calc(-0.75rem - 25px);
@@ -138,29 +139,27 @@ const StyledTweetContent = styled.div`
 
 export function TweetModal({ user, onClose }) {
   const { id, avatar } = user;
-  const [tweetContent, setTweetContent] = useState('');
+  const [tweetDescription, setTweetDescription] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
-  // let errorMessage = '';
 
-  const handleContentChange = (e) => {
-    setTweetContent(e.target.value);
+  const handleDescriptionChange = (e) => {
+    setTweetDescription(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!tweetContent.length) {
+    if (!tweetDescription.length) {
       setErrorMessage('內容不可空白');
-      setTweetContent(tweetContent);
       return;
     }
-    if (tweetContent.length > 140) {
+    if (tweetDescription.length > 140) {
       setErrorMessage('字數不可超過 140 字');
       return;
     }
     // 這邊要發送修改請求
-    console.log(`user ${id} just submitted a tweet: ${tweetContent}`);
+    console.log(`user ${id} just submitted a tweet: ${tweetDescription}`);
     setErrorMessage(null);
-    setTweetContent('');
+    setTweetDescription('');
   };
 
   useEffect(() => {
@@ -183,13 +182,13 @@ export function TweetModal({ user, onClose }) {
           <form>
             <textarea
               name="tweet"
-              id="tweet-content"
-              value={tweetContent}
+              id="tweet-Description"
+              value={tweetDescription}
               placeholder="有什麼新鮮事？"
-              onChange={handleContentChange}
+              onChange={handleDescriptionChange}
             />
             <div className="submit">
-              <span>{`${tweetContent.length}/140`}</span>
+              <span>{`${tweetDescription.length}/140`}</span>
               <div>
                 <span className={errorMessage ? 'error' : undefined}>
                   {errorMessage}
@@ -206,7 +205,35 @@ export function TweetModal({ user, onClose }) {
   );
 }
 
-export function ReplyModal({ onClose }) {
+export function ReplyModal({ user, tweet, onClose }) {
+  const { id, avatar } = user;
+  const { User, createdAt, description } = tweet;
+  const timeAgo = countTimeDiff(createdAt);
+  const [replyDescription, setReplyDescription] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const handleDescriptionChange = (e) => {
+    setReplyDescription(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!replyDescription.length) {
+      setErrorMessage('內容不可空白');
+      return;
+    }
+    if (replyDescription.length > 140) {
+      setErrorMessage('字數不可超過 140 字');
+      return;
+    }
+    // 這邊要發送修改請求
+    console.log(
+      `user ${id} just submitted a reply to user @${User.account}: ${replyDescription}`
+    );
+    setErrorMessage(null);
+    setReplyDescription('');
+  };
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -223,32 +250,42 @@ export function ReplyModal({ onClose }) {
           </button>
         </div>
         <StyledTweetContent>
-          <img src="https://placekitten.com/1000/1000" alt="avatar" />
+          <img src={User.avatar} alt="avatar" />
           <div>
             <div className="user">
-              <b>Apple</b>
-              <span>@apple</span>
+              <b>{User.name}</b>
+              <span>@{User.account}</span>
               <span>．</span>
-              <span>3 小時</span>
+              <span>{timeAgo}</span>
             </div>
-            <p className="content">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita
-              excepturi corrupti velit vitae quasi. Ad corrupti laudantium qui
-              Lorem ipsum dolor sit.
-            </p>
+            <p className="content">{description}</p>
             <div className="reply-to">
               <span>回覆給</span>
-              <span className="account">@Mitsubishi</span>
+              <span className="account">@{User.account}</span>
             </div>
           </div>
         </StyledTweetContent>
         <StyledTextarea>
-          <img src="https://placekitten.com/700/700" alt="avatar" />
+          <img src={avatar} alt="avatar" />
           <form>
-            <textarea placeholder="推你的回覆" />
-            <button type="submit" onClick={onClose}>
-              回覆
-            </button>
+            <textarea
+              name="reply"
+              id="reply-content"
+              value={replyDescription}
+              placeholder="推你的回覆"
+              onChange={handleDescriptionChange}
+            />
+            <div className="submit">
+              <span>{`${replyDescription.length}/140`}</span>
+              <div>
+                <span className={errorMessage ? 'error' : undefined}>
+                  {errorMessage}
+                </span>
+                <button type="submit" onClick={handleSubmit}>
+                  回覆
+                </button>
+              </div>
+            </div>
           </form>
         </StyledTextarea>
       </StyledModal>
