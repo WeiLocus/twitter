@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import Header from '../components/Header';
 import TweetInput from '../components/TweetInput';
 import TweetList from '../components/TweetList';
-import { tweets } from '../dummyData';
+import { tweets, loginUser } from '../dummyData';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 68px);
@@ -35,7 +35,7 @@ export default function TweetPage() {
     <>
       <Header headerText="首頁" />
       <StyledDiv>
-        <TweetInput />
+        <TweetInput user={loginUser} />
         <TweetList tweets={tweets} type="tweet" />
       </StyledDiv>
     </>

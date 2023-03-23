@@ -10,6 +10,7 @@ import { ReactComponent as SettingIcon } from '../assets/Setting.svg';
 import { ReactComponent as SettingBlackIcon } from '../assets/Setting-black.svg';
 import { ReactComponent as LogoutIcon } from '../assets/Logout.svg';
 import { TweetModal } from './elements/TweetModal';
+import { loginUser } from '../dummyData';
 
 const StyledNav = styled.nav`
   height: 100vh;
@@ -129,7 +130,7 @@ export function Navbar() {
           </StyledLi>
         </ul>
       </StyledNav>
-      {showModal && <TweetModal onClose={handleShowModal} />}
+      {showModal && <TweetModal user={loginUser} onClose={handleShowModal} />}
     </>
   );
 }

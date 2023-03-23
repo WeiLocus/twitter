@@ -44,18 +44,20 @@ const StyledButtonDiv = styled.div`
   }
 `;
 
-export default function TweetInput() {
+export default function TweetInput({ user }) {
+  const { id, avatar } = user;
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
     const nextShowModal = !showModal;
     setShowModal(nextShowModal);
   };
+
   return (
     <>
       <StyledDiv onClick={handleShowModal}>
         <StyledAvatarDiv>
-          <img src="https://placekitten.com/300/300" alt="avatar" />
+          <img src={avatar} alt="avatar" />
           <p>有什麼新鮮事？</p>
         </StyledAvatarDiv>
         <StyledButtonDiv>
@@ -64,7 +66,7 @@ export default function TweetInput() {
           </button>
         </StyledButtonDiv>
       </StyledDiv>
-      {showModal && <TweetModal onClose={handleShowModal} />}
+      {showModal && <TweetModal user={user} onClose={handleShowModal} />}
     </>
   );
 }

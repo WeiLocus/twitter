@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CrossIcon } from '../../assets/Cross.svg';
 
@@ -60,11 +60,25 @@ const StyledTextarea = styled.div`
       width: calc(100% - 1rem);
     }
 
+    .submit {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    span {
+      color: var(--color-secondary);
+      &.error {
+        color: var(--color-error);
+      }
+    }
+
     button {
       all: unset;
       cursor: pointer;
       padding: 0.5rem 1rem;
-      margin-top: 1rem;
+      margin-left: 1rem;
       border: 1px solid var(--color-theme);
       border-radius: 3.125rem;
       color: white;
@@ -122,7 +136,33 @@ const StyledTweetContent = styled.div`
   }
 `;
 
-export function TweetModal({ onClose }) {
+export function TweetModal({ user, onClose }) {
+  const { id, avatar } = user;
+  const [tweetContent, setTweetContent] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null);
+  // let errorMessage = '';
+
+  const handleContentChange = (e) => {
+    setTweetContent(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!tweetContent.length) {
+      setErrorMessage('內容不可空白');
+      setTweetContent(tweetContent);
+      return;
+    }
+    if (tweetContent.length > 140) {
+      setErrorMessage('字數不可超過 140 字');
+      return;
+    }
+    // 這邊要發送修改請求
+    console.log(`user ${id} just submitted a tweet: ${tweetContent}`);
+    setErrorMessage(null);
+    setTweetContent('');
+  };
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -139,12 +179,26 @@ export function TweetModal({ onClose }) {
           </button>
         </div>
         <StyledTextarea>
-          <img src="https://placekitten.com/700/700" alt="avatar" />
+          <img src={avatar} alt="avatar" />
           <form>
-            <textarea placeholder="有什麼新鮮事？" />
-            <button type="submit" onClick={onClose}>
-              推文
-            </button>
+            <textarea
+              name="tweet"
+              id="tweet-content"
+              value={tweetContent}
+              placeholder="有什麼新鮮事？"
+              onChange={handleContentChange}
+            />
+            <div className="submit">
+              <span>{`${tweetContent.length}/140`}</span>
+              <div>
+                <span className={errorMessage ? 'error' : undefined}>
+                  {errorMessage}
+                </span>
+                <button type="submit" onClick={handleSubmit}>
+                  推文
+                </button>
+              </div>
+            </div>
           </form>
         </StyledTextarea>
       </StyledModal>

@@ -108,7 +108,7 @@ const replies = [
     id: 21,
     description:
       'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
-    createdAt: '2023-03-23T05:24:59.000Z',
+    createdAt: '2023-03-22T05:24:59.000Z',
     User: {
       id: 103,
       account: 'user103',
@@ -120,7 +120,7 @@ const replies = [
     id: 22,
     description:
       'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
-    createdAt: '2023-03-23T05:24:59.000Z',
+    createdAt: '2023-03-23T01:24:59.000Z',
     User: {
       id: 104,
       account: 'user104',
@@ -132,7 +132,7 @@ const replies = [
     id: 23,
     description:
       'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
-    createdAt: '2023-03-23T05:24:59.000Z',
+    createdAt: '2023-03-22T12:24:59.000Z',
     User: {
       id: 104,
       account: 'user104',
@@ -144,7 +144,7 @@ const replies = [
     id: 24,
     description:
       'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
-    createdAt: '2023-03-23T05:24:59.000Z',
+    createdAt: '2023-03-23T05:00:59.000Z',
     User: {
       id: 105,
       account: 'user105',
@@ -156,7 +156,7 @@ const replies = [
     id: 25,
     description:
       'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
-    createdAt: '2023-03-23T05:24:59.000Z',
+    createdAt: '2023-03-20T01:24:59.000Z',
     User: {
       id: 200,
       account: 'user200',
@@ -166,4 +166,19 @@ const replies = [
   },
 ];
 
-export { tweets, replies };
+const loginUser = {
+  id: 125,
+  name: 'user125',
+  email: 'user125@example.com',
+  account: 'user2',
+  introduction:
+    'Mollitia consectetur optio. Consequatur aut quaerat necessitatibus quod beatae perferendis sint repellat rem. Inventore at voluptas blanditiis non pariatur exercitationem. Error rerum illum iusto magnam quisquam quo fugiat iste nostrum. Et laboriosam aliquam consequuntur labore magnam aperiam quam.',
+  avatar:
+    'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/268.jpg',
+  cover: 'https://loremflickr.com/640/480/nature?lock=27430',
+  isAdmin: false,
+  createdAt: '2023-03-20T15:44:34.000Z',
+  updatedAt: '2023-03-20T15:44:34.000Z',
+};
+
+export { tweets, replies, loginUser };
