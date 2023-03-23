@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
+import login from '../api/auth';
 import {
   AuthContainer,
   AuthInputContainer,
@@ -21,7 +22,21 @@ export default function LoginPage() {
   // 用state儲存account、password
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
-  
+
+  const navigate = useNavigate();
+
+  // 確認登入狀況
+  const handelClick = async () => {
+    if (account.length === 0) return;
+    if (password.length === 0) return;
+    const { success, token } = await login({ account, password });
+
+    if (success) {
+      localStorage.setItem('token', token);
+      navigate('/tweets');
+    }
+  };
+
   return (
     <AuthContainer>
       <div>
@@ -45,7 +60,7 @@ export default function LoginPage() {
           onChange={(passwordInput) => setPassword(passwordInput)}
         />
       </AuthInputContainer>
-      <AuthButton>登入</AuthButton>
+      <AuthButton onClick={handelClick}>登入</AuthButton>
       <AuthLinkContainer>
         <Link to="/signup">
           <AuthLinkText>註冊</AuthLinkText>
