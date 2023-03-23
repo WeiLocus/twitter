@@ -19,7 +19,6 @@ const StyledTitle = styled.div`
   font-weight: 700;
 `;
 export default function LoginPage() {
-  // 用state儲存account、password
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
 
@@ -29,9 +28,9 @@ export default function LoginPage() {
   const handelClick = async () => {
     if (account.length === 0) return;
     if (password.length === 0) return;
-    const { success, token } = await login({ account, password });
+    const { token } = await login({ account, password });
 
-    if (success) {
+    if (token) {
       localStorage.setItem('token', token);
       navigate('/tweets');
     }

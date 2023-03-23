@@ -15,9 +15,9 @@ const login = async ({ account, password }) => {
 
     // 判斷是否登入要回傳的內容
     if (token) {
-      return { success: true, ...data };
+      return { ...data.data };
     }
-    return data;
+    return data.data;
   } catch (error) {
     console.log('[Login Failed]:', error);
   }
