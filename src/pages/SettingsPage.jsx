@@ -3,7 +3,8 @@ import Header from '../components/Header';
 import AuthInput from '../components/elements/Input';
 
 const StyedSettingsContainer = styled.div`
-  height: 100vh;
+  height: calc(100vh - 68px);
+  overflow-y: scroll;
   padding: 1.6rem;
   border: 1px solid var(--color-gray-200);
   border-bottom: none;

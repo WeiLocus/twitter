@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CommentIcon } from '../assets/Comment.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
+import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
 import { ReplyModal } from './elements/TweetModal';
 
 const StyledDiv = styled.div`
@@ -46,7 +47,6 @@ const StyledDiv = styled.div`
     padding-block: 0.5rem;
     border-bottom: 1px solid var(--color-gray-200);
     color: var(--color-secondary);
-    font-family: 'Noto sans tc';
     font-size: var(--fs-secondary);
   }
 
@@ -81,11 +81,18 @@ const StyledDiv = styled.div`
 
 export default function TweetContent() {
   const [showModal, setShowModal] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   const handleShowModal = () => {
     const nextShowModal = !showModal;
     setShowModal(nextShowModal);
   };
+
+  const handleLike = () => {
+    const nextIsLiked = !isLiked;
+    setIsLiked(nextIsLiked);
+  };
+
   return (
     <>
       <StyledDiv>
@@ -118,7 +125,11 @@ export default function TweetContent() {
             <CommentIcon />
           </button>
           <button type="button">
-            <LikeIcon />
+            {isLiked ? (
+              <LikeBlackIcon onClick={handleLike} />
+            ) : (
+              <LikeIcon onClick={handleLike} />
+            )}
           </button>
         </div>
       </StyledDiv>

@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 const StyledPopularAside = styled.aside`
-  height: calc(100vh - 2rem);
   overflow-y: scroll;
   margin: 1rem;
   border-radius: 1rem;
@@ -66,12 +65,22 @@ const StyledLi = styled.li`
 `;
 
 export default function Popular() {
+  const asideRef = useRef(null);
+
+  useEffect(() => {
+    if (asideRef.current.offsetHeight > window.innerHeight) {
+      asideRef.current.style.height = `calc(100vh - 2rem)`;
+    }
+  }, []);
+
   return (
-    <StyledPopularAside>
+    <StyledPopularAside ref={asideRef}>
       <h2>推薦跟隨</h2>
       <ul>
         {/* <PopularItem isFollowing /> */}
         {/* <PopularItem isFollowing /> */}
+        <PopularItem />
+        <PopularItem />
         <PopularItem />
         <PopularItem />
         <PopularItem />

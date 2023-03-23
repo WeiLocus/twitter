@@ -13,7 +13,9 @@ const StyledTweetContainer = styled(StyledListItem)`
 `;
 
 const StyledAdminTweetContainer = styled.div`
-  height: 100vh;
+  height: calc(100vh - 68px);
+  overflow-y: scroll;
+  overflow-x: hidden;
   border-inline: 1px solid var(--color-gray-200);
   background-color: #fff;
 

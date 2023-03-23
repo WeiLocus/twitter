@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import { TweetModal } from './elements/TweetModal';
 
 const StyledDiv = styled.div`
+  cursor: pointer;
   padding: 1rem;
   border: 1px solid var(--color-gray-200);
   border-bottom: 10px solid var(--color-gray-200);
@@ -42,15 +45,26 @@ const StyledButtonDiv = styled.div`
 `;
 
 export default function TweetInput() {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => {
+    const nextShowModal = !showModal;
+    setShowModal(nextShowModal);
+  };
   return (
-    <StyledDiv>
-      <StyledAvatarDiv>
-        <img src="https://placekitten.com/300/300" alt="avatar" />
-        <p>有什麼新鮮事？</p>
-      </StyledAvatarDiv>
-      <StyledButtonDiv>
-        <button type="button">推文</button>
-      </StyledButtonDiv>
-    </StyledDiv>
+    <>
+      <StyledDiv onClick={handleShowModal}>
+        <StyledAvatarDiv>
+          <img src="https://placekitten.com/300/300" alt="avatar" />
+          <p>有什麼新鮮事？</p>
+        </StyledAvatarDiv>
+        <StyledButtonDiv>
+          <button type="button" onClick={handleShowModal}>
+            推文
+          </button>
+        </StyledButtonDiv>
+      </StyledDiv>
+      {showModal && <TweetModal onClose={handleShowModal} />}
+    </>
   );
 }
