@@ -14,6 +14,7 @@ import ReplyPage from './pages/ReplyPage';
 import UserPage from './pages/UserPage';
 import TweetList from './components/TweetList';
 import FollowList from './components/FollowList';
+import { tweets, replies } from './dummyData';
 
 const basename = import.meta.env.VITE_PUBLIC_URL;
 
@@ -39,9 +40,18 @@ function App() {
           </Route>
           <Route element={<UserPage />}>
             <Route path="users/:id">
-              <Route path="tweets" element={<TweetList type="tweet" />} />
-              <Route path="replies" element={<TweetList type="reply" />} />
-              <Route path="likes" element={<TweetList type="like" />} />
+              <Route
+                path="tweets"
+                element={<TweetList type="tweet" tweets={tweets} />}
+              />
+              <Route
+                path="replies"
+                element={<TweetList type="reply" tweets={replies} />}
+              />
+              <Route
+                path="likes"
+                element={<TweetList type="like" tweets={tweets} />}
+              />
               <Route
                 path="followers"
                 element={<FollowList type="followers" />}

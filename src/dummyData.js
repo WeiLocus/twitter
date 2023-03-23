@@ -98,10 +98,70 @@ const replies = [
       'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
     createdAt: '2023-03-23T05:24:59.000Z',
     User: {
+      id: 101,
+      account: 'user101',
+      name: 'user101',
+      avatar: 'https://api.lorem.space/image/face?w=150&h=150',
+    },
+  },
+  {
+    id: 21,
+    description:
+      'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
+    createdAt: '2023-03-23T05:24:59.000Z',
+    User: {
+      id: 103,
+      account: 'user103',
+      name: 'user103',
+      avatar: 'https://api.lorem.space/image/face?w=450&h=450',
+    },
+  },
+  {
+    id: 22,
+    description:
+      'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
+    createdAt: '2023-03-23T05:24:59.000Z',
+    User: {
+      id: 104,
+      account: 'user104',
+      name: 'user104',
+      avatar: 'http://placekitten.com/g/600/600',
+    },
+  },
+  {
+    id: 23,
+    description:
+      'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
+    createdAt: '2023-03-23T05:24:59.000Z',
+    User: {
+      id: 104,
+      account: 'user104',
+      name: 'user104',
+      avatar: 'http://placekitten.com/g/600/600',
+    },
+  },
+  {
+    id: 24,
+    description:
+      'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
+    createdAt: '2023-03-23T05:24:59.000Z',
+    User: {
+      id: 105,
+      account: 'user105',
+      name: 'user105',
+      avatar: 'https://api.lorem.space/image/face?w=350&h=350',
+    },
+  },
+  {
+    id: 25,
+    description:
+      'Nulla a quam purus. Etiam dictum mi ex, sed vehicula nulla placerat ut.',
+    createdAt: '2023-03-23T05:24:59.000Z',
+    User: {
       id: 200,
       account: 'user200',
       name: 'user200',
-      avatar: 'http://placekitten.com/g/400/400',
+      avatar: 'https://api.lorem.space/image/face?w=550&h=550',
     },
   },
 ];
