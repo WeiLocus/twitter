@@ -41,12 +41,12 @@ const StyledInput = styled.input`
 
 const StyledInputCheckContainer = styled.div`
   position: relative;
-  margin-top: 0.5rem;
 `;
 
 const StyledInputCount = styled.div`
   text-align: end;
   color: var(--color-gray-700);
+  margin-top: 0.5rem;
 `;
 
 const StyledInputLimit = styled.div`
@@ -80,16 +80,15 @@ export default function AuthInput({
         />
       </StyledContainer>
       <StyledInputCheckContainer>
-        {label === '名稱' && InputLength > 0 && (
+        {InputLength > 0 && (
           <StyledInputCount>{InputLength}/50</StyledInputCount>
         )}
-        {label === '自我介紹' && InputLength > 0 && (
-          <StyledInputCount>{InputLength}/160</StyledInputCount>
-        )}
-        {label === '名稱' && InputLength > 50 && (
+        {InputLength > 50 && (
           <StyledInputLimit>字數超出上限！</StyledInputLimit>
         )}
       </StyledInputCheckContainer>
     </>
   );
 }
+
+export { StyledInputCount, StyledInput };
