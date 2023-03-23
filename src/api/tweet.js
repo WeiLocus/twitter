@@ -3,17 +3,28 @@ import axios from 'axios';
 
 const baseURL = 'https://murmuring-plains-40389.herokuapp.com/api';
 
-async function getTweets(token) {
-  try {
-    const response = await axios.get(`${baseURL}/tweets`, {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    });
-    return response.data;
-  } catch (error) {
+const axiosInstance = axios.create({
+  baseURL: baseURL,
+});
+
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
     console.error(error);
   }
-}
+);
 
-export { getTweets };
+export async function getTweets() {
+  try {
+    const res = await axiosInstance.get(`${baseURL}/tweets`);
+    return res.data;
+  } catch (error) {
+    console.error('[Get Tweets failed]: ', error);
+  }
+}

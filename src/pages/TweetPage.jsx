@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import TweetInput from '../components/TweetInput';
 import TweetList from '../components/TweetList';
-import { loginUser, tweets } from '../dummyData';
+import { loginUser } from '../dummyData';
 import { getTweets } from '../api/tweet';
 
 const StyledDiv = styled.div`
@@ -12,21 +12,18 @@ const StyledDiv = styled.div`
   overflow-y: scroll;
 `;
 export default function TweetPage() {
-  // const [tweets, setTweets] = useState([]);
-  // useEffect(() => {
-  //   const getTweetsAsync = async () => {
-  //     const token = localStorage.getItem('token');
-  //     if (token) {
-  //       try {
-  //         const { tweets } = await getTweets(token);
-  //         setTweets(tweets);
-  //       } catch (error) {
-  //         console.error(error);
-  //       }
-  //     }
-  //   };
-  //   getTweetsAsync();
-  // }, [tweets]);
+  const [tweets, setTweets] = useState([]);
+  useEffect(() => {
+    const getTweetsAsync = async () => {
+      try {
+        const { tweets } = await getTweets();
+        setTweets(tweets);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getTweetsAsync();
+  }, [tweets]);
 
   return (
     <>
