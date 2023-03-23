@@ -1,36 +1,33 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import styled from 'styled-components';
-import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import TweetInput from '../components/TweetInput';
 import TweetList from '../components/TweetList';
-import { tweets, loginUser } from '../dummyData';
+import { loginUser, tweets } from '../dummyData';
+import { getTweets } from '../api/tweet';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 68px);
   overflow-y: scroll;
 `;
-const baseURL = `https://murmuring-plains-40389.herokuapp.com/api`;
-
-async function getTweets(token) {
-  try {
-    const response = await axios.get(`${baseURL}/tweets`, {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    });
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-}
 export default function TweetPage() {
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      getTweets(token);
-    }
-  }, []);
+  // const [tweets, setTweets] = useState([]);
+  // useEffect(() => {
+  //   const getTweetsAsync = async () => {
+  //     const token = localStorage.getItem('token');
+  //     if (token) {
+  //       try {
+  //         const { tweets } = await getTweets(token);
+  //         setTweets(tweets);
+  //       } catch (error) {
+  //         console.error(error);
+  //       }
+  //     }
+  //   };
+  //   getTweetsAsync();
+  // }, [tweets]);
+
   return (
     <>
       <Header headerText="首頁" />
