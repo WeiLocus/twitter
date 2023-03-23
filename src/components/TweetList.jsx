@@ -1,3 +1,4 @@
+/* eslint-disable operator-assignment */
 import { useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
@@ -5,6 +6,31 @@ import { ReactComponent as CommentIcon } from '../assets/Comment.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
 import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
 import { ReplyModal } from './elements/TweetModal';
+
+function convertMsToTime(milliseconds) {
+  // source: https://bobbyhadz.com/blog/javascript-convert-milliseconds-to-hours-minutes-seconds
+  let seconds = Math.floor(milliseconds / 1000);
+  let minutes = Math.floor(seconds / 60);
+  let hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  seconds = seconds % 60;
+  minutes = minutes % 60;
+  hours = hours % 24;
+
+  if (days > 0) {
+    return `${days} 天`;
+  }
+  if (hours > 0) {
+    return `${hours} 小時`;
+  }
+  if (minutes > 0) {
+    return `${minutes} 分鐘`;
+  }
+  return `${seconds} 秒`;
+
+  // return `${days} 天 ${hours} 小時 ${minutes} 分鐘 ${seconds} 秒前`;
+}
 
 const StyledList = styled.ul`
   background-color: white;
@@ -77,9 +103,20 @@ const StyledListItem = styled.li`
   }
 `;
 
-function TweetItem() {
+function TweetItem({ tweet }) {
+  const { id, description, createdAt, replyCounts, likeCounts, isLiked, User } =
+    tweet;
   const [showModal, setShowModal] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const [currentIsLiked, setCurrentIsLiked] = useState(isLiked); // todo to be fixed
+  // * 需要另外計算時間
+
+  const createdTime = new Date(Date.parse(createdAt));
+  const now = new Date();
+  const timeDiff = now - createdTime;
+  // console.log(createdTime);
+  // console.log(now);
+  // console.log(timeDiff);
+  // console.log(convertMsToTime(timeDiff));
 
   const handleShowModal = () => {
     const nextShowModal = !showModal;
@@ -87,37 +124,32 @@ function TweetItem() {
   };
 
   const handleLike = () => {
-    const nextIsLiked = !isLiked;
-    setIsLiked(nextIsLiked);
+    const nextCurrentIsLiked = !currentIsLiked;
+    setCurrentIsLiked(nextCurrentIsLiked);
   };
 
   return (
     <>
       <StyledListItem>
-        <NavLink to="/users/3/tweets">
-          <img src="https://placekitten.com/350/350" alt="avatar" />
+        <NavLink to={`/users/${User.id}/tweets`}>
+          <img src={User.avatar} alt="avatar" />
         </NavLink>
         <div>
           <div className="user">
-            <b>Apple</b>
-            <span>@apple</span>
+            <b>{User.name}</b>
+            <span>@{User.account}</span>
             <span>．</span>
-            <span>3 小時</span>
+            <span>{convertMsToTime(timeDiff)}</span>
           </div>
-          <NavLink to="/tweets/5">
-            <p className="content">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita
-              excepturi corrupti velit vitae quasi. Ad corrupti laudantium qui,
-              molestiae inventore maiores architecto quasi possimus ut
-              accusamus, enim, neque consequuntur ea?
-            </p>
+          <NavLink to={`/tweets/${id}`}>
+            <p className="content">{description}</p>
           </NavLink>
           <div className="stats">
             <NavLink onClick={handleShowModal} className="stat">
               <span>
                 <CommentIcon width="15px" height="15px" />
               </span>
-              <span>13</span>
+              <span>{replyCounts}</span>
             </NavLink>
             <div className="stat">
               {isLiked ? (
@@ -125,7 +157,7 @@ function TweetItem() {
               ) : (
                 <LikeIcon className="icon" onClick={handleLike} />
               )}
-              <span>76</span>
+              <span>{likeCounts}</span>
             </div>
           </div>
         </div>
@@ -135,44 +167,42 @@ function TweetItem() {
   );
 }
 
-function ReplyItem() {
+function ReplyItem({ tweet }) {
+  const { description, createdAt, User } = tweet;
+  const createdTime = new Date(Date.parse(createdAt));
+  const now = new Date();
+  const timeDiff = now - createdTime;
   return (
     <StyledListItem>
-      <NavLink to="/users/3/tweets">
-        <img src="https://placekitten.com/600/600" alt="avatar" />
+      <NavLink to={`/users/${User.id}/tweets`}>
+        <img src={User.avatar} alt="avatar" />
       </NavLink>
       <div>
         <div className="user">
-          <b>Apple</b>
-          <span>@apple</span>
+          <b>{User.name}</b>
+          <span>@{User.account}</span>
           <span>．</span>
-          <span>3 小時</span>
+          <span>{convertMsToTime(timeDiff)}</span>
         </div>
         <p className="reply">
           回覆
           <span>@Apple</span>
         </p>
-        <p className="content">
-          Molestiae inventore maiores architecto quasi possimus ut accusamus,
-          enim, neque consequuntur ea?
-        </p>
+        <p className="content">{description}</p>
       </div>
     </StyledListItem>
   );
 }
 
-export default function TweetList({ type }) {
-  const renderedItem = type === 'reply' ? <ReplyItem /> : <TweetItem />;
+export default function TweetList({ type, tweets }) {
+  const renderedItems = tweets.map((tweet) => {
+    if (type === 'reply') {
+      return <ReplyItem tweet={tweet} key={tweet.id} />;
+    }
+    return <TweetItem tweet={tweet} key={tweet.id} />;
+  });
 
-  return (
-    <StyledList>
-      {renderedItem}
-      {renderedItem}
-      {renderedItem}
-      {renderedItem}
-      {renderedItem}
-    </StyledList>
-  );
+  return <StyledList>{renderedItems}</StyledList>;
 }
 
 export { StyledListItem };

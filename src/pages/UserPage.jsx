@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useParams, Outlet, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Profile from '../components/Profile';
+import { tweets } from '../dummyData';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 73px);
@@ -16,7 +17,7 @@ export default function UserPage() {
       <Header headerText="John Doe" goBack user />
       <StyledDiv>
         {!pathname.includes('follow') && <Profile id={id} />}
-        <Outlet />
+        <Outlet context={tweets} />
       </StyledDiv>
     </>
   );

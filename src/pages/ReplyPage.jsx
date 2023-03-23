@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Header from '../components/Header';
 import TweetContent from '../components/TweetContent';
 import TweetList from '../components/TweetList';
+import { replies } from '../dummyData';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 68px);
@@ -14,7 +15,7 @@ export default function ReplyPage() {
       <Header headerText="推文" goBack />
       <StyledDiv>
         <TweetContent />
-        <TweetList type="reply" />
+        <TweetList type="reply" tweets={replies} />
       </StyledDiv>
     </>
   );
