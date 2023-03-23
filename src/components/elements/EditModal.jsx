@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import AuthInput from './Input';
 import { ReactComponent as CrossIcon } from '../../assets/Cross.svg';
@@ -102,9 +102,44 @@ const StyledFilterDiv = styled.div`
 const StyledInputContainer = styled.div`
   margin-top: 5rem;
   padding: 1rem;
+  background-color: pink;
+  .introduction {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    background-color: var(--color-gray-100);
+    label {
+      padding: 0.125rem 0.625rem;
+      font-size: var(--fs-secondary);
+      color: var(--color-gray-700);
+    }
+  }
+`;
+
+const StyledInput = styled.input`
+  padding: 0.125rem 0.625rem;
+  border: none;
+  background-color: var(--color-gray-100);
+  line-height: 1.6rem;
+  font-size: var(--fs-basic);
+  ::-webkit-input-placeholder {
+    color: var(--color-gray-500);
+  }
+  border-bottom: 2px solid var(--color-gray-700);
+  :focus {
+    border-bottom: 2px solid var(--color-light-blue);
+    outline: none;
+  }
+  :hover {
+    border-bottom: 2px solid var(--color-light-blue);
+  }
 `;
 
 export default function EditModal({ onClose }) {
+  const [username, setUsername] = useState('');
+  const [introduction, setIntroduction] = useState('');
+  const nameLength = username.length;
+  const introductionLength = introduction.length;
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -136,12 +171,26 @@ export default function EditModal({ onClose }) {
               </StyledFilterDiv>
             </div>
             <StyledInputContainer>
-              <AuthInput type="text" label="名稱" placeholder="John Doe" />
               <AuthInput
-                type="text"
+                label="名稱"
+                placeholder="John Doe"
+                value={username}
+                onChange={(nameInput) => setUsername(nameInput)}
+                InputLength={nameLength}
+              />
+              <div className="introduction">
+                <label>自我介紹</label>
+                <StyledInput placeholder="Hello! My name is John Doe" />
+              </div>
+              {/* <AuthInput
                 label="自我介紹"
                 placeholder="Hello! My name is John Doe"
-              />
+                value={introduction}
+                onChange={(introductionInput) =>
+                  setIntroduction(introductionInput)
+                }
+                InputLength={introductionLength}
+              /> */}
             </StyledInputContainer>
             <div className="avatar">
               <img src="https://placekitten.com/700/700" alt="avatar" />

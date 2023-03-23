@@ -70,7 +70,7 @@ export default function AuthInput({
       <StyledContainer>
         <StyledLabel>{label}</StyledLabel>
         <StyledInput
-          className={clsx('', { error: InputLength > 50 })}
+          className={clsx('', { error: label === '名稱' && InputLength > 50 })}
           type={type || 'text'}
           placeholder={placeholder}
           value={value}
@@ -80,10 +80,13 @@ export default function AuthInput({
         />
       </StyledContainer>
       <StyledInputCheckContainer>
-        {InputLength > 0 && (
+        {label === '名稱' && InputLength > 0 && (
           <StyledInputCount>{InputLength}/50</StyledInputCount>
         )}
-        {InputLength > 50 && (
+        {label === '自我介紹' && InputLength > 0 && (
+          <StyledInputCount>{InputLength}/160</StyledInputCount>
+        )}
+        {label === '名稱' && InputLength > 50 && (
           <StyledInputLimit>字數超出上限！</StyledInputLimit>
         )}
       </StyledInputCheckContainer>
