@@ -29,14 +29,14 @@ const StyledTitle = styled.div`
 `;
 
 export default function SignupPage() {
-  // 用state儲存account、name、email、password
   const [account, setAccount] = useState('');
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [checkPassword, setCheckPassword] = useState('');
   // 確認名稱長度
-  const nameLength = username.length;
+  const nameLength = name.length;
+
 
   return (
     <StyedSignupContainer>
@@ -56,9 +56,9 @@ export default function SignupPage() {
         <AuthInput
           label="名稱"
           placeholder="請輸入使用者名稱"
-          value={username}
+          value={name}
           InputLength={nameLength}
-          onChange={(nameInput) => setUsername(nameInput)}
+          onChange={(nameInput) => setName(nameInput)}
         />
       </AuthInputContainer>
       <AuthInputContainer>
@@ -83,11 +83,11 @@ export default function SignupPage() {
           type="password"
           label="密碼確認"
           placeholder="請再次輸入密碼"
-          value={passwordConfirm}
-          onChange={(pwdConfirmValue) => setPasswordConfirm(pwdConfirmValue)}
+          value={checkPassword}
+          onChange={(pwdConfirmValue) => setCheckPassword(pwdConfirmValue)}
         />
       </AuthInputContainer>
-      <AuthButton>註冊</AuthButton>
+      <AuthButton name="註冊" onClick={handleClick} />
       <Link to="/login">
         <AuthLinkText>取消</AuthLinkText>
       </Link>
