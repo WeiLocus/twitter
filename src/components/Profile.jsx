@@ -102,7 +102,12 @@ const StyledDiv = styled.div`
   }
 `;
 
-export default function Profile({ id }) {
+export default function Profile({ user }) {
+  const { id, name, account, introduction, avatar, cover } = user;
+  // todo 需要再調整
+  const userFollowingCount = undefined ?? 34;
+  const userFollowerCount = undefined ?? 59;
+  // todo
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
@@ -113,13 +118,9 @@ export default function Profile({ id }) {
     <>
       <StyledDiv>
         <div className="cover">
-          <img src="https://picsum.photos/id/120/700/300" alt="user-cover" />
+          <img src={cover} alt="user-cover" />
         </div>
-        <img
-          className="avatar"
-          src="https://placekitten.com/700/700"
-          alt="avatar"
-        />
+        <img className="avatar" src={avatar} alt="avatar" />
         <div className="content">
           <div className="edit">
             <button type="button" onClick={handleShowModal}>
@@ -127,19 +128,16 @@ export default function Profile({ id }) {
             </button>
           </div>
           <div className="user">
-            <b>Apple</b>
-            <p>@apple</p>
+            <b>{name}</b>
+            <p>@{account}</p>
           </div>
-          <p className="intro">
-            Maecenas blandit volutpat hendrerit. Fusce at elementum urna,
-            ullamcorper mattis libero. Donec rutrum tempor felis id condimentum.
-          </p>
+          <p className="intro">{introduction}</p>
           <div className="stats">
             <NavLink to={`/users/${id}/followings`}>
-              <span>34</span>個跟隨中
+              <span>{userFollowingCount}</span>個跟隨中
             </NavLink>
             <NavLink to={`/users/${id}/followers`}>
-              <span>59</span>個跟隨者
+              <span>{userFollowerCount}</span>個跟隨者
             </NavLink>
           </div>
         </div>
@@ -155,7 +153,7 @@ export default function Profile({ id }) {
           </NavLink>
         </div>
       </StyledDiv>
-      {showModal && <EditModal onClose={handleShowModal} />}
+      {showModal && <EditModal user={user} onClose={handleShowModal} />}
     </>
   );
 }

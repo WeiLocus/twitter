@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import TweetInput from '../components/TweetInput';
 import TweetList from '../components/TweetList';
-import { loginUser, tweets } from '../dummyData';
+import { currentUser, tweets } from '../dummyData';
 import { getTweets } from '../api/tweet';
 
 const StyledDiv = styled.div`
@@ -13,25 +13,25 @@ const StyledDiv = styled.div`
   overflow-y: scroll;
 `;
 export default function TweetPage() {
-  const [tweets, setTweets] = useState([]);
-  useEffect(() => {
-    const getTweetsAsync = async () => {
-      try {
-        const { tweets } = await getTweets();
-        setTweets(tweets);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getTweetsAsync();
-  }, [tweets]);
+  // const [tweets, setTweets] = useState([]);
+  // useEffect(() => {
+  //   const getTweetsAsync = async () => {
+  //     try {
+  //       const { tweets } = await getTweets();
+  //       setTweets(tweets);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   getTweetsAsync();
+  // }, [tweets]);
 
   return (
     <>
       <Header headerText="首頁" />
       <StyledDiv>
-        <TweetInput user={loginUser} />
-        <TweetList user={loginUser} tweets={tweets} type="tweet" />
+        <TweetInput user={currentUser} />
+        <TweetList user={currentUser} tweets={tweets} type="tweet" />
       </StyledDiv>
     </>
   );

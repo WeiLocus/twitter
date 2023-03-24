@@ -159,13 +159,13 @@ const replies = [
   },
 ];
 
-const loginUser = {
+const currentUser = {
   id: 125,
   name: 'user125',
   email: 'user125@example.com',
-  account: 'user2',
+  account: 'user125',
   introduction:
-    'Mollitia consectetur optio. Consequatur aut quaerat necessitatibus quod beatae perferendis sint repellat rem. Inventore at voluptas blanditiis non pariatur exercitationem. Error rerum illum iusto magnam quisquam quo fugiat iste nostrum. Et laboriosam aliquam consequuntur labore magnam aperiam quam.',
+    'Reach out if you want to talk about emerging tech, creating software products, or baseball.',
   avatar:
     'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/268.jpg',
   cover: 'https://loremflickr.com/640/480/nature?lock=27430',
@@ -174,4 +174,46 @@ const loginUser = {
   updatedAt: '2023-03-20T15:44:34.000Z',
 };
 
-export { tweets, replies, loginUser };
+const users = [
+  {
+    id: 125,
+    name: 'user125',
+    email: 'user125@example.com',
+    account: 'user125',
+    introduction:
+      'Reach out if you want to talk about emerging tech, creating software products, or baseball.',
+    avatar:
+      'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/268.jpg',
+    cover: 'https://loremflickr.com/640/480/nature?lock=27430',
+    isAdmin: false,
+    createdAt: '2023-03-20T15:44:34.000Z',
+    updatedAt: '2023-03-20T15:44:34.000Z',
+  },
+  {
+    id: 100,
+    name: 'user100',
+    email: 'user100@example.com',
+    account: 'user100',
+    introduction: '我要成為海賊王 喵喵喵 ',
+    avatar: 'http://placekitten.com/g/200/300',
+    cover: 'https://picsum.photos/id/123/700/300',
+    isAdmin: false,
+    createdAt: '2023-03-21T15:44:34.000Z',
+    updatedAt: '2023-03-21T15:44:34.000Z',
+  },
+  {
+    id: 101,
+    name: 'user101',
+    email: 'user101@example.com',
+    account: 'user101',
+    introduction:
+      'Throughout my life, I have developed this art of being able to communicate with anyone at any given time.',
+    avatar: 'https://api.lorem.space/image/face?w=150&h=150',
+    cover: 'https://picsum.photos/id/145/700/300',
+    isAdmin: false,
+    createdAt: '2023-03-22T15:44:34.000Z',
+    updatedAt: '2023-03-22T15:44:34.000Z',
+  },
+];
+
+export { tweets, replies, currentUser, users };

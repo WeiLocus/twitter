@@ -10,7 +10,7 @@ import { ReactComponent as SettingIcon } from '../assets/Setting.svg';
 import { ReactComponent as SettingBlackIcon } from '../assets/Setting-black.svg';
 import { ReactComponent as LogoutIcon } from '../assets/Logout.svg';
 import { TweetModal } from './elements/TweetModal';
-import { loginUser } from '../dummyData';
+import { currentUser } from '../dummyData';
 
 const StyledNav = styled.nav`
   height: 100vh;
@@ -61,7 +61,6 @@ const StyledNavButton = styled.button`
 
 export function Navbar() {
   const { pathname } = useLocation();
-  const user = { id: 5 }; // 暫時假定
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
@@ -91,12 +90,14 @@ export function Navbar() {
               </StyledLi>
             </NavLink>
             <NavLink
-              to={`/users/${user.id}/tweets`}
-              className={pathname.includes(`users/${user.id}`) && 'active'}
+              to={`/users/${currentUser.id}/tweets`}
+              className={
+                pathname.includes(`users/${currentUser.id}`) && 'active'
+              }
             >
               <StyledLi>
                 <div className="icon">
-                  {pathname.includes(`users/${user.id}`) ? (
+                  {pathname.includes(`users/${currentUser.id}`) ? (
                     <PersonBlackIcon />
                   ) : (
                     <PersonIcon />
@@ -130,7 +131,7 @@ export function Navbar() {
           </StyledLi>
         </ul>
       </StyledNav>
-      {showModal && <TweetModal user={loginUser} onClose={handleShowModal} />}
+      {showModal && <TweetModal user={currentUser} onClose={handleShowModal} />}
     </>
   );
 }
