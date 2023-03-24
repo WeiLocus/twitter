@@ -79,7 +79,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: var(--ff-basic);
-    font-variant-numeric: tabular-nums;
+    /* font-variant-numeric: tabular-nums; */
     font-size: var(--fs-basic);
   }
 
