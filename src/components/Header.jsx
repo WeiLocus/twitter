@@ -41,7 +41,7 @@ export default function Header({ headerText, goBack, user }) {
   return (
     <StyledHeader>
       {goBack && (
-        <NavLink to="/tweets">
+        <NavLink to={user ? `users/${user.id}/tweets` : '/tweets'}>
           <GoBackIcon />
         </NavLink>
       )}

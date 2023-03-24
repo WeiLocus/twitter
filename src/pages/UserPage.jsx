@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useParams, Outlet, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Profile from '../components/Profile';
-import { currentUser, users } from '../dummyData';
+import { users } from '../dummyData';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 73px);
@@ -14,6 +14,7 @@ export default function UserPage() {
   const { id } = useParams();
   const { pathname } = useLocation();
   const shownUser = users.find((user) => user.id === parseInt(id));
+  console.log(shownUser);
 
   return (
     <>

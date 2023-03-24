@@ -109,7 +109,7 @@ function TweetItem({ user, tweet }) {
 
   return (
     <>
-      <StyledListItem onClick={() => navigate(`/tweets/${id}`)}>
+      <StyledListItem>
         <NavLink to={`/users/${User.id}/tweets`}>
           <img src={User.avatar} alt="avatar" />
         </NavLink>
