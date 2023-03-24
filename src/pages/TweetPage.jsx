@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable import/no-extraneous-dependencies */
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
@@ -12,18 +13,18 @@ const StyledDiv = styled.div`
   overflow-y: scroll;
 `;
 export default function TweetPage() {
-  // const [tweets, setTweets] = useState([]);
-  // useEffect(() => {
-  //   const getTweetsAsync = async () => {
-  //     try {
-  //       const { tweets } = await getTweets();
-  //       setTweets(tweets);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   getTweetsAsync();
-  // }, [tweets]);
+  const [tweets, setTweets] = useState([]);
+  useEffect(() => {
+    const getTweetsAsync = async () => {
+      try {
+        const { tweets } = await getTweets();
+        setTweets(tweets);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getTweetsAsync();
+  }, [tweets]);
 
   return (
     <>

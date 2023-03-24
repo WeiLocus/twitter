@@ -30,7 +30,7 @@ export default function AdminPage() {
       <AuthInputContainer>
         <AuthInput type="password" label="密碼" placeholder="請輸入密碼" />
       </AuthInputContainer>
-      <AuthButton>登入</AuthButton>
+      <AuthButton name="登入" />
       <AuthLinkContainer>
         <Link to="/login">
           <AuthLinkText>前台登入</AuthLinkText>

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
-import login from '../api/auth';
+import { login } from '../api/auth';
 import {
   AuthContainer,
   AuthInputContainer,
@@ -59,7 +59,7 @@ export default function LoginPage() {
           onChange={(passwordInput) => setPassword(passwordInput)}
         />
       </AuthInputContainer>
-      <AuthButton onClick={handelClick}>登入</AuthButton>
+      <AuthButton name="登入" onClick={handelClick} />
       <AuthLinkContainer>
         <Link to="/signup">
           <AuthLinkText>註冊</AuthLinkText>
