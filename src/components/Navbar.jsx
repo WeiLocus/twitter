@@ -57,6 +57,10 @@ const StyledNavButton = styled.button`
   border-radius: 2rem;
   color: white;
   background-color: var(--color-theme);
+
+  :hover {
+    background-color: var(--color-light-orange);
+  }
 `;
 
 export function Navbar() {

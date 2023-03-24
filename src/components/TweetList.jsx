@@ -19,6 +19,10 @@ const StyledListItem = styled.li`
   border: 1px solid var(--color-gray-200);
   background-color: white;
 
+  :hover {
+    background-color: var(--color-gray-100);
+  }
+
   img {
     width: 50px;
     aspect-ratio: 1/1;
@@ -75,6 +79,10 @@ const StyledListItem = styled.li`
       cursor: pointer;
       width: 15px;
       height: 15px;
+
+      &:hover {
+        color: var(--color-theme);
+      }
     }
   }
 `;
@@ -99,38 +107,40 @@ function TweetItem({ user, tweet }) {
 
   return (
     <>
-      <StyledListItem>
-        <NavLink to={`/users/${User.id}/tweets`}>
-          <img src={User.avatar} alt="avatar" />
-        </NavLink>
-        <div>
-          <div className="user">
-            <b>{User.name}</b>
-            <span>@{User.account}</span>
-            <span>．</span>
-            <span>{timeAgo}</span>
-          </div>
-          <NavLink to={`/tweets/${id}`}>
-            <p className="content">{description}</p>
+      <NavLink to={`/tweets/${id}`}>
+        <StyledListItem>
+          <NavLink to={`/users/${User.id}/tweets`}>
+            <img src={User.avatar} alt="avatar" />
           </NavLink>
-          <div className="stats">
-            <NavLink onClick={handleShowModal} className="stat">
-              <span>
-                <CommentIcon width="15px" height="15px" />
-              </span>
-              <span>{replyCounts}</span>
-            </NavLink>
-            <div className="stat">
-              {isLiked ? (
-                <LikeBlackIcon className="icon" onClick={handleLike} />
-              ) : (
-                <LikeIcon className="icon" onClick={handleLike} />
-              )}
-              <span>{likeCounts}</span>
+          <div>
+            <div className="user">
+              <b>{User.name}</b>
+              <span>@{User.account}</span>
+              <span>．</span>
+              <span>{timeAgo}</span>
+            </div>
+
+            <p className="content">{description}</p>
+
+            <div className="stats">
+              <NavLink onClick={handleShowModal} className="stat">
+                <span>
+                  <CommentIcon className="icon" />
+                </span>
+                <span>{replyCounts}</span>
+              </NavLink>
+              <NavLink className="stat">
+                {currentIsLiked ? (
+                  <LikeBlackIcon className="icon" onClick={handleLike} />
+                ) : (
+                  <LikeIcon className="icon" onClick={handleLike} />
+                )}
+                <span>{likeCounts}</span>
+              </NavLink>
             </div>
           </div>
-        </div>
-      </StyledListItem>
+        </StyledListItem>
+      </NavLink>
       {showModal && (
         <ReplyModal user={user} tweet={tweet} onClose={handleShowModal} />
       )}

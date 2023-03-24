@@ -85,6 +85,11 @@ const StyledTextarea = styled.div`
       color: white;
       background-color: var(--color-theme);
       font-size: var(--fs-basic);
+
+      :hover {
+        border: 1px solid var(--color-light-orange);
+        background-color: var(--color-light-orange);
+      }
     }
   }
 `;

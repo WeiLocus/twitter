@@ -8,6 +8,10 @@ const StyledDiv = styled.div`
   border: 1px solid var(--color-gray-200);
   border-bottom: 10px solid var(--color-gray-200);
   background-color: white;
+
+  :hover {
+    background-color: var(--color-gray-100);
+  }
 `;
 
 const StyledAvatarDiv = styled.div`

@@ -14,11 +14,15 @@ const StyledPopularAside = styled.aside`
   }
 `;
 
-const StyledLi = styled.li`
+const StyledPopularItem = styled.li`
   padding: 1rem;
   display: grid;
   grid-template-columns: 50px auto auto;
   align-items: center;
+
+  :hover {
+    background-color: var(--color-gray-200);
+  }
 
   .avatar {
     aspect-ratio: 1/1;
@@ -100,7 +104,7 @@ function PopularItem() {
     setIsFollowing((prev) => !prev);
   };
   return (
-    <StyledLi isFollowing>
+    <StyledPopularItem isFollowing>
       <div className="avatar">
         <img src="https://placekitten.com/300/300" alt="avatar" />
       </div>
@@ -115,6 +119,6 @@ function PopularItem() {
       >
         {isFollowing ? '正在跟隨' : '跟隨'}
       </button>
-    </StyledLi>
+    </StyledPopularItem>
   );
 }
