@@ -39,3 +39,25 @@ export async function getUserData(id) {
     console.error('[Get User Data failed]: ', error);
   }
 }
+
+// * 取得特定使用者發過的貼文
+export async function getUserTweets(id) {
+  try {
+    const res = await axiosInstance.get(`${baseURL}/users/${id}/tweets`);
+    return res;
+  } catch (error) {
+    console.error('[Get User Tweets failed]: ', error);
+  }
+}
+
+// * 取得特定使用者發過的留言
+export async function getUserReplies(id) {
+  try {
+    const res = await axiosInstance.get(
+      `${baseURL}/users/${id}/replied_tweets`
+    );
+    return res;
+  } catch (error) {
+    console.error('[Get User Replies failed]: ', error);
+  }
+}
