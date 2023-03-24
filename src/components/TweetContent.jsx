@@ -4,6 +4,7 @@ import { ReactComponent as CommentIcon } from '../assets/Comment.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
 import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
 import { ReplyModal } from './elements/TweetModal';
+import { getConvertedTime } from '../utilities';
 
 const StyledDiv = styled.div`
   padding: 1rem;
@@ -79,9 +80,12 @@ const StyledDiv = styled.div`
   }
 `;
 
-export default function TweetContent() {
+export default function TweetContent({ tweet, user }) {
+  const { id, description, createdAt, replyCounts, likeCounts, isLiked, User } =
+    tweet;
+  const { convertedDate, convertedTime } = getConvertedTime(createdAt);
   const [showModal, setShowModal] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const [currentIsLiked, setCurrentIsLiked] = useState(isLiked); // todo to be fixed
 
   const handleShowModal = () => {
     const nextShowModal = !showModal;
@@ -89,35 +93,32 @@ export default function TweetContent() {
   };
 
   const handleLike = () => {
-    const nextIsLiked = !isLiked;
-    setIsLiked(nextIsLiked);
+    const nextCurrentIsLiked = !currentIsLiked;
+    setCurrentIsLiked(nextCurrentIsLiked);
   };
 
   return (
     <>
       <StyledDiv>
         <div className="user">
-          <img src="https://placekitten.com/325/325" alt="avatar" />
+          <img src={User.avatar} alt="avatar" />
           <div>
-            <b>Apple</b>
-            <span>@apple</span>
+            <b>{User.name}</b>
+            <span>@{User.account}</span>
           </div>
         </div>
-        <p className="content">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita
-          excepturi corrupti velit vitae quasi. Ad corrupti laudantium qui
-        </p>
+        <p className="content">{description}</p>
         <div className="time-stamp">
-          <span>上午 10:05</span>
+          <span>{convertedTime}</span>
           <span>．</span>
-          <span>2021年11月10日</span>
+          <span>{convertedDate}</span>
         </div>
         <div className="stats">
           <p>
-            <span>34</span>回覆
+            <span>{replyCounts}</span>回覆
           </p>
           <p>
-            <span>808</span>喜歡次數
+            <span>{likeCounts}</span>喜歡次數
           </p>
         </div>
         <div className="reaction">
@@ -133,7 +134,9 @@ export default function TweetContent() {
           </button>
         </div>
       </StyledDiv>
-      {showModal && <ReplyModal onClose={handleShowModal} />}
+      {showModal && (
+        <ReplyModal tweet={tweet} user={user} onClose={handleShowModal} />
+      )}
     </>
   );
 }

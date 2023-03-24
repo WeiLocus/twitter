@@ -104,12 +104,12 @@ function PopularItem() {
       <div className="avatar">
         <img src="https://placekitten.com/300/300" alt="avatar" />
       </div>
-      <div className={`user ${isFollowing && 'active'}`}>
+      <div className={`user ${isFollowing ? 'active' : undefined}`}>
         <b>Meowwwwww</b>
         <p>@Meow</p>
       </div>
       <button
-        className={isFollowing && 'active'}
+        className={isFollowing ? 'active' : undefined}
         type="button"
         onClick={handleFollow}
       >

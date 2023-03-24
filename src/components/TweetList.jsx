@@ -1,3 +1,4 @@
+/* eslint-disable operator-assignment */
 import { useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
@@ -5,6 +6,7 @@ import { ReactComponent as CommentIcon } from '../assets/Comment.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
 import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
 import { ReplyModal } from './elements/TweetModal';
+import { countTimeDiff } from '../utilities';
 
 const StyledList = styled.ul`
   background-color: white;
@@ -77,9 +79,13 @@ const StyledListItem = styled.li`
   }
 `;
 
-function TweetItem() {
+function TweetItem({ user, tweet }) {
+  const { id, description, createdAt, replyCounts, likeCounts, isLiked, User } =
+    tweet;
   const [showModal, setShowModal] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const [currentIsLiked, setCurrentIsLiked] = useState(isLiked); // todo to be fixed
+  // * 需要另外計算時間
+  const timeAgo = countTimeDiff(createdAt);
 
   const handleShowModal = () => {
     const nextShowModal = !showModal;
@@ -87,37 +93,32 @@ function TweetItem() {
   };
 
   const handleLike = () => {
-    const nextIsLiked = !isLiked;
-    setIsLiked(nextIsLiked);
+    const nextCurrentIsLiked = !currentIsLiked;
+    setCurrentIsLiked(nextCurrentIsLiked);
   };
 
   return (
     <>
       <StyledListItem>
-        <NavLink to="/users/3/tweets">
-          <img src="https://placekitten.com/350/350" alt="avatar" />
+        <NavLink to={`/users/${User.id}/tweets`}>
+          <img src={User.avatar} alt="avatar" />
         </NavLink>
         <div>
           <div className="user">
-            <b>Apple</b>
-            <span>@apple</span>
+            <b>{User.name}</b>
+            <span>@{User.account}</span>
             <span>．</span>
-            <span>3 小時</span>
+            <span>{timeAgo}</span>
           </div>
-          <NavLink to="/tweets/5">
-            <p className="content">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita
-              excepturi corrupti velit vitae quasi. Ad corrupti laudantium qui,
-              molestiae inventore maiores architecto quasi possimus ut
-              accusamus, enim, neque consequuntur ea?
-            </p>
+          <NavLink to={`/tweets/${id}`}>
+            <p className="content">{description}</p>
           </NavLink>
           <div className="stats">
             <NavLink onClick={handleShowModal} className="stat">
               <span>
                 <CommentIcon width="15px" height="15px" />
               </span>
-              <span>13</span>
+              <span>{replyCounts}</span>
             </NavLink>
             <div className="stat">
               {isLiked ? (
@@ -125,54 +126,53 @@ function TweetItem() {
               ) : (
                 <LikeIcon className="icon" onClick={handleLike} />
               )}
-              <span>76</span>
+              <span>{likeCounts}</span>
             </div>
           </div>
         </div>
       </StyledListItem>
-      {showModal && <ReplyModal onClose={handleShowModal} />}
+      {showModal && (
+        <ReplyModal user={user} tweet={tweet} onClose={handleShowModal} />
+      )}
     </>
   );
 }
 
-function ReplyItem() {
+function ReplyItem({ tweet }) {
+  const { description, createdAt, User } = tweet;
+  const timeAgo = countTimeDiff(createdAt);
+
   return (
     <StyledListItem>
-      <NavLink to="/users/3/tweets">
-        <img src="https://placekitten.com/600/600" alt="avatar" />
+      <NavLink to={`/users/${User.id}/tweets`}>
+        <img src={User.avatar} alt="avatar" />
       </NavLink>
       <div>
         <div className="user">
-          <b>Apple</b>
-          <span>@apple</span>
+          <b>{User.name}</b>
+          <span>@{User.account}</span>
           <span>．</span>
-          <span>3 小時</span>
+          <span>{timeAgo}</span>
         </div>
         <p className="reply">
           回覆
           <span>@Apple</span>
         </p>
-        <p className="content">
-          Molestiae inventore maiores architecto quasi possimus ut accusamus,
-          enim, neque consequuntur ea?
-        </p>
+        <p className="content">{description}</p>
       </div>
     </StyledListItem>
   );
 }
 
-export default function TweetList({ type }) {
-  const renderedItem = type === 'reply' ? <ReplyItem /> : <TweetItem />;
+export default function TweetList({ type, user, tweets }) {
+  const renderedItems = tweets.map((tweet) => {
+    if (type === 'reply') {
+      return <ReplyItem tweet={tweet} key={tweet.id} />;
+    }
+    return <TweetItem user={user} tweet={tweet} key={tweet.id} />;
+  });
 
-  return (
-    <StyledList>
-      {renderedItem}
-      {renderedItem}
-      {renderedItem}
-      {renderedItem}
-      {renderedItem}
-    </StyledList>
-  );
+  return <StyledList>{renderedItems}</StyledList>;
 }
 
 export { StyledListItem };
