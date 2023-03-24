@@ -1,7 +1,7 @@
 /* eslint-disable operator-assignment */
 import { useState } from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ReactComponent as CommentIcon } from '../assets/Comment.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
 import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
@@ -13,6 +13,7 @@ const StyledList = styled.ul`
 `;
 
 const StyledListItem = styled.li`
+  cursor: pointer;
   display: grid;
   grid-template-columns: calc(50px + 0.5rem) 1fr;
   padding: 1rem;
@@ -90,6 +91,7 @@ const StyledListItem = styled.li`
 function TweetItem({ user, tweet }) {
   const { id, description, createdAt, replyCounts, likeCounts, isLiked, User } =
     tweet;
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [currentIsLiked, setCurrentIsLiked] = useState(isLiked); // todo to be fixed
   // * 需要另外計算時間
@@ -107,40 +109,38 @@ function TweetItem({ user, tweet }) {
 
   return (
     <>
-      <NavLink to={`/tweets/${id}`}>
-        <StyledListItem>
-          <NavLink to={`/users/${User.id}/tweets`}>
-            <img src={User.avatar} alt="avatar" />
-          </NavLink>
-          <div>
-            <div className="user">
-              <b>{User.name}</b>
-              <span>@{User.account}</span>
-              <span>．</span>
-              <span>{timeAgo}</span>
-            </div>
-
-            <p className="content">{description}</p>
-
-            <div className="stats">
-              <NavLink onClick={handleShowModal} className="stat">
-                <span>
-                  <CommentIcon className="icon" />
-                </span>
-                <span>{replyCounts}</span>
-              </NavLink>
-              <NavLink className="stat">
-                {currentIsLiked ? (
-                  <LikeBlackIcon className="icon" onClick={handleLike} />
-                ) : (
-                  <LikeIcon className="icon" onClick={handleLike} />
-                )}
-                <span>{likeCounts}</span>
-              </NavLink>
-            </div>
+      <StyledListItem onClick={() => navigate(`/tweets/${id}`)}>
+        <NavLink to={`/users/${User.id}/tweets`}>
+          <img src={User.avatar} alt="avatar" />
+        </NavLink>
+        <div>
+          <div className="user">
+            <b>{User.name}</b>
+            <span>@{User.account}</span>
+            <span>．</span>
+            <span>{timeAgo}</span>
           </div>
-        </StyledListItem>
-      </NavLink>
+          <NavLink to={`/tweets/${id}`}>
+            <p className="content">{description}</p>
+          </NavLink>
+          <div className="stats">
+            <NavLink onClick={handleShowModal} className="stat">
+              <span>
+                <CommentIcon className="icon" />
+              </span>
+              <span>{replyCounts}</span>
+            </NavLink>
+            <NavLink className="stat">
+              {currentIsLiked ? (
+                <LikeBlackIcon className="icon" onClick={handleLike} />
+              ) : (
+                <LikeIcon className="icon" onClick={handleLike} />
+              )}
+              <span>{likeCounts}</span>
+            </NavLink>
+          </div>
+        </div>
+      </StyledListItem>
       {showModal && (
         <ReplyModal user={user} tweet={tweet} onClose={handleShowModal} />
       )}

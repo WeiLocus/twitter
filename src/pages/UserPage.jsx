@@ -20,7 +20,7 @@ export default function UserPage() {
       <Header headerText={shownUser.name} user={shownUser} goBack />
       <StyledDiv>
         {!pathname.includes('follow') && <Profile user={shownUser} />}
-        <Outlet />
+        <Outlet context={shownUser} />
       </StyledDiv>
     </>
   );

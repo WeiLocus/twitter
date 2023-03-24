@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useOutletContext } from 'react-router-dom';
 
 const StyledList = styled.ul`
   background-color: white;
@@ -69,6 +69,11 @@ const StyledTab = styled.div`
     border-bottom: 3px solid white;
     line-height: 3em;
 
+    :hover {
+      border-bottom: 3px solid var(--color-gray-100);
+      background-color: var(--color-gray-100);
+    }
+
     &.active {
       border-bottom: 3px solid var(--color-theme);
       color: var(--color-theme);
@@ -119,10 +124,10 @@ function FollowItem() {
 }
 
 export default function FollowList() {
-  const user = { id: 5 };
+  const shownUser = useOutletContext();
   return (
     <>
-      <FollowTab id={user.id} />
+      <FollowTab id={shownUser.id} />
       <StyledList>
         <FollowItem />
         <FollowItem />
