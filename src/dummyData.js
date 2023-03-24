@@ -177,6 +177,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-20T15:44:34.000Z',
     updatedAt: '2023-03-20T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 100,
@@ -189,6 +191,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-21T15:44:34.000Z',
     updatedAt: '2023-03-21T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 101,
@@ -202,6 +206,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 102,
@@ -215,6 +221,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 103,
@@ -228,6 +236,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 104,
@@ -241,6 +251,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 105,
@@ -254,6 +266,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 106,
@@ -267,6 +281,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 107,
@@ -279,6 +295,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 108,
@@ -292,6 +310,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 109,
@@ -305,6 +325,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 110,
@@ -318,6 +340,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
 ];
 

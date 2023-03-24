@@ -19,3 +19,23 @@ axiosInstance.interceptors.request.use(
     console.error(error);
   }
 );
+
+// * 取得目前登入的使用者資訊
+export async function getCurrentUser() {
+  try {
+    const res = await axiosInstance.get(`${baseURL}/users/current_user`);
+    return res;
+  } catch (error) {
+    console.error('[Get CurrentUser failed]: ', error);
+  }
+}
+
+// * 取得特定使用者資訊
+export async function getUserData(id) {
+  try {
+    const res = await axiosInstance.get(`${baseURL}/users/${id}`);
+    return res;
+  } catch (error) {
+    console.error('[Get User Data failed]: ', error);
+  }
+}
