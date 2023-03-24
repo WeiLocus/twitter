@@ -93,7 +93,6 @@ function TweetItem({ user, tweet }) {
     tweet;
   const [showModal, setShowModal] = useState(false);
   const [currentIsLiked, setCurrentIsLiked] = useState(isLiked); // todo to be fixed
-  // * 需要另外計算時間
   const timeAgo = countTimeDiff(createdAt);
 
   const handleShowModal = () => {
@@ -148,7 +147,7 @@ function TweetItem({ user, tweet }) {
 }
 
 function ReplyItem({ tweet }) {
-  const { description, createdAt, User } = tweet;
+  const { comment, createdAt, User } = tweet;
   const timeAgo = countTimeDiff(createdAt);
 
   return (
@@ -167,13 +166,24 @@ function ReplyItem({ tweet }) {
           回覆
           <span>@Apple</span>
         </p>
-        <p className="content">{description}</p>
+        <p className="content">{comment}</p>
       </div>
     </StyledListItem>
   );
 }
 
-export default function TweetList({ type, user, tweets }) {
+export function TweetList({ type, user, tweets }) {
+  const renderedItems = tweets.map((tweet) => {
+    if (type === 'reply') {
+      return <ReplyItem tweet={tweet} key={tweet.id} />;
+    }
+    return <TweetItem user={user} tweet={tweet} key={tweet.id} />;
+  });
+
+  return <StyledList>{renderedItems}</StyledList>;
+}
+
+export function UserTweetList({ type, user, tweets }) {
   const renderedItems = tweets.map((tweet) => {
     if (type === 'reply') {
       return <ReplyItem tweet={tweet} key={tweet.id} />;

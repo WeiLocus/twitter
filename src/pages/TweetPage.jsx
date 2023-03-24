@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import TweetInput from '../components/TweetInput';
-import TweetList from '../components/TweetList';
+import { TweetList } from '../components/TweetList';
 import { currentUser, tweets } from '../dummyData';
 import { getTweets } from '../api/tweet';
 

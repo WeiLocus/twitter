@@ -12,7 +12,7 @@ import TweetLayout from './components/layouts/TweetLayout';
 import TweetPage from './pages/TweetPage';
 import ReplyPage from './pages/ReplyPage';
 import UserPage from './pages/UserPage';
-import TweetList from './components/TweetList';
+import { UserTweetList } from './components/TweetList';
 import FollowList from './components/FollowList';
 import { tweets, replies } from './dummyData';
 
@@ -42,15 +42,15 @@ function App() {
             <Route path="users/:id">
               <Route
                 path="tweets"
-                element={<TweetList type="tweet" tweets={tweets} />}
+                element={<UserTweetList type="tweet" tweets={tweets} />}
               />
               <Route
                 path="replies"
-                element={<TweetList type="reply" tweets={replies} />}
+                element={<UserTweetList type="reply" tweets={replies} />}
               />
               <Route
                 path="likes"
-                element={<TweetList type="like" tweets={tweets} />}
+                element={<UserTweetList type="like" tweets={tweets} />}
               />
               <Route
                 path="followers"
