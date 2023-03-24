@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
 import { AuthInputContainer, AuthLinkText } from '../components/auth.styled';
 import AuthInput from '../components/elements/Input';
 import AuthButton from '../components/elements/Button';
 import { Container, device } from '../globalStyles';
+import { register } from '../api/auth';
+
 // Signup Container
 const StyedSignupContainer = styled(Container)`
   display: flex;
@@ -36,7 +38,25 @@ export default function SignupPage() {
   const [checkPassword, setCheckPassword] = useState('');
   // 確認名稱長度
   const nameLength = name.length;
+  const navigate = useNavigate();
 
+  // 註冊後導引至登入
+  const handleClick = async () => {
+    if (account.length === 0) return;
+    if (name.length === 0) return;
+    if (email.length === 0) return;
+    if (password.length === 0) return;
+    if (checkPassword.length === 0) return;
+
+    await register({
+      account,
+      name,
+      email,
+      password,
+      checkPassword,
+    });
+    navigate('/login');
+  };
 
   return (
     <StyedSignupContainer>
