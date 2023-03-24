@@ -2,26 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
-import { AuthInputContainer, AuthLinkText } from '../components/auth.styled';
+import {
+  AuthContainer,
+  AuthInputContainer,
+  AuthLinkText,
+} from '../components/auth.styled';
 import AuthInput from '../components/elements/Input';
 import AuthButton from '../components/elements/Button';
-import { Container, device } from '../globalStyles';
 import { register } from '../api/auth';
-
-// Signup Container
-const StyedSignupContainer = styled(Container)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-width: 400px;
-  margin-top: 3rem;
-  background-color: #fff;
-  @media screen and (${device.md}) {
-    width: 50%;
-  }
-`;
 
 // title style
 const StyledTitle = styled.div`
@@ -59,7 +47,7 @@ export default function SignupPage() {
   };
 
   return (
-    <StyedSignupContainer>
+    <AuthContainer>
       <div>
         <LogoIcon />
       </div>
@@ -111,6 +99,6 @@ export default function SignupPage() {
       <Link to="/login">
         <AuthLinkText>取消</AuthLinkText>
       </Link>
-    </StyedSignupContainer>
+    </AuthContainer>
   );
 }

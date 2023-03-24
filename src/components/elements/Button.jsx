@@ -15,7 +15,7 @@ const StyledAuthButton = styled.button`
     cursor: pointer;
   }
   @media screen and (${device.sm}) {
-    width: 60%;
+    width: 50%;
   }
 `;
 
