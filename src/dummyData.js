@@ -235,6 +235,62 @@ const likes = [
   },
 ];
 
+const tweetsByUser = [
+  {
+    id: 60,
+    description:
+      'Eveniet fuga quibusdam ad veritatis aut tempora deserunt.\nRepudiandae consequatur asperiores esse.\nDelectus iusto ipsa.',
+    createdAt: '2023-03-24T08:02:38.000Z',
+    updatedAt: '2023-03-24T08:02:38.000Z',
+    UserId: 125,
+  },
+  {
+    id: 61,
+    description:
+      'Accusamus asperiores expedita animi et ipsa commodi nobis rerum.\nVoluptatem dicta porro nulla nostrum neque cupiditate.\nAut ex porro iste beatae sit.\nMagni sapiente voluptas totam optio ducimus.\nOccaecati voluptatibus beatae necessitatibus nisi maiores.',
+    createdAt: '2023-03-24T08:02:38.000Z',
+    updatedAt: '2023-03-24T08:02:38.000Z',
+    UserId: 125,
+  },
+  {
+    id: 62,
+    description:
+      'Doloribus similique labore quisquam molestias asperiores vitae doloribus.\nQuidem sunt corrupti.\nPraesentium libero nobis optio nobis ducimus asperiores alias libero quam.\nLabore soluta labore fuga libero accusamus.',
+    createdAt: '2023-03-24T08:02:38.000Z',
+    updatedAt: '2023-03-24T08:02:38.000Z',
+    UserId: 125,
+  },
+];
+
+const repliesByUser = [
+  {
+    id: 4,
+    comment:
+      'Vel explicabo voluptas laborum unde unde ipsum tempora laudantium debitis.\nMolestias commodi voluptatem delectus distinctio.',
+    createdAt: '2023-03-24T08:02:39.000Z',
+    updatedAt: '2023-03-24T08:02:39.000Z',
+    UserId: 2,
+    TweetId: 18,
+  },
+  {
+    id: 6,
+    comment:
+      'Occaecati facilis et deleniti facilis.\nAb corporis ducimus ducimus minima.\nQuae vero impedit optio deserunt voluptates labore laudantium a quos.\nFacilis perferendis ipsa nisi enim illo quibusdam culpa cumque maxime.',
+    createdAt: '2023-03-24T08:02:39.000Z',
+    updatedAt: '2023-03-24T08:02:39.000Z',
+    UserId: 2,
+    TweetId: 25,
+  },
+  {
+    id: 15,
+    comment: 'Totam eius odit assumenda odio dolores libero asperiores.',
+    createdAt: '2023-03-24T08:02:39.000Z',
+    updatedAt: '2023-03-24T08:02:39.000Z',
+    UserId: 2,
+    TweetId: 41,
+  },
+];
+
 const currentUser = {
   id: 125,
   name: 'user125',
@@ -432,4 +488,12 @@ const users = [
   },
 ];
 
-export { tweets, replies, likes, currentUser, users };
+export {
+  tweets,
+  replies,
+  likes,
+  currentUser,
+  users,
+  tweetsByUser,
+  repliesByUser,
+};

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import TweetContent from '../components/TweetContent';
-import { TweetList } from '../components/TweetList';
+import { ReplyList } from '../components/TweetList';
 import { tweets, replies, currentUser } from '../dummyData';
 import { getSingleTweet } from '../api/tweet';
 
@@ -35,7 +35,7 @@ export default function ReplyPage() {
       <Header headerText="推文" goBack />
       <StyledDiv>
         <TweetContent tweet={selectedTweet} user={currentUser} />
-        <TweetList type="reply" tweets={replies} />
+        <ReplyList replies={replies} replyTo={selectedTweet.User.account} />
       </StyledDiv>
     </>
   );

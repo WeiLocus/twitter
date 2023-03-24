@@ -142,7 +142,11 @@ export default function TweetContent({ tweet, user }) {
         </div>
       </StyledDiv>
       {showModal && (
-        <ReplyModal tweet={tweet} user={user} onClose={handleShowModal} />
+        <ReplyModal
+          tweet={tweet}
+          currentUser={user}
+          onClose={handleShowModal}
+        />
       )}
     </>
   );

@@ -210,8 +210,8 @@ export function TweetModal({ user, onClose }) {
   );
 }
 
-export function ReplyModal({ user, tweet, onClose }) {
-  const { id, avatar } = user;
+export function ReplyModal({ currentUser, tweet, onClose }) {
+  const { id, avatar } = currentUser;
   const { User, createdAt, description } = tweet;
   const timeAgo = countTimeDiff(createdAt);
   const [replyComment, setReplyComment] = useState('');
@@ -233,7 +233,7 @@ export function ReplyModal({ user, tweet, onClose }) {
     }
     // 這邊要發送修改請求
     console.log(
-      `user ${id} just submitted a reply to user @${User.account}: ${replyDescription}`
+      `user ${id} just submitted a reply to user @${User.account}: ${replyComment}`
     );
     setErrorMessage(null);
     setReplyComment('');
