@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { users } from '../dummyData.js';
 
 const StyledPopularAside = styled.aside`
   overflow-y: scroll;
@@ -70,6 +72,9 @@ const StyledPopularItem = styled.li`
 
 export default function Popular() {
   const asideRef = useRef(null);
+  const renderedPopularUsers = users.map((user) => {
+    return <PopularItem key={user.id} user={user} />;
+  });
 
   useEffect(() => {
     if (asideRef.current.offsetHeight > window.innerHeight) {
@@ -80,25 +85,13 @@ export default function Popular() {
   return (
     <StyledPopularAside ref={asideRef}>
       <h2>推薦跟隨</h2>
-      <ul>
-        {/* <PopularItem isFollowing /> */}
-        {/* <PopularItem isFollowing /> */}
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-      </ul>
+      <ul>{renderedPopularUsers}</ul>
     </StyledPopularAside>
   );
 }
 
-function PopularItem() {
+function PopularItem({ user }) {
+  const { id, name, account, avatar } = user;
   const [isFollowing, setIsFollowing] = useState(false);
   const handleFollow = () => {
     setIsFollowing((prev) => !prev);
@@ -106,11 +99,13 @@ function PopularItem() {
   return (
     <StyledPopularItem isFollowing>
       <div className="avatar">
-        <img src="https://placekitten.com/300/300" alt="avatar" />
+        <NavLink to={`users/${id}/tweets`}>
+          <img src={avatar} alt="avatar" />
+        </NavLink>
       </div>
       <div className={`user ${isFollowing ? 'active' : undefined}`}>
-        <b>Meowwwwww</b>
-        <p>@Meow</p>
+        <b>{name}</b>
+        <p>@{account}</p>
       </div>
       <button
         className={isFollowing ? 'active' : undefined}

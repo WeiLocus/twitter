@@ -13,8 +13,7 @@ export default function UserPage() {
   // 從網址取得要顯示的 user id
   const { id } = useParams();
   const { pathname } = useLocation();
-  const shownUser = users.find((user) => user.id === parseInt(id));
-  console.log(shownUser);
+  const shownUser = users.find((user) => user.id === parseInt(id, 10));
 
   return (
     <>

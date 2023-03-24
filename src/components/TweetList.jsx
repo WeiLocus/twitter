@@ -1,7 +1,7 @@
 /* eslint-disable operator-assignment */
 import { useState } from 'react';
 import styled from 'styled-components';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { ReactComponent as CommentIcon } from '../assets/Comment.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
 import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
@@ -91,7 +91,6 @@ const StyledListItem = styled.li`
 function TweetItem({ user, tweet }) {
   const { id, description, createdAt, replyCounts, likeCounts, isLiked, User } =
     tweet;
-  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [currentIsLiked, setCurrentIsLiked] = useState(isLiked); // todo to be fixed
   // * 需要另外計算時間
