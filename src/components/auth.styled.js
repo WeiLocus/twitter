@@ -12,7 +12,7 @@ const StyedContainer = styled(Container)`
   padding-top: 3rem;
   background-color: #fff;
   @media screen and (${device.md}) {
-    width: 60%;
+    width: 50%;
   }
 `;
 
@@ -21,7 +21,7 @@ const StyledAuthInputContainer = styled.div`
   width: 100%;
   margin-top: 1.8rem;
   @media screen and (${device.sm}) {
-    width: 60%;
+    width: 50%;
   }
 `;
 
@@ -31,7 +31,7 @@ const StyledLinkContainer = styled.div`
   justify-content: right;
   width: 100%;
   @media screen and (${device.sm}) {
-    width: 60%;
+    width: 50%;
   }
 `;
 
