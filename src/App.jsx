@@ -40,18 +40,9 @@ function App() {
           </Route>
           <Route element={<UserPage />}>
             <Route path="users/:id">
-              <Route
-                path="tweets"
-                element={<UserTweetList type="tweet" tweets={tweets} />}
-              />
-              <Route
-                path="replies"
-                element={<UserTweetList type="reply" tweets={replies} />}
-              />
-              <Route
-                path="likes"
-                element={<UserTweetList type="like" tweets={tweets} />}
-              />
+              <Route path="tweets" element={<UserTweetList type="tweet" />} />
+              <Route path="replies" element={<UserTweetList type="reply" />} />
+              <Route path="likes" element={<UserTweetList type="like" />} />
               <Route
                 path="followers"
                 element={<FollowList type="followers" />}

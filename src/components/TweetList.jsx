@@ -1,7 +1,7 @@
 /* eslint-disable operator-assignment */
 import { useState } from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useOutletContext } from 'react-router-dom';
 import { ReactComponent as CommentIcon } from '../assets/Comment.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
 import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
@@ -129,7 +129,7 @@ function TweetItem({ user, tweet }) {
               <span>{replyCounts}</span>
             </NavLink>
             <NavLink className="stat">
-              {currentIsLiked ? (
+              {likeCounts > 0 ? (
                 <LikeBlackIcon className="icon" onClick={handleLike} />
               ) : (
                 <LikeIcon className="icon" onClick={handleLike} />
@@ -172,7 +172,7 @@ function ReplyItem({ tweet }) {
   );
 }
 
-export function TweetList({ type, user, tweets }) {
+function TweetList({ type, user, tweets }) {
   const renderedItems = tweets.map((tweet) => {
     if (type === 'reply') {
       return <ReplyItem tweet={tweet} key={tweet.id} />;
@@ -183,15 +183,23 @@ export function TweetList({ type, user, tweets }) {
   return <StyledList>{renderedItems}</StyledList>;
 }
 
-export function UserTweetList({ type, user, tweets }) {
-  const renderedItems = tweets.map((tweet) => {
-    if (type === 'reply') {
-      return <ReplyItem tweet={tweet} key={tweet.id} />;
-    }
-    return <TweetItem user={user} tweet={tweet} key={tweet.id} />;
-  });
-
+function UserTweetList({ type }) {
+  const { currentUser, shownUser, tweets, replies, likes } = useOutletContext();
+  let renderedItems;
+  if (type === 'reply') {
+    renderedItems = replies.map((reply) => {
+      return <ReplyItem tweet={reply} key={reply.id} />;
+    });
+  } else if (type === 'like') {
+    renderedItems = likes.map((tweet) => {
+      return <TweetItem user={currentUser} tweet={tweet} key={tweet.id} />;
+    });
+  } else {
+    renderedItems = tweets.map((tweet) => {
+      return <TweetItem user={currentUser} tweet={tweet} key={tweet.id} />;
+    });
+  }
   return <StyledList>{renderedItems}</StyledList>;
 }
 
-export { StyledListItem };
+export { StyledListItem, TweetList, UserTweetList };

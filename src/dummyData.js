@@ -143,6 +143,98 @@ const replies = [
   },
 ];
 
+const likes = [
+  {
+    id: 60,
+    description: '那些老屁股的見解太迂腐了，我要反對他們！',
+    createdAt: '2023-03-23T13:58:29.000Z',
+    replyCounts: 2,
+    likeCounts: 1,
+    isLiked: 1,
+    User: {
+      id: 100,
+      account: 'user100',
+      name: 'user100',
+      avatar: 'http://placekitten.com/g/200/300',
+    },
+  },
+  {
+    id: 61,
+    description:
+      '我想到一個一定得獎的作品，就是用QR Code當作山水畫的皴法。有沒有畫山水的我們來合作一下。',
+    createdAt: '2023-03-22T03:24:29.000Z',
+    replyCounts: 2,
+    likeCounts: 3,
+    isLiked: 1,
+    User: {
+      id: 101,
+      account: 'user101',
+      name: 'user101',
+      avatar: 'https://api.lorem.space/image/face?w=150&h=150',
+    },
+  },
+  {
+    id: 62,
+    description:
+      '這樣那些感到害怕或認為自己無法實現目標的人看到我衝過馬拉松的終點線，就會對自己說：我也能做到。',
+    createdAt: '2023-03-23T05:24:29.000Z',
+    replyCounts: 2,
+    likeCounts: 5,
+    isLiked: 1,
+    User: {
+      id: 102,
+      account: 'user102',
+      name: 'user102',
+      avatar: 'https://api.lorem.space/image/face?w=250&h=250',
+    },
+  },
+  {
+    id: 63,
+    description:
+      '今天去看of an age, 超好看！台詞還有提到凱特布蘭琪、妮可基嫚、王家衛電影，很有意思。',
+    createdAt: '2023-03-23T02:34:29.000Z',
+    replyCounts: 2,
+    likeCounts: 1,
+    isLiked: 1,
+    User: {
+      id: 103,
+      account: 'user103',
+      name: 'user103',
+      avatar: 'http://placekitten.com/g/500/500',
+    },
+  },
+  {
+    id: 64,
+    description:
+      '天轉熱了 可以喝冰咖啡了 建議用我家的義式咖啡 煮濃一些 加冰塊 很不錯',
+    createdAt: '2023-03-20T13:24:29.000Z',
+    replyCounts: 2,
+    likeCounts: 1,
+    isLiked: 1,
+    User: {
+      id: 104,
+      account: 'user104',
+      name: 'user104',
+      avatar: 'http://placekitten.com/g/600/600',
+    },
+  },
+  {
+    id: 65,
+    description:
+      '以前讀過一個網路廣傳的文章，大意是說哈佛大學學生之所以優秀，是因為他們都睡很少晚上都還在唸書，配圖還搭上哈佛圖書館整晚通亮的樣子。',
+    createdAt: '2023-03-23T05:24:59.000Z',
+    replyCounts: 2,
+    likeCounts: 5,
+    isLiked: 1,
+    User: {
+      id: 105,
+      account: 'user105',
+      name: 'user105',
+      avatar: 'https://api.lorem.space/image/face?w=350&h=350',
+    },
+  },
+];
+
 const currentUser = {
   id: 125,
   name: 'user125',
@@ -340,4 +432,4 @@ const users = [
   },
 ];
 
-export { tweets, replies, currentUser, users };
+export { tweets, replies, likes, currentUser, users };
