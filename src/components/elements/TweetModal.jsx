@@ -214,20 +214,20 @@ export function ReplyModal({ user, tweet, onClose }) {
   const { id, avatar } = user;
   const { User, createdAt, description } = tweet;
   const timeAgo = countTimeDiff(createdAt);
-  const [replyDescription, setReplyDescription] = useState('');
+  const [replyComment, setReplyComment] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const handleDescriptionChange = (e) => {
-    setReplyDescription(e.target.value);
+  const handleCommentChange = (e) => {
+    setReplyComment(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!replyDescription.length) {
+    if (!replyComment.length) {
       setErrorMessage('內容不可空白');
       return;
     }
-    if (replyDescription.length > 140) {
+    if (replyComment.length > 140) {
       setErrorMessage('字數不可超過 140 字');
       return;
     }
@@ -236,7 +236,7 @@ export function ReplyModal({ user, tweet, onClose }) {
       `user ${id} just submitted a reply to user @${User.account}: ${replyDescription}`
     );
     setErrorMessage(null);
-    setReplyDescription('');
+    setReplyComment('');
   };
 
   useEffect(() => {
@@ -276,12 +276,12 @@ export function ReplyModal({ user, tweet, onClose }) {
             <textarea
               name="reply"
               id="reply-content"
-              value={replyDescription}
+              value={replyComment}
               placeholder="推你的回覆"
-              onChange={handleDescriptionChange}
+              onChange={handleCommentChange}
             />
             <div className="submit">
-              <span>{`${replyDescription.length}/140`}</span>
+              <span>{`${replyComment.length}/140`}</span>
               <div>
                 <span className={errorMessage ? 'error' : undefined}>
                   {errorMessage}

@@ -92,8 +92,7 @@ const tweets = [
 
 const replies = [
   {
-    id: 20,
-    description: '不能再同意更多',
+    comment: '不能再同意更多',
     createdAt: '2023-03-23T05:24:59.000Z',
     User: {
       id: 101,
@@ -103,8 +102,7 @@ const replies = [
     },
   },
   {
-    id: 21,
-    description: '超級同意 der',
+    comment: '超級同意 der',
     createdAt: '2023-03-22T05:24:59.000Z',
     User: {
       id: 102,
@@ -114,8 +112,7 @@ const replies = [
     },
   },
   {
-    id: 22,
-    description: '你再繼續胡說八道',
+    comment: '你再繼續胡說八道',
     createdAt: '2023-03-23T01:24:59.000Z',
     User: {
       id: 103,
@@ -125,8 +122,7 @@ const replies = [
     },
   },
   {
-    id: 23,
-    description: '一切都是謊言',
+    comment: '一切都是謊言',
     createdAt: '2023-03-22T12:24:59.000Z',
     User: {
       id: 104,
@@ -136,8 +132,7 @@ const replies = [
     },
   },
   {
-    id: 24,
-    description: 'Agree',
+    comment: 'Agree',
     createdAt: '2023-03-23T05:00:59.000Z',
     User: {
       id: 105,
