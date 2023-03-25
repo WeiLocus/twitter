@@ -6,6 +6,7 @@ import TweetContent from '../components/TweetContent';
 import { ReplyList } from '../components/TweetList';
 import { currentUser } from '../dummyData';
 import { getSingleTweet, getReplies } from '../api/tweet';
+import BeatLoader from 'react-spinners/BeatLoader';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 68px);
@@ -14,6 +15,8 @@ const StyledDiv = styled.div`
 `;
 
 const StyledMessage = styled.div`
+  width: 100%;
+  height: 100%;
   padding: 2rem 0;
   text-align: center;
   color: var(--color-secondary);
@@ -39,6 +42,8 @@ export default function ReplyPage() {
             JSON.stringify(replies)
           );
           setTweetReplies(replies);
+        } else {
+          localStorage.setItem(`storedTweetReplies${id}`, JSON.stringify([]));
         }
 
         localStorage.setItem(`storedTweet${id}`, JSON.stringify(tweet));
@@ -68,7 +73,11 @@ export default function ReplyPage() {
     <>
       <Header headerText="推文" goBack />
       <StyledDiv>
-        {isLoading && <StyledMessage>貼文載入中</StyledMessage>}
+        {isLoading && (
+          <StyledMessage>
+            <BeatLoader color="var(--color-theme)" />
+          </StyledMessage>
+        )}
         {!isLoading && (
           <TweetContent tweet={selectedTweet} user={currentUser} />
         )}
