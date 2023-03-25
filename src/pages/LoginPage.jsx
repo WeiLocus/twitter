@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
 import { login } from '../api/auth';
@@ -11,6 +11,7 @@ import {
 } from '../components/auth.styled';
 import AuthInput from '../components/elements/Input';
 import AuthButton from '../components/elements/Button';
+import Alert from '../components/elements/Alert';
 
 // title style
 const StyledTitle = styled.div`
@@ -21,18 +22,38 @@ const StyledTitle = styled.div`
 export default function LoginPage() {
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
+  const [showSuccessMsg, setShowSuccessMsg] = useState(false);
+  const [showErrorMsg, setShowErrorMsg] = useState('');
 
   const navigate = useNavigate();
 
-  // 確認登入狀況
+  // check login status
   const handelClick = async () => {
-    if (account.length === 0) return;
-    if (password.length === 0) return;
-    const { token } = await login({ account, password });
+    if (account.length === 0 || password.length === 0) {
+      setShowErrorMsg('欄位不可空白!');
+      setTimeout(() => {
+        setShowErrorMsg(false);
+        navigate('/login');
+      }, 1000);
+      return;
+    }
+    const { token, status, message } = await login({ account, password });
 
     if (token) {
       localStorage.setItem('token', token);
-      navigate('/tweets');
+      setShowSuccessMsg(true);
+      setTimeout(() => {
+        setShowSuccessMsg(false);
+        navigate('/tweets');
+      }, 1000);
+    }
+    // get error message
+    if (status === 'error' && message) {
+      setShowErrorMsg(message);
+      setTimeout(() => {
+        setShowErrorMsg(false);
+        navigate('/login');
+      }, 1000);
     }
   };
 
@@ -69,6 +90,8 @@ export default function LoginPage() {
           <AuthLinkText>後台登入</AuthLinkText>
         </Link>
       </AuthLinkContainer>
+      {showSuccessMsg && <Alert type="success" message="登入成功" />}
+      {showErrorMsg && <Alert type="error" message={showErrorMsg} />}
     </AuthContainer>
   );
 }
