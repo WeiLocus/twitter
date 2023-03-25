@@ -142,29 +142,32 @@ const StyledTweetContent = styled.div`
   }
 `;
 
-export function TweetModal({ currentUser, onClose }) {
-  const { id, avatar } = currentUser;
-  const [tweetDescription, setTweetDescription] = useState('');
+export function TweetModal({
+  tweetInput,
+  currentUser,
+  onClose,
+  onChange,
+  onAddTweet,
+}) {
+  const { avatar } = currentUser;
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const handleDescriptionChange = (e) => {
-    setTweetDescription(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!tweetDescription.length) {
+    if (!tweetInput.length) {
       setErrorMessage('內容不可空白');
       return;
     }
-    if (tweetDescription.length > 140) {
+    if (tweetInput.length > 140) {
       setErrorMessage('字數不可超過 140 字');
       return;
     }
     // 這邊要發送修改請求
-    console.log(`user ${id} just submitted a tweet: ${tweetDescription}`);
-    setErrorMessage(null);
-    setTweetDescription('');
+    const { status } = await onAddTweet();
+    if (status === 'ok') {
+      setErrorMessage(null);
+      onClose();
+    }
   };
 
   useEffect(() => {
@@ -187,13 +190,16 @@ export function TweetModal({ currentUser, onClose }) {
           <form>
             <textarea
               name="tweet"
-              id="tweet-Description"
-              value={tweetDescription}
+              id="tweet-input"
+              type="text"
               placeholder="有什麼新鮮事？"
-              onChange={handleDescriptionChange}
+              value={tweetInput}
+              onChange={(event) => {
+                onChange?.(event.target.value);
+              }}
             />
             <div className="submit">
-              <span>{`${tweetDescription.length}/140`}</span>
+              <span>{`${tweetInput.length}/140`}</span>
               <div>
                 <span className={errorMessage ? 'error' : undefined}>
                   {errorMessage}

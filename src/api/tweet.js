@@ -41,11 +41,11 @@ export async function getSingleTweet(id) {
 }
 
 // * 新增推文
-export async function createTweet(payload) {
+export async function addTweet(payload) {
   const { description } = payload;
   try {
     const res = await axiosInstance.post(`${baseURL}/tweets`, { description });
-    return res.tweet;
+    return res.data;
   } catch (error) {
     console.error('[Create Tweets failed]: ', error);
   }
