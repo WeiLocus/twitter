@@ -135,7 +135,9 @@ export function Navbar() {
           </StyledLi>
         </ul>
       </StyledNav>
-      {showModal && <TweetModal user={currentUser} onClose={handleShowModal} />}
+      {showModal && (
+        <TweetModal currentUser={currentUser} onClose={handleShowModal} />
+      )}
     </>
   );
 }

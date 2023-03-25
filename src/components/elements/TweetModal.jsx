@@ -142,8 +142,8 @@ const StyledTweetContent = styled.div`
   }
 `;
 
-export function TweetModal({ user, onClose }) {
-  const { id, avatar } = user;
+export function TweetModal({ currentUser, onClose }) {
+  const { id, avatar } = currentUser;
   const [tweetDescription, setTweetDescription] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
 

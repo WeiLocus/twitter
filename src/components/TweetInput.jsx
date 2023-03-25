@@ -70,7 +70,7 @@ export default function TweetInput({ user }) {
           </button>
         </StyledButtonDiv>
       </StyledDiv>
-      {showModal && <TweetModal user={user} onClose={handleShowModal} />}
+      {showModal && <TweetModal currentUser={user} onClose={handleShowModal} />}
     </>
   );
 }
