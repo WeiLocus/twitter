@@ -45,9 +45,11 @@ export async function addTweet(payload) {
   const { description } = payload;
   try {
     const res = await axiosInstance.post(`${baseURL}/tweets`, { description });
+    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error('[Create Tweets failed]: ', error);
+    return error.response.data.status;
   }
 }
 

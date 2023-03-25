@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import TweetInput from '../components/TweetInput';
 import { TweetList } from '../components/TweetList';
 // import { currentUser } from '../dummyData';
-import { getTweets } from '../api/tweet';
+import { getTweets, addTweet } from '../api/tweet';
 import { useUser } from '../contexts/UserContext';
 
 const StyledDiv = styled.div`
@@ -24,16 +24,17 @@ export default function TweetPage() {
 
   const handleAddTweet = async () => {
     try {
-      // const data = await addTweet({ description: tweetInput });
+      const data = await addTweet({ description: tweetInput });
+      if (data === 'error') return;
       console.log(
         `user ${currentUser.id} just submitted a tweet: ${tweetInput}`
       );
       // 重新setTweets
       const nextTweets = [
         {
-          id: 802,
-          description: tweetInput,
-          createdAt: '2023-03-25T15:58:29.000Z',
+          id: data.tweetInput.id,
+          description: data.tweetInput.description,
+          createdAt: data.tweetInput.createdAt,
           replyCounts: 0,
           likeCounts: 0,
           isLiked: 0,
