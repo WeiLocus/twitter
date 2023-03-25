@@ -20,6 +20,18 @@ export async function login({ account, password }) {
     }
     return data.data;
   } catch (error) {
+    if (error.response) {
+      const { data, status } = error.response;
+      if (status === 400 && data.message === '欄位不可空白!') {
+        return { status: 'error', message: '欄位不可空白' };
+      }
+      if (status === 404 && data.message === '帳號不存在!') {
+        return { status: 'error', message: '帳號不存在' };
+      }
+      if (status === 400 && data.message === '密碼不正確!') {
+        return { status: 'error', message: '密碼不正確' };
+      }
+    }
     console.log('[Login Failed]:', error);
   }
 }

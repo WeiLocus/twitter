@@ -23,28 +23,39 @@ export default function LoginPage() {
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
   const [showSuccessMsg, setShowSuccessMsg] = useState(false);
+  const [showErrorMsg, setShowErrorMsg] = useState('');
+
   const navigate = useNavigate();
 
-  // 確認登入狀況
+  // check login status
   const handelClick = async () => {
-    if (account.length === 0) return;
-    if (password.length === 0) return;
-    const { token } = await login({ account, password });
+    if (account.length === 0 || password.length === 0) {
+      setShowErrorMsg('欄位不可空白!');
+      setTimeout(() => {
+        setShowErrorMsg(false);
+        navigate('/login');
+      }, 1000);
+      return;
+    }
+    const { token, status, message } = await login({ account, password });
 
     if (token) {
       localStorage.setItem('token', token);
       setShowSuccessMsg(true);
-    }
-  };
-
-  useEffect(() => {
-    if (showSuccessMsg) {
       setTimeout(() => {
         setShowSuccessMsg(false);
         navigate('/tweets');
       }, 1000);
     }
-  }, [showSuccessMsg, navigate]);
+    // get error message
+    if (status === 'error' && message) {
+      setShowErrorMsg(message);
+      setTimeout(() => {
+        setShowErrorMsg(false);
+        navigate('/login');
+      }, 1000);
+    }
+  };
 
   return (
     <AuthContainer>
@@ -80,7 +91,7 @@ export default function LoginPage() {
         </Link>
       </AuthLinkContainer>
       {showSuccessMsg && <Alert type="success" message="登入成功" />}
-      {console.log(showSuccessMsg)}
+      {showErrorMsg && <Alert type="error" message={showErrorMsg} />}
     </AuthContainer>
   );
 }
