@@ -12,25 +12,20 @@ export async function login({ account, password }) {
     });
 
     // 如果登入成功，拿得到token
-    const { token } = data.data;
+    const { token } = data;
 
     // 判斷是否登入要回傳的內容
     if (token) {
-      return { ...data.data };
+      return { ...data };
     }
-    return data.data;
+    return data;
   } catch (error) {
-    if (error.response) {
-      const { data, status } = error.response;
-      if (status === 400 && data.message === '欄位不可空白!') {
-        return { status: 'error', message: '欄位不可空白' };
-      }
-      if (status === 404 && data.message === '帳號不存在!') {
-        return { status: 'error', message: '帳號不存在' };
-      }
-      if (status === 400 && data.message === '密碼不正確!') {
-        return { status: 'error', message: '密碼不正確' };
-      }
+    const { data, status } = error.response;
+    if (status === 400) {
+      return { status: 'error', message: data.message };
+    }
+    if (status === 404) {
+      return { status: 'error', message: data.message };
     }
     console.log('[Login Failed]:', error);
   }
@@ -55,7 +50,7 @@ export async function register({
     // 印出回傳值data
     console.log('data', data);
 
-    return { ...data.data };
+    return { ...data };
   } catch (error) {
     console.log('[Register Failed]', error);
   }
