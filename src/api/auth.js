@@ -12,13 +12,13 @@ export async function login({ account, password }) {
     });
 
     // 如果登入成功，拿得到token
-    const { token } = data.data;
+    const { token } = data;
 
     // 判斷是否登入要回傳的內容
     if (token) {
-      return { ...data.data };
+      return { ...data };
     }
-    return data.data;
+    return data;
   } catch (error) {
     if (error.response) {
       const { data, status } = error.response;
