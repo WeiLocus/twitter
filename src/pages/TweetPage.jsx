@@ -14,7 +14,6 @@ const StyledDiv = styled.div`
 
 export default function TweetPage() {
   const { currentUser } = useUser();
-  console.log(currentUser);
   const [tweets, setTweets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [tweetInput, setTweetInput] = useState('');

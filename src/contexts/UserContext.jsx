@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { getCurrentUser } from '../api/user';
 
 const UserContext = createContext(null);
 
@@ -21,14 +23,27 @@ function UserProvider({ children }) {
     createdAt: '2023-03-20T15:44:34.000Z',
     updatedAt: '2023-03-20T15:44:34.000Z',
   });
-  // console.log(currentUser);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const getUserAsync = async () => {
-      const user = await getCurrentUser();
-      console.log('user context loaded');
+      try {
+        const user = await getCurrentUser();
+        if (user === 'error') return;
+        console.log(user);
+        console.log('user context loaded');
+        localStorage.setItem('storedCurrentUser', JSON.stringify(user));
+        setCurrentUser(user);
+      } catch {
+        console.error(error);
+      }
     };
-  }, []);
+    const storedUser = JSON.parse(localStorage.getItem('storedCurrentUser'));
+    if (storedUser) {
+      return setCurrentUser(storedUser);
+    }
+    getUserAsync();
+  }, [pathname]);
 
   return (
     <UserContext.Provider value={{ currentUser }}>

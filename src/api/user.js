@@ -24,9 +24,11 @@ axiosInstance.interceptors.request.use(
 export async function getCurrentUser() {
   try {
     const res = await axiosInstance.get(`${baseURL}/users/current_user`);
-    return res;
+    console.log(res.data);
+    return res.data;
   } catch (error) {
     console.error('[Get CurrentUser failed]: ', error);
+    return error.response.data.status;
   }
 }
 
