@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { ReactComponent as EmailIcon } from '../assets/Email.svg';
+import { ReactComponent as NotificationIcon } from '../assets/Notification.svg';
 import EditModal from './elements/EditModal';
+import { currentUser } from '../dummyData';
 
 const StyledDiv = styled.div`
   position: relative;
@@ -27,30 +30,12 @@ const StyledDiv = styled.div`
     border-radius: 50%;
     overflow: hidden;
   }
+`;
 
-  .content {
-    padding: 1rem;
-  }
-
-  .edit {
-    display: flex;
-    justify-content: end;
-
-    button {
-      cursor: pointer;
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--color-theme);
-      border-radius: 3.125rem;
-      color: var(--color-theme);
-      background-color: white;
-      font-size: var(--fs-basic);
-
-      :hover {
-        color: white;
-        background-color: var(--color-theme);
-      }
-    }
-  }
+const StyledContentDiv = styled.div`
+  padding: 1rem;
+  color: var(--color-gray-900);
+  font-size: var(--fs-secondary);
 
   .user {
     margin: 0.75rem 0 0.25rem;
@@ -62,11 +47,6 @@ const StyledDiv = styled.div`
     }
   }
 
-  .content {
-    color: var(--color-gray-900);
-    font-size: var(--fs-secondary);
-  }
-
   .stats {
     display: flex;
     align-items: center;
@@ -75,34 +55,86 @@ const StyledDiv = styled.div`
     color: var(--color-secondary);
     font-size: var(--fs-secondary);
 
+    a:hover {
+      color: var(--color-gray-900);
+    }
+
     span {
       margin-right: 0.25rem;
       color: var(--color-gray-900);
     }
   }
+`;
 
-  .tabs {
-    display: flex;
-    justify-content: start;
-    color: var(--color-secondary);
-    font-weight: 700;
+const StyledEditDiv = styled.div`
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 0.5rem;
 
-    .category {
-      width: 8em;
-      display: grid;
-      place-items: center;
-      border-bottom: 3px solid white;
-      line-height: 3em;
+  .icon {
+    cursor: pointer;
+    padding: 0.5rem;
+    border: 1px solid var(--color-theme);
+    border-radius: 50%;
+    color: var(--color-theme);
 
-      &.active {
-        border-bottom: 3px solid var(--color-theme);
-        color: var(--color-theme);
-      }
+    :hover {
+      color: white;
+      background-color: var(--color-theme);
+    }
+  }
+
+  button {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-theme);
+    border-radius: 3.125rem;
+    color: var(--color-theme);
+    background-color: white;
+    font-size: var(--fs-basic);
+
+    :hover,
+    &.active {
+      color: white;
+      background-color: var(--color-theme);
     }
   }
 `;
 
-export default function Profile({ id }) {
+const StyledTabs = styled.div`
+  display: flex;
+  justify-content: start;
+  color: var(--color-secondary);
+  font-weight: 700;
+
+  .category {
+    width: 8em;
+    display: grid;
+    place-items: center;
+    border-bottom: 3px solid white;
+    line-height: 3em;
+
+    :hover {
+      background-color: var(--color-gray-100);
+      border-bottom: 3px solid var(--color-gray-100);
+    }
+
+    &.active {
+      border-bottom: 3px solid var(--color-theme);
+      color: var(--color-theme);
+    }
+  }
+`;
+
+export default function Profile({ user }) {
+  const { id, name, account, introduction, avatar, cover } = user;
+  // todo 需要再調整
+  const userFollowingCount = undefined ?? 34;
+  const userFollowerCount = undefined ?? 59;
+  // 該使用者是否於目前登入的使用者的跟隨清單中
+  const isFollowing = undefined ?? true;
+  // todo
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
@@ -113,37 +145,47 @@ export default function Profile({ id }) {
     <>
       <StyledDiv>
         <div className="cover">
-          <img src="https://picsum.photos/id/120/700/300" alt="user-cover" />
+          <img src={cover} alt="user-cover" />
         </div>
-        <img
-          className="avatar"
-          src="https://placekitten.com/700/700"
-          alt="avatar"
-        />
-        <div className="content">
-          <div className="edit">
-            <button type="button" onClick={handleShowModal}>
-              編輯個人資料
-            </button>
-          </div>
+        <img className="avatar" src={avatar} alt="avatar" />
+        <StyledContentDiv>
+          <StyledEditDiv>
+            {id === currentUser.id ? (
+              <button type="button" onClick={handleShowModal}>
+                編輯個人資料
+              </button>
+            ) : (
+              <>
+                <span className="icon">
+                  <EmailIcon />
+                </span>
+                <span className="icon">
+                  <NotificationIcon />
+                </span>
+                <button
+                  className={isFollowing ? 'active' : undefined}
+                  type="button"
+                >
+                  {isFollowing ? '正在追蹤' : '追蹤'}
+                </button>
+              </>
+            )}
+          </StyledEditDiv>
           <div className="user">
-            <b>Apple</b>
-            <p>@apple</p>
+            <b>{name}</b>
+            <p>@{account}</p>
           </div>
-          <p className="intro">
-            Maecenas blandit volutpat hendrerit. Fusce at elementum urna,
-            ullamcorper mattis libero. Donec rutrum tempor felis id condimentum.
-          </p>
+          <p className="intro">{introduction}</p>
           <div className="stats">
             <NavLink to={`/users/${id}/followings`}>
-              <span>34</span>個跟隨中
+              <span>{userFollowingCount}</span>個跟隨中
             </NavLink>
             <NavLink to={`/users/${id}/followers`}>
-              <span>59</span>個跟隨者
+              <span>{userFollowerCount}</span>個跟隨者
             </NavLink>
           </div>
-        </div>
-        <div className="tabs">
+        </StyledContentDiv>
+        <StyledTabs>
           <NavLink className="category" to={`/users/${id}/tweets`}>
             <p>推文</p>
           </NavLink>
@@ -153,9 +195,9 @@ export default function Profile({ id }) {
           <NavLink className="category" to={`/users/${id}/likes`}>
             <p>喜歡的內容</p>
           </NavLink>
-        </div>
+        </StyledTabs>
       </StyledDiv>
-      {showModal && <EditModal onClose={handleShowModal} />}
+      {showModal && <EditModal user={user} onClose={handleShowModal} />}
     </>
   );
 }

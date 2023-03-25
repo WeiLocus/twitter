@@ -36,17 +36,19 @@ const StyledHeader = styled.header`
   }
 `;
 export default function Header({ headerText, goBack, user }) {
+  // todo 需要再調整
+  const tweetsCount = undefined ?? 25;
   return (
     <StyledHeader>
       {goBack && (
-        <NavLink to="/tweets">
+        <NavLink to={user ? `users/${user.id}/tweets` : '/tweets'}>
           <GoBackIcon />
         </NavLink>
       )}
       <div className={user && 'small'}>
         <h1>{headerText}</h1>
         <p>
-          <span>25</span>推文
+          <span>{tweetsCount}</span>推文
         </p>
       </div>
     </StyledHeader>

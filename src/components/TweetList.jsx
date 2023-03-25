@@ -13,11 +13,16 @@ const StyledList = styled.ul`
 `;
 
 const StyledListItem = styled.li`
+  cursor: pointer;
   display: grid;
   grid-template-columns: calc(50px + 0.5rem) 1fr;
   padding: 1rem;
   border: 1px solid var(--color-gray-200);
   background-color: white;
+
+  :hover {
+    background-color: var(--color-gray-100);
+  }
 
   img {
     width: 50px;
@@ -75,6 +80,10 @@ const StyledListItem = styled.li`
       cursor: pointer;
       width: 15px;
       height: 15px;
+
+      &:hover {
+        color: var(--color-theme);
+      }
     }
   }
 `;
@@ -116,18 +125,18 @@ function TweetItem({ user, tweet }) {
           <div className="stats">
             <NavLink onClick={handleShowModal} className="stat">
               <span>
-                <CommentIcon width="15px" height="15px" />
+                <CommentIcon className="icon" />
               </span>
               <span>{replyCounts}</span>
             </NavLink>
-            <div className="stat">
-              {isLiked ? (
+            <NavLink className="stat">
+              {currentIsLiked ? (
                 <LikeBlackIcon className="icon" onClick={handleLike} />
               ) : (
                 <LikeIcon className="icon" onClick={handleLike} />
               )}
               <span>{likeCounts}</span>
-            </div>
+            </NavLink>
           </div>
         </div>
       </StyledListItem>

@@ -107,10 +107,10 @@ const replies = [
     description: '超級同意 der',
     createdAt: '2023-03-22T05:24:59.000Z',
     User: {
-      id: 103,
-      account: 'user103',
-      name: 'user103',
-      avatar: 'https://api.lorem.space/image/face?w=450&h=450',
+      id: 102,
+      account: 'user102',
+      name: 'user102',
+      avatar: 'https://api.lorem.space/image/face?w=250&h=250',
     },
   },
   {
@@ -118,10 +118,10 @@ const replies = [
     description: '你再繼續胡說八道',
     createdAt: '2023-03-23T01:24:59.000Z',
     User: {
-      id: 104,
-      account: 'user104',
-      name: 'user104',
-      avatar: 'http://placekitten.com/g/600/600',
+      id: 103,
+      account: 'user103',
+      name: 'user103',
+      avatar: 'http://placekitten.com/g/500/500',
     },
   },
   {
@@ -146,26 +146,15 @@ const replies = [
       avatar: 'https://api.lorem.space/image/face?w=350&h=350',
     },
   },
-  {
-    id: 25,
-    description: '不是吧！！！！',
-    createdAt: '2023-03-20T01:24:59.000Z',
-    User: {
-      id: 200,
-      account: 'user200',
-      name: 'user200',
-      avatar: 'https://api.lorem.space/image/face?w=550&h=550',
-    },
-  },
 ];
 
-const loginUser = {
+const currentUser = {
   id: 125,
   name: 'user125',
   email: 'user125@example.com',
-  account: 'user2',
+  account: 'user125',
   introduction:
-    'Mollitia consectetur optio. Consequatur aut quaerat necessitatibus quod beatae perferendis sint repellat rem. Inventore at voluptas blanditiis non pariatur exercitationem. Error rerum illum iusto magnam quisquam quo fugiat iste nostrum. Et laboriosam aliquam consequuntur labore magnam aperiam quam.',
+    'Reach out if you want to talk about emerging tech, creating software products, or baseball.',
   avatar:
     'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/268.jpg',
   cover: 'https://loremflickr.com/640/480/nature?lock=27430',
@@ -174,4 +163,162 @@ const loginUser = {
   updatedAt: '2023-03-20T15:44:34.000Z',
 };
 
-export { tweets, replies, loginUser };
+const users = [
+  {
+    id: 125,
+    name: 'user125',
+    email: 'user125@example.com',
+    account: 'user125',
+    introduction:
+      'Reach out if you want to talk about emerging tech, creating software products, or baseball.',
+    avatar:
+      'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/268.jpg',
+    cover: 'https://loremflickr.com/640/480/nature?lock=27430',
+    isAdmin: false,
+    createdAt: '2023-03-20T15:44:34.000Z',
+    updatedAt: '2023-03-20T15:44:34.000Z',
+  },
+  {
+    id: 100,
+    name: 'user100',
+    email: 'user100@example.com',
+    account: 'user100',
+    introduction: '我要成為海賊王 喵喵喵 ',
+    avatar: 'http://placekitten.com/g/200/300',
+    cover: 'https://picsum.photos/id/123/700/300',
+    isAdmin: false,
+    createdAt: '2023-03-21T15:44:34.000Z',
+    updatedAt: '2023-03-21T15:44:34.000Z',
+  },
+  {
+    id: 101,
+    name: 'user101',
+    email: 'user101@example.com',
+    account: 'user101',
+    introduction:
+      'Throughout my life, I have developed this art of being able to communicate with anyone at any given time.',
+    avatar: 'https://api.lorem.space/image/face?w=150&h=150',
+    cover: 'https://picsum.photos/id/145/700/300',
+    isAdmin: false,
+    createdAt: '2023-03-22T15:44:34.000Z',
+    updatedAt: '2023-03-22T15:44:34.000Z',
+  },
+  {
+    id: 102,
+    name: 'user102',
+    email: 'user102@example.com',
+    account: 'user102',
+    introduction:
+      'I manage a small cafe. I am passionate about making delicious food for others.',
+    avatar: 'https://api.lorem.space/image/face?w=250&h=250',
+    cover: 'https://picsum.photos/id/250/700/300',
+    isAdmin: false,
+    createdAt: '2023-03-22T15:44:34.000Z',
+    updatedAt: '2023-03-22T15:44:34.000Z',
+  },
+  {
+    id: 103,
+    name: 'user103',
+    email: 'user103@example.com',
+    account: 'user103',
+    introduction:
+      'I am a high school librarian. I am passionate about helping people read.',
+    avatar: 'http://placekitten.com/g/500/500',
+    cover: 'https://picsum.photos/id/310/700/300',
+    isAdmin: false,
+    createdAt: '2023-03-22T15:44:34.000Z',
+    updatedAt: '2023-03-22T15:44:34.000Z',
+  },
+  {
+    id: 104,
+    name: 'user104',
+    email: 'user104@example.com',
+    account: 'user104',
+    introduction:
+      'I am a professor at Stone University. I have written a book and journal article on the topics of Paleolithic history.',
+    avatar: 'http://placekitten.com/g/600/600',
+    cover: 'https://picsum.photos/id/400/700/300',
+    isAdmin: false,
+    createdAt: '2023-03-22T15:44:34.000Z',
+    updatedAt: '2023-03-22T15:44:34.000Z',
+  },
+  {
+    id: 105,
+    name: 'user105',
+    email: 'user105@example.com',
+    account: 'user105',
+    introduction:
+      'I am passionate about travel and exploration. I am currently a truck driver, where I gained experiences in 45 places.',
+    avatar: 'https://api.lorem.space/image/face?w=350&h=350',
+    cover: 'https://picsum.photos/id/500/700/300',
+    isAdmin: false,
+    createdAt: '2023-03-22T15:44:34.000Z',
+    updatedAt: '2023-03-22T15:44:34.000Z',
+  },
+  {
+    id: 106,
+    name: 'user106',
+    email: 'user106@example.com',
+    account: 'user106',
+    introduction:
+      'Proin quis dolor mollis, blandit erat nec, tristique ligula. Nulla volutpat urna augue, nec dignissim massa fermentum sit amet.',
+    avatar: 'https://xsgames.co/randomusers/avatar.php?g=female',
+    cover: 'https://picsum.photos/id/600/700/300',
+    isAdmin: false,
+    createdAt: '2023-03-22T15:44:34.000Z',
+    updatedAt: '2023-03-22T15:44:34.000Z',
+  },
+  {
+    id: 107,
+    name: 'user107',
+    email: 'user107@example.com',
+    account: 'user107',
+    introduction: "This is user 107's profile",
+    avatar: 'https://api.lorem.space/image/face?w=850&h=850',
+    cover: 'https://picsum.photos/id/700/700/300',
+    isAdmin: false,
+    createdAt: '2023-03-22T15:44:34.000Z',
+    updatedAt: '2023-03-22T15:44:34.000Z',
+  },
+  {
+    id: 108,
+    name: 'user108',
+    email: 'user108@example.com',
+    account: 'user108',
+    introduction:
+      'Proin quis dolor mollis, blandit erat nec, tristique ligula. Nulla volutpat urna augue, nec dignissim massa fermentum sit amet.',
+    avatar: 'https://api.lorem.space/image/face?w=950&h=950',
+    cover: 'https://picsum.photos/id/800/700/300',
+    isAdmin: false,
+    createdAt: '2023-03-22T15:44:34.000Z',
+    updatedAt: '2023-03-22T15:44:34.000Z',
+  },
+  {
+    id: 109,
+    name: 'user109',
+    email: 'user109@example.com',
+    account: 'user109',
+    introduction:
+      'Nullam vel enim dignissim nunc pretium rhoncus. Integer ullamcorper tincidunt mattis. Nunc rutrum egestas pulvinar. Nunc viverra interdum dui sed imperdiet. Duis id felis vitae mi auctor sodales sed quis tortor. ',
+    avatar: 'https://api.lorem.space/image/face?w=500&h=500',
+    cover: 'https://picsum.photos/id/900/700/300',
+    isAdmin: false,
+    createdAt: '2023-03-22T15:44:34.000Z',
+    updatedAt: '2023-03-22T15:44:34.000Z',
+  },
+  {
+    id: 110,
+    name: 'user110',
+    email: 'user110@example.com',
+    account: 'user110',
+    introduction:
+      'Nullam vel enim dignissim nunc pretium rhoncus. Integer ullamcorper tincidunt mattis. Nunc rutrum egestas pulvinar. Nunc viverra interdum dui sed imperdiet. Duis id felis vitae mi auctor sodales sed quis tortor. ',
+    avatar: 'https://api.lorem.space/image/face?w=600&h=600',
+    cover: 'https://picsum.photos/id/1000/700/300',
+    isAdmin: false,
+    createdAt: '2023-03-22T15:44:34.000Z',
+    updatedAt: '2023-03-22T15:44:34.000Z',
+  },
+];
+
+export { tweets, replies, currentUser, users };

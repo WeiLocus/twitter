@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useOutletContext } from 'react-router-dom';
+import { users } from '../dummyData.js';
 
 const StyledList = styled.ul`
   background-color: white;
@@ -8,7 +9,7 @@ const StyledList = styled.ul`
 
 const StyledListItem = styled.li`
   display: grid;
-  grid-template-columns: calc(50px + 0.5rem) 1fr;
+  grid-template-columns: calc(50px + 1rem) 1fr;
   padding: 1rem;
   border: 1px solid var(--color-gray-200);
   background-color: white;
@@ -16,7 +17,7 @@ const StyledListItem = styled.li`
   img {
     width: 50px;
     aspect-ratio: 1/1;
-    margin-right: 0.5rem;
+    margin-right: 1rem;
     border-radius: 50%;
     overflow: hidden;
   }
@@ -69,6 +70,11 @@ const StyledTab = styled.div`
     border-bottom: 3px solid white;
     line-height: 3em;
 
+    :hover {
+      border-bottom: 3px solid var(--color-gray-100);
+      background-color: var(--color-gray-100);
+    }
+
     &.active {
       border-bottom: 3px solid var(--color-theme);
       color: var(--color-theme);
@@ -89,17 +95,18 @@ function FollowTab({ id }) {
   );
 }
 
-function FollowItem() {
+function FollowItem({ user }) {
+  const { id, name, avatar, introduction } = user;
   const [isFollowing, setIsFollowing] = useState(false);
   const handleFollow = () => {
     setIsFollowing((prev) => !prev);
   };
   return (
     <StyledListItem>
-      <img src="https://placekitten.com/800/800" alt="avatar" />
+      <img src={avatar} alt="avatar" />
       <div>
         <div className="user">
-          <b>Apple</b>
+          <b>{name}</b>
           <button
             className={`user ${isFollowing && 'active'}`}
             type="button"
@@ -108,30 +115,21 @@ function FollowItem() {
             {isFollowing ? '正在跟隨' : '跟隨'}
           </button>
         </div>
-        <p className="content">
-          Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
-          cillum dolor. Voluptate exercitation incididunt aliquip deserunt
-          reprehenderit elit laborum.
-        </p>
+        <p className="content">{introduction}</p>
       </div>
     </StyledListItem>
   );
 }
 
 export default function FollowList() {
-  const user = { id: 5 };
+  const shownUser = useOutletContext();
+  const renderedFollowItem = users.map((user) => {
+    return <FollowItem user={user} key={user.id} />;
+  });
   return (
     <>
-      <FollowTab id={user.id} />
-      <StyledList>
-        <FollowItem />
-        <FollowItem />
-        <FollowItem />
-        <FollowItem />
-        <FollowItem />
-        <FollowItem />
-        <FollowItem />
-      </StyledList>
+      <FollowTab id={shownUser.id} />
+      <StyledList>{renderedFollowItem}</StyledList>
     </>
   );
 }

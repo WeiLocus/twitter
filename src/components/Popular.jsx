@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { users } from '../dummyData.js';
 
 const StyledPopularAside = styled.aside`
   overflow-y: scroll;
@@ -14,11 +16,15 @@ const StyledPopularAside = styled.aside`
   }
 `;
 
-const StyledLi = styled.li`
+const StyledPopularItem = styled.li`
   padding: 1rem;
   display: grid;
   grid-template-columns: 50px auto auto;
   align-items: center;
+
+  :hover {
+    background-color: var(--color-gray-200);
+  }
 
   .avatar {
     aspect-ratio: 1/1;
@@ -66,6 +72,9 @@ const StyledLi = styled.li`
 
 export default function Popular() {
   const asideRef = useRef(null);
+  const renderedPopularUsers = users.map((user) => {
+    return <PopularItem key={user.id} user={user} />;
+  });
 
   useEffect(() => {
     if (asideRef.current.offsetHeight > window.innerHeight) {
@@ -76,37 +85,27 @@ export default function Popular() {
   return (
     <StyledPopularAside ref={asideRef}>
       <h2>推薦跟隨</h2>
-      <ul>
-        {/* <PopularItem isFollowing /> */}
-        {/* <PopularItem isFollowing /> */}
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-        <PopularItem />
-      </ul>
+      <ul>{renderedPopularUsers}</ul>
     </StyledPopularAside>
   );
 }
 
-function PopularItem() {
+function PopularItem({ user }) {
+  const { id, name, account, avatar } = user;
   const [isFollowing, setIsFollowing] = useState(false);
   const handleFollow = () => {
     setIsFollowing((prev) => !prev);
   };
   return (
-    <StyledLi isFollowing>
+    <StyledPopularItem isFollowing>
       <div className="avatar">
-        <img src="https://placekitten.com/300/300" alt="avatar" />
+        <NavLink to={`users/${id}/tweets`}>
+          <img src={avatar} alt="avatar" />
+        </NavLink>
       </div>
       <div className={`user ${isFollowing ? 'active' : undefined}`}>
-        <b>Meowwwwww</b>
-        <p>@Meow</p>
+        <b>{name}</b>
+        <p>@{account}</p>
       </div>
       <button
         className={isFollowing ? 'active' : undefined}
@@ -115,6 +114,6 @@ function PopularItem() {
       >
         {isFollowing ? '正在跟隨' : '跟隨'}
       </button>
-    </StyledLi>
+    </StyledPopularItem>
   );
 }

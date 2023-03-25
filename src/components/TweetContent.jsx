@@ -5,6 +5,7 @@ import { ReactComponent as LikeIcon } from '../assets/Like.svg';
 import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
 import { ReplyModal } from './elements/TweetModal';
 import { getConvertedTime } from '../utilities';
+import { NavLink } from 'react-router-dom';
 
 const StyledDiv = styled.div`
   padding: 1rem;
@@ -76,6 +77,10 @@ const StyledDiv = styled.div`
     button {
       all: unset;
       cursor: pointer;
+
+      :hover {
+        color: var(--color-theme);
+      }
     }
   }
 `;
@@ -85,7 +90,7 @@ export default function TweetContent({ tweet, user }) {
     tweet;
   const { convertedDate, convertedTime } = getConvertedTime(createdAt);
   const [showModal, setShowModal] = useState(false);
-  const [currentIsLiked, setCurrentIsLiked] = useState(isLiked); // todo to be fixed
+  const [currentIsLiked, setCurrentIsLiked] = useState(true); // todo to be fixed
 
   const handleShowModal = () => {
     const nextShowModal = !showModal;
@@ -101,7 +106,9 @@ export default function TweetContent({ tweet, user }) {
     <>
       <StyledDiv>
         <div className="user">
-          <img src={User.avatar} alt="avatar" />
+          <NavLink to={`/users/${User.id}/tweets`}>
+            <img src={User.avatar} alt="avatar" />
+          </NavLink>
           <div>
             <b>{User.name}</b>
             <span>@{User.account}</span>
@@ -123,13 +130,13 @@ export default function TweetContent({ tweet, user }) {
         </div>
         <div className="reaction">
           <button type="button" onClick={handleShowModal}>
-            <CommentIcon />
+            <CommentIcon className="icon" />
           </button>
           <button type="button">
-            {isLiked ? (
+            {currentIsLiked ? (
               <LikeBlackIcon onClick={handleLike} />
             ) : (
-              <LikeIcon onClick={handleLike} />
+              <LikeIcon className="icon" onClick={handleLike} />
             )}
           </button>
         </div>

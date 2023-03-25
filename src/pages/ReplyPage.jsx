@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Header from '../components/Header';
 import TweetContent from '../components/TweetContent';
 import TweetList from '../components/TweetList';
-import { tweets, replies, loginUser } from '../dummyData';
+import { tweets, replies, currentUser } from '../dummyData';
 import { getSingleTweet } from '../api/tweet';
 
 const StyledDiv = styled.div`
@@ -34,7 +34,7 @@ export default function ReplyPage() {
     <>
       <Header headerText="推文" goBack />
       <StyledDiv>
-        <TweetContent tweet={selectedTweet} user={loginUser} />
+        <TweetContent tweet={selectedTweet} user={currentUser} />
         <TweetList type="reply" tweets={replies} />
       </StyledDiv>
     </>
