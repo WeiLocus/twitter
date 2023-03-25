@@ -1,11 +1,10 @@
 import styled from 'styled-components';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import Header from '../components/Header';
 import TweetInput from '../components/TweetInput';
 import { TweetList } from '../components/TweetList';
-// import { currentUser } from '../dummyData';
-import { getTweets, addTweet } from '../api/tweet';
-import { useUser } from '../contexts/UserContext';
+import { getTweets } from '../api/tweet';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 68px);
@@ -13,49 +12,15 @@ const StyledDiv = styled.div`
 `;
 
 export default function TweetPage() {
-  const { currentUser } = useUser();
-  const [tweets, setTweets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [tweetInput, setTweetInput] = useState('');
-
-  const handleInputChange = (value) => {
-    setTweetInput(value);
-  };
-
-  const handleAddTweet = async () => {
-    try {
-      const data = await addTweet({ description: tweetInput });
-      if (data === 'error') return;
-      console.log(
-        `user ${currentUser.id} just submitted a tweet: ${tweetInput}`
-      );
-      // 重新setTweets
-      const nextTweets = [
-        {
-          id: data.tweetInput.id,
-          description: data.tweetInput.description,
-          createdAt: data.tweetInput.createdAt,
-          replyCounts: 0,
-          likeCounts: 0,
-          isLiked: 0,
-          User: {
-            id: currentUser.id,
-            account: currentUser.account,
-            name: currentUser.name,
-            avatar: currentUser.avatar,
-          },
-        },
-        ...tweets,
-      ];
-      setTweets(nextTweets);
-      setTweetInput('');
-      localStorage.setItem('storedTweets', JSON.stringify(nextTweets));
-      return { status: 'ok' };
-    } catch (error) {
-      console.log(error);
-      return { status: 'error' };
-    }
-  };
+  const {
+    currentUser,
+    tweets,
+    setTweets,
+    tweetInput,
+    handleInputChange,
+    handleAddTweet,
+  } = useOutletContext();
 
   useEffect(() => {
     const getTweetsAsync = async () => {

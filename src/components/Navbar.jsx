@@ -10,7 +10,6 @@ import { ReactComponent as SettingIcon } from '../assets/Setting.svg';
 import { ReactComponent as SettingBlackIcon } from '../assets/Setting-black.svg';
 import { ReactComponent as LogoutIcon } from '../assets/Logout.svg';
 import { TweetModal } from './elements/TweetModal';
-import { currentUser } from '../dummyData';
 
 const StyledNav = styled.nav`
   height: 100vh;
@@ -63,7 +62,7 @@ const StyledNavButton = styled.button`
   }
 `;
 
-export function Navbar() {
+export function Navbar({ tweetInput, currentUser, onChange, onAddTweet }) {
   const { pathname } = useLocation();
   const [showModal, setShowModal] = useState(false);
 
@@ -136,7 +135,13 @@ export function Navbar() {
         </ul>
       </StyledNav>
       {showModal && (
-        <TweetModal currentUser={currentUser} onClose={handleShowModal} />
+        <TweetModal
+          tweetInput={tweetInput}
+          currentUser={currentUser}
+          onClose={handleShowModal}
+          onChange={onChange}
+          onAddTweet={onAddTweet}
+        />
       )}
     </>
   );
