@@ -2,6 +2,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import TweetInput from '../components/TweetInput';
 import { TweetList } from '../components/TweetList';
@@ -13,6 +14,13 @@ const StyledDiv = styled.div`
   overflow-y: scroll;
 `;
 export default function TweetPage() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+    }
+  }, [navigate]);
   // const [tweets, setTweets] = useState([]);
   // useEffect(() => {
   //   const getTweetsAsync = async () => {
