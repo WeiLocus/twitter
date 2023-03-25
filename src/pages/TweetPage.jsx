@@ -13,18 +13,28 @@ const StyledDiv = styled.div`
   overflow-y: scroll;
 `;
 export default function TweetPage() {
-  // const [tweets, setTweets] = useState([]);
-  // useEffect(() => {
-  //   const getTweetsAsync = async () => {
-  //     try {
-  //       const { tweets } = await getTweets();
-  //       setTweets(tweets);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   getTweetsAsync();
-  // }, [tweets]);
+  const [tweets, setTweets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getTweetsAsync = async () => {
+      try {
+        const tweets = await getTweets();
+        console.log('tweets get!');
+        localStorage.setItem('storedTweets', JSON.stringify(tweets));
+        setTweets(tweets);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    const storedTweets = JSON.parse(localStorage.getItem('storedTweets'));
+    if (storedTweets) {
+      setTweets(storedTweets);
+      return setIsLoading(false);
+    }
+    getTweetsAsync();
+  }, []);
 
   return (
     <>

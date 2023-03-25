@@ -90,7 +90,7 @@ export default function TweetContent({ tweet, user }) {
     tweet;
   const { convertedDate, convertedTime } = getConvertedTime(createdAt);
   const [showModal, setShowModal] = useState(false);
-  const [currentIsLiked, setCurrentIsLiked] = useState(true); // todo to be fixed
+  const [currentIsLiked, setCurrentIsLiked] = useState(isLiked); // todo to be fixed
 
   const handleShowModal = () => {
     const nextShowModal = !showModal;

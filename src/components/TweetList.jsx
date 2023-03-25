@@ -191,7 +191,9 @@ function TweetList({ user, tweets }) {
 
 function ReplyList({ replies, replyTo }) {
   const renderedItems = replies.map((reply) => {
-    return <ReplyItem key={reply.id} reply={reply} replyTo={replyTo} />;
+    return (
+      <ReplyItem key={reply.id} reply={reply} replyTo={replyTo.User.account} />
+    );
   });
   return <StyledList>{renderedItems}</StyledList>;
 }

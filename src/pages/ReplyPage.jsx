@@ -15,27 +15,42 @@ const StyledDiv = styled.div`
 export default function ReplyPage() {
   // 注意 id 是字串
   const { id } = useParams();
-  const selectedTweet = tweets.find((tweet) => tweet.id === parseInt(id));
-  // const [tweet, setTweet] = useState(undefined);
+  const [selectedTweet, setSelectedTweet] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect(() => {
-  //   const getSingleTweetAsync = async () => {
-  //     try {
-  //       const { tweet } = await getSingleTweet(id);
-  //       setTweet(tweet);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   getSingleTweetAsync();
-  // }, [tweet]);
+  useEffect(() => {
+    const getSingleTweetAsync = async () => {
+      try {
+        const tweet = await getSingleTweet(id);
+        console.log(`tweet ${id} get!`);
+        localStorage.setItem(`storedTweet${id}`, JSON.stringify(tweet));
+        setSelectedTweet(tweet);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    const storedSelectedTweet = JSON.parse(
+      localStorage.getItem(`storedTweet${id}`)
+    );
+    console.log(storedSelectedTweet);
+    if (storedSelectedTweet) {
+      setSelectedTweet(storedSelectedTweet);
+      return setIsLoading(false);
+    }
+    getSingleTweetAsync();
+  }, []);
 
   return (
     <>
       <Header headerText="推文" goBack />
       <StyledDiv>
-        <TweetContent tweet={selectedTweet} user={currentUser} />
-        <ReplyList replies={replies} replyTo={selectedTweet.User.account} />
+        {!isLoading && (
+          <>
+            <TweetContent tweet={selectedTweet} user={currentUser} />
+            <ReplyList replies={replies} replyTo={selectedTweet} />
+          </>
+        )}
       </StyledDiv>
     </>
   );
