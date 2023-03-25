@@ -36,7 +36,7 @@ const StyledHeader = styled.header`
   }
 `;
 export default function Header({ headerText, goBack, user }) {
-  // todo 需要再調整
+  // todo 需要計算該使用者貼文總數
   const tweetsCount = undefined ?? 25;
   return (
     <StyledHeader>

@@ -20,20 +20,56 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+// * 取得所有推文
 export async function getTweets() {
   try {
     const res = await axiosInstance.get(`${baseURL}/tweets`);
-    return res.data;
+    return res;
   } catch (error) {
     console.error('[Get Tweets failed]: ', error);
   }
 }
 
+// * 取得單一推文
 export async function getSingleTweet(id) {
   try {
     const res = await axiosInstance.get(`${baseURL}/tweets/${id}`);
-    return res.data;
+    return res;
   } catch (error) {
-    console.error('[Get Tweets failed]: ', error);
+    console.error('[Get Single Tweet failed]: ', error);
+  }
+}
+
+// * 新增推文
+export async function createTweet(payload) {
+  const { description } = payload;
+  try {
+    const res = await axiosInstance.post(`${baseURL}/tweets`, { description });
+    return res.tweet;
+  } catch (error) {
+    console.error('[Create Tweets failed]: ', error);
+  }
+}
+
+// * 取得特定貼文的所有回覆
+export async function getReplies(id) {
+  try {
+    const res = await axiosInstance.get(`${baseURL}/tweets/${id}/replies`);
+    return res;
+  } catch (error) {
+    console.error('[Get Replies failed]: ', error);
+  }
+}
+
+// * 在特定貼文新增回覆
+export async function createReply(payload) {
+  const { id, comment } = payload;
+  try {
+    const res = await axiosInstance.post(`${baseURL}/tweets/${id}/replies`, {
+      comment,
+    });
+    return res.replyInput;
+  } catch (error) {
+    console.error('[Create Reply failed]: ', error);
   }
 }

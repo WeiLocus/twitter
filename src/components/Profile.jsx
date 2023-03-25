@@ -128,10 +128,17 @@ const StyledTabs = styled.div`
 `;
 
 export default function Profile({ user }) {
-  const { id, name, account, introduction, avatar, cover } = user;
+  const {
+    id,
+    name,
+    account,
+    introduction,
+    avatar,
+    cover,
+    followerCounts,
+    followingCounts,
+  } = user;
   // todo 需要再調整
-  const userFollowingCount = undefined ?? 34;
-  const userFollowerCount = undefined ?? 59;
   // 該使用者是否於目前登入的使用者的跟隨清單中
   const isFollowing = undefined ?? true;
   // todo
@@ -178,10 +185,10 @@ export default function Profile({ user }) {
           <p className="intro">{introduction}</p>
           <div className="stats">
             <NavLink to={`/users/${id}/followings`}>
-              <span>{userFollowingCount}</span>個跟隨中
+              <span>{followingCounts}</span>個跟隨中
             </NavLink>
             <NavLink to={`/users/${id}/followers`}>
-              <span>{userFollowerCount}</span>個跟隨者
+              <span>{followerCounts}</span>個跟隨者
             </NavLink>
           </div>
         </StyledContentDiv>

@@ -92,8 +92,7 @@ const tweets = [
 
 const replies = [
   {
-    id: 20,
-    description: '不能再同意更多',
+    comment: '不能再同意更多',
     createdAt: '2023-03-23T05:24:59.000Z',
     User: {
       id: 101,
@@ -103,8 +102,7 @@ const replies = [
     },
   },
   {
-    id: 21,
-    description: '超級同意 der',
+    comment: '超級同意 der',
     createdAt: '2023-03-22T05:24:59.000Z',
     User: {
       id: 102,
@@ -114,8 +112,7 @@ const replies = [
     },
   },
   {
-    id: 22,
-    description: '你再繼續胡說八道',
+    comment: '你再繼續胡說八道',
     createdAt: '2023-03-23T01:24:59.000Z',
     User: {
       id: 103,
@@ -125,8 +122,7 @@ const replies = [
     },
   },
   {
-    id: 23,
-    description: '一切都是謊言',
+    comment: '一切都是謊言',
     createdAt: '2023-03-22T12:24:59.000Z',
     User: {
       id: 104,
@@ -136,8 +132,7 @@ const replies = [
     },
   },
   {
-    id: 24,
-    description: 'Agree',
+    comment: 'Agree',
     createdAt: '2023-03-23T05:00:59.000Z',
     User: {
       id: 105,
@@ -145,6 +140,154 @@ const replies = [
       name: 'user105',
       avatar: 'https://api.lorem.space/image/face?w=350&h=350',
     },
+  },
+];
+
+const likes = [
+  {
+    id: 60,
+    description: '那些老屁股的見解太迂腐了，我要反對他們！',
+    createdAt: '2023-03-23T13:58:29.000Z',
+    replyCounts: 2,
+    likeCounts: 1,
+    isLiked: 1,
+    User: {
+      id: 100,
+      account: 'user100',
+      name: 'user100',
+      avatar: 'http://placekitten.com/g/200/300',
+    },
+  },
+  {
+    id: 61,
+    description:
+      '我想到一個一定得獎的作品，就是用QR Code當作山水畫的皴法。有沒有畫山水的我們來合作一下。',
+    createdAt: '2023-03-22T03:24:29.000Z',
+    replyCounts: 2,
+    likeCounts: 3,
+    isLiked: 1,
+    User: {
+      id: 101,
+      account: 'user101',
+      name: 'user101',
+      avatar: 'https://api.lorem.space/image/face?w=150&h=150',
+    },
+  },
+  {
+    id: 62,
+    description:
+      '這樣那些感到害怕或認為自己無法實現目標的人看到我衝過馬拉松的終點線，就會對自己說：我也能做到。',
+    createdAt: '2023-03-23T05:24:29.000Z',
+    replyCounts: 2,
+    likeCounts: 5,
+    isLiked: 1,
+    User: {
+      id: 102,
+      account: 'user102',
+      name: 'user102',
+      avatar: 'https://api.lorem.space/image/face?w=250&h=250',
+    },
+  },
+  {
+    id: 63,
+    description:
+      '今天去看of an age, 超好看！台詞還有提到凱特布蘭琪、妮可基嫚、王家衛電影，很有意思。',
+    createdAt: '2023-03-23T02:34:29.000Z',
+    replyCounts: 2,
+    likeCounts: 1,
+    isLiked: 1,
+    User: {
+      id: 103,
+      account: 'user103',
+      name: 'user103',
+      avatar: 'http://placekitten.com/g/500/500',
+    },
+  },
+  {
+    id: 64,
+    description:
+      '天轉熱了 可以喝冰咖啡了 建議用我家的義式咖啡 煮濃一些 加冰塊 很不錯',
+    createdAt: '2023-03-20T13:24:29.000Z',
+    replyCounts: 2,
+    likeCounts: 1,
+    isLiked: 1,
+    User: {
+      id: 104,
+      account: 'user104',
+      name: 'user104',
+      avatar: 'http://placekitten.com/g/600/600',
+    },
+  },
+  {
+    id: 65,
+    description:
+      '以前讀過一個網路廣傳的文章，大意是說哈佛大學學生之所以優秀，是因為他們都睡很少晚上都還在唸書，配圖還搭上哈佛圖書館整晚通亮的樣子。',
+    createdAt: '2023-03-23T05:24:59.000Z',
+    replyCounts: 2,
+    likeCounts: 5,
+    isLiked: 1,
+    User: {
+      id: 105,
+      account: 'user105',
+      name: 'user105',
+      avatar: 'https://api.lorem.space/image/face?w=350&h=350',
+    },
+  },
+];
+
+const tweetsByUser = [
+  {
+    id: 60,
+    description:
+      'Eveniet fuga quibusdam ad veritatis aut tempora deserunt.\nRepudiandae consequatur asperiores esse.\nDelectus iusto ipsa.',
+    createdAt: '2023-03-24T08:02:38.000Z',
+    updatedAt: '2023-03-24T08:02:38.000Z',
+    UserId: 125,
+  },
+  {
+    id: 61,
+    description:
+      'Accusamus asperiores expedita animi et ipsa commodi nobis rerum.\nVoluptatem dicta porro nulla nostrum neque cupiditate.\nAut ex porro iste beatae sit.\nMagni sapiente voluptas totam optio ducimus.\nOccaecati voluptatibus beatae necessitatibus nisi maiores.',
+    createdAt: '2023-03-24T08:02:38.000Z',
+    updatedAt: '2023-03-24T08:02:38.000Z',
+    UserId: 125,
+  },
+  {
+    id: 62,
+    description:
+      'Doloribus similique labore quisquam molestias asperiores vitae doloribus.\nQuidem sunt corrupti.\nPraesentium libero nobis optio nobis ducimus asperiores alias libero quam.\nLabore soluta labore fuga libero accusamus.',
+    createdAt: '2023-03-24T08:02:38.000Z',
+    updatedAt: '2023-03-24T08:02:38.000Z',
+    UserId: 125,
+  },
+];
+
+const repliesByUser = [
+  {
+    id: 4,
+    comment:
+      'Vel explicabo voluptas laborum unde unde ipsum tempora laudantium debitis.\nMolestias commodi voluptatem delectus distinctio.',
+    createdAt: '2023-03-24T08:02:39.000Z',
+    updatedAt: '2023-03-24T08:02:39.000Z',
+    UserId: 2,
+    TweetId: 18,
+  },
+  {
+    id: 6,
+    comment:
+      'Occaecati facilis et deleniti facilis.\nAb corporis ducimus ducimus minima.\nQuae vero impedit optio deserunt voluptates labore laudantium a quos.\nFacilis perferendis ipsa nisi enim illo quibusdam culpa cumque maxime.',
+    createdAt: '2023-03-24T08:02:39.000Z',
+    updatedAt: '2023-03-24T08:02:39.000Z',
+    UserId: 2,
+    TweetId: 25,
+  },
+  {
+    id: 15,
+    comment: 'Totam eius odit assumenda odio dolores libero asperiores.',
+    createdAt: '2023-03-24T08:02:39.000Z',
+    updatedAt: '2023-03-24T08:02:39.000Z',
+    UserId: 2,
+    TweetId: 41,
   },
 ];
 
@@ -177,6 +320,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-20T15:44:34.000Z',
     updatedAt: '2023-03-20T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 100,
@@ -189,6 +334,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-21T15:44:34.000Z',
     updatedAt: '2023-03-21T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 101,
@@ -202,6 +349,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 102,
@@ -215,6 +364,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 103,
@@ -228,6 +379,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 104,
@@ -241,6 +394,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 105,
@@ -254,6 +409,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 106,
@@ -267,6 +424,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 107,
@@ -279,6 +438,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 108,
@@ -292,6 +453,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 109,
@@ -305,6 +468,8 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
   {
     id: 110,
@@ -318,7 +483,17 @@ const users = [
     isAdmin: false,
     createdAt: '2023-03-22T15:44:34.000Z',
     updatedAt: '2023-03-22T15:44:34.000Z',
+    followerCounts: 1,
+    followingCounts: 1,
   },
 ];
 
-export { tweets, replies, currentUser, users };
+export {
+  tweets,
+  replies,
+  likes,
+  currentUser,
+  users,
+  tweetsByUser,
+  repliesByUser,
+};

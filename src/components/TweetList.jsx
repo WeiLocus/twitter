@@ -1,7 +1,7 @@
 /* eslint-disable operator-assignment */
 import { useState } from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { ReactComponent as CommentIcon } from '../assets/Comment.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
 import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
@@ -70,6 +70,10 @@ const StyledListItem = styled.li`
     color: var(--color-secondary);
     font-size: var(--fs-small);
 
+    &.disable {
+      pointer-events: none;
+    }
+
     .stat {
       display: flex;
       align-items: center;
@@ -88,12 +92,12 @@ const StyledListItem = styled.li`
   }
 `;
 
-function TweetItem({ user, tweet }) {
+function TweetItem({ currentUser, tweet }) {
+  const { pathname } = useLocation();
   const { id, description, createdAt, replyCounts, likeCounts, isLiked, User } =
     tweet;
   const [showModal, setShowModal] = useState(false);
   const [currentIsLiked, setCurrentIsLiked] = useState(isLiked); // todo to be fixed
-  // * 需要另外計算時間
   const timeAgo = countTimeDiff(createdAt);
 
   const handleShowModal = () => {
@@ -109,20 +113,20 @@ function TweetItem({ user, tweet }) {
   return (
     <>
       <StyledListItem>
-        <NavLink to={`/users/${User.id}/tweets`}>
-          <img src={User.avatar} alt="avatar" />
+        <NavLink to={`/users/${User ? User.id : currentUser.id}/tweets`}>
+          <img src={User ? User.avatar : currentUser.avatar} alt="avatar" />
         </NavLink>
         <div>
           <div className="user">
-            <b>{User.name}</b>
-            <span>@{User.account}</span>
+            <b>{User ? User.name : currentUser.name}</b>
+            <span>@{User ? User.account : currentUser.account}</span>
             <span>．</span>
             <span>{timeAgo}</span>
           </div>
           <NavLink to={`/tweets/${id}`}>
             <p className="content">{description}</p>
           </NavLink>
-          <div className="stats">
+          <div className={`stats ${pathname.includes('users') && 'disable'}`}>
             <NavLink onClick={handleShowModal} className="stat">
               <span>
                 <CommentIcon className="icon" />
@@ -130,7 +134,7 @@ function TweetItem({ user, tweet }) {
               <span>{replyCounts}</span>
             </NavLink>
             <NavLink className="stat">
-              {currentIsLiked ? (
+              {likeCounts > 0 ? (
                 <LikeBlackIcon className="icon" onClick={handleLike} />
               ) : (
                 <LikeIcon className="icon" onClick={handleLike} />
@@ -141,47 +145,64 @@ function TweetItem({ user, tweet }) {
         </div>
       </StyledListItem>
       {showModal && (
-        <ReplyModal user={user} tweet={tweet} onClose={handleShowModal} />
+        <ReplyModal
+          currentUser={currentUser}
+          tweet={tweet}
+          onClose={handleShowModal}
+        />
       )}
     </>
   );
 }
 
-function ReplyItem({ tweet }) {
-  const { description, createdAt, User } = tweet;
+function ReplyItem({ currentUser, reply, replyTo }) {
+  const { comment, createdAt, User } = reply;
   const timeAgo = countTimeDiff(createdAt);
 
   return (
     <StyledListItem>
-      <NavLink to={`/users/${User.id}/tweets`}>
-        <img src={User.avatar} alt="avatar" />
+      <NavLink to={`/users/${User ? User.id : currentUser.id}/tweets`}>
+        <img src={User ? User.avatar : currentUser.avatar} alt="avatar" />
       </NavLink>
       <div>
         <div className="user">
-          <b>{User.name}</b>
-          <span>@{User.account}</span>
+          <b>{User ? User.name : currentUser.name}</b>
+          <span>@{User ? User.account : currentUser.account}</span>
           <span>．</span>
           <span>{timeAgo}</span>
         </div>
         <p className="reply">
           回覆
-          <span>@Apple</span>
+          <span>@{replyTo || 'user'}</span>
         </p>
-        <p className="content">{description}</p>
+        <p className="content">{comment}</p>
       </div>
     </StyledListItem>
   );
 }
 
-export default function TweetList({ type, user, tweets }) {
+function TweetList({ user, tweets }) {
   const renderedItems = tweets.map((tweet) => {
-    if (type === 'reply') {
-      return <ReplyItem tweet={tweet} key={tweet.id} />;
-    }
-    return <TweetItem user={user} tweet={tweet} key={tweet.id} />;
+    return <TweetItem key={tweet.id} currentUser={user} tweet={tweet} />;
   });
 
   return <StyledList>{renderedItems}</StyledList>;
 }
 
-export { StyledListItem };
+function ReplyList({ user, replies, replyTo }) {
+  const renderedItems = replies.map((reply) => {
+    return (
+      <ReplyItem key={reply.id} user={user} reply={reply} replyTo={replyTo} />
+    );
+  });
+  return <StyledList>{renderedItems}</StyledList>;
+}
+
+export {
+  StyledListItem,
+  StyledList,
+  TweetList,
+  ReplyList,
+  TweetItem,
+  ReplyItem,
+};
