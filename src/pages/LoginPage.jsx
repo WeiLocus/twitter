@@ -33,9 +33,7 @@ export default function LoginPage() {
 
     if (token) {
       localStorage.setItem('token', token);
-      if (localStorage.getItem('token')) {
-        setShowSuccessMsg(true);
-      }
+      setShowSuccessMsg(true);
     }
   };
 

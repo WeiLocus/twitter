@@ -13,6 +13,7 @@ const StyledAuthButton = styled.button`
 
   &:hover {
     cursor: pointer;
+    background-color: var(--color-light-orange);
   }
   @media screen and (${device.sm}) {
     width: 50%;
