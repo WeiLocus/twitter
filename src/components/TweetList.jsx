@@ -92,7 +92,7 @@ const StyledListItem = styled.li`
   }
 `;
 
-function TweetItem({ currentUser, tweet }) {
+function TweetItem({ currentUser, tweet, shownUser }) {
   const { pathname } = useLocation();
   const { id, description, createdAt, replyCounts, likeCounts, isLiked, User } =
     tweet;
@@ -113,13 +113,13 @@ function TweetItem({ currentUser, tweet }) {
   return (
     <>
       <StyledListItem>
-        <NavLink to={`/users/${User ? User.id : currentUser.id}/tweets`}>
-          <img src={User ? User.avatar : currentUser.avatar} alt="avatar" />
+        <NavLink to={`/users/${shownUser ? shownUser.id : User.id}/tweets`}>
+          <img src={shownUser ? shownUser.avatar : User.avatar} alt="avatar" />
         </NavLink>
         <div>
           <div className="user">
-            <b>{User ? User.name : currentUser.name}</b>
-            <span>@{User ? User.account : currentUser.account}</span>
+            <b>{shownUser ? shownUser.name : User.name}</b>
+            <span>@{shownUser ? shownUser.account : User.account}</span>
             <span>．</span>
             <span>{timeAgo}</span>
           </div>
@@ -155,19 +155,19 @@ function TweetItem({ currentUser, tweet }) {
   );
 }
 
-function ReplyItem({ currentUser, reply, replyTo }) {
+function ReplyItem({ reply, replyTo, shownUser }) {
   const { comment, createdAt, User } = reply;
   const timeAgo = countTimeDiff(createdAt);
 
   return (
     <StyledListItem>
-      <NavLink to={`/users/${User ? User.id : currentUser.id}/tweets`}>
-        <img src={User ? User.avatar : currentUser.avatar} alt="avatar" />
+      <NavLink to={`/users/${shownUser ? shownUser.id : User.id}/tweets`}>
+        <img src={shownUser ? shownUser.avatar : User.avatar} alt="avatar" />
       </NavLink>
       <div>
         <div className="user">
-          <b>{User ? User.name : currentUser.name}</b>
-          <span>@{User ? User.account : currentUser.account}</span>
+          <b>{shownUser ? shownUser.name : User.name}</b>
+          <span>@{shownUser ? shownUser.account : User.account}</span>
           <span>．</span>
           <span>{timeAgo}</span>
         </div>
@@ -189,11 +189,9 @@ function TweetList({ user, tweets }) {
   return <StyledList>{renderedItems}</StyledList>;
 }
 
-function ReplyList({ user, replies, replyTo }) {
+function ReplyList({ replies, replyTo }) {
   const renderedItems = replies.map((reply) => {
-    return (
-      <ReplyItem key={reply.id} user={user} reply={reply} replyTo={replyTo} />
-    );
+    return <ReplyItem key={reply.id} reply={reply} replyTo={replyTo} />;
   });
   return <StyledList>{renderedItems}</StyledList>;
 }

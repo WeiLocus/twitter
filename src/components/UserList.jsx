@@ -7,7 +7,14 @@ import { tweetsByUser, repliesByUser, likes } from '../dummyData';
 function UserTweetList() {
   const { currentUser, shownUser } = useOutletContext();
   const renderedItems = tweetsByUser.map((tweet) => {
-    return <TweetItem currentUser={currentUser} tweet={tweet} key={tweet.id} />;
+    return (
+      <TweetItem
+        currentUser={currentUser}
+        tweet={tweet}
+        shownUser={shownUser}
+        key={tweet.id}
+      />
+    );
   });
   return <StyledList>{renderedItems}</StyledList>;
 }
@@ -15,7 +22,14 @@ function UserTweetList() {
 function UserReplyList() {
   const { currentUser, shownUser } = useOutletContext();
   const renderedItems = repliesByUser.map((reply) => {
-    return <ReplyItem currentUser={currentUser} reply={reply} key={reply.id} />;
+    return (
+      <ReplyItem
+        currentUser={currentUser}
+        reply={reply}
+        shownUser={shownUser}
+        key={reply.id}
+      />
+    );
   });
   return <StyledList>{renderedItems}</StyledList>;
 }
@@ -23,7 +37,14 @@ function UserReplyList() {
 function UserLikeList() {
   const { currentUser, shownUser } = useOutletContext();
   const renderedItems = likes.map((tweet) => {
-    return <TweetItem currentUser={currentUser} tweet={tweet} key={tweet.id} />;
+    return (
+      <TweetItem
+        currentUser={currentUser}
+        tweet={tweet}
+        shownUser={shownUser}
+        key={tweet.id}
+      />
+    );
   });
   return <StyledList>{renderedItems}</StyledList>;
 }
