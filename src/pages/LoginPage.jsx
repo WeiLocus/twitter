@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
 import { login } from '../api/auth';
@@ -11,6 +11,7 @@ import {
 } from '../components/auth.styled';
 import AuthInput from '../components/elements/Input';
 import AuthButton from '../components/elements/Button';
+import Alert from '../components/elements/Alert';
 
 // title style
 const StyledTitle = styled.div`
@@ -21,7 +22,7 @@ const StyledTitle = styled.div`
 export default function LoginPage() {
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
-
+  const [showSuccessMsg, setShowSuccessMsg] = useState(false);
   const navigate = useNavigate();
 
   // 確認登入狀況
@@ -32,9 +33,20 @@ export default function LoginPage() {
 
     if (token) {
       localStorage.setItem('token', token);
-      navigate('/tweets');
+      if (localStorage.getItem('token')) {
+        setShowSuccessMsg(true);
+      }
     }
   };
+
+  useEffect(() => {
+    if (showSuccessMsg) {
+      setTimeout(() => {
+        setShowSuccessMsg(false);
+        navigate('/tweets');
+      }, 1000);
+    }
+  }, [showSuccessMsg, navigate]);
 
   return (
     <AuthContainer>
@@ -69,6 +81,8 @@ export default function LoginPage() {
           <AuthLinkText>後台登入</AuthLinkText>
         </Link>
       </AuthLinkContainer>
+      {showSuccessMsg && <Alert type="success" message="登入成功" />}
+      {console.log(showSuccessMsg)}
     </AuthContainer>
   );
 }
