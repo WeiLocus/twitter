@@ -191,13 +191,9 @@ function TweetList({ user, tweets }) {
 
 function ReplyList({ replies, replyTo }) {
   const renderedItems = replies.map((reply) => {
-<<<<<<< HEAD
     return (
       <ReplyItem key={reply.id} reply={reply} replyTo={replyTo.User.account} />
     );
-=======
-    return <ReplyItem key={reply.id} reply={reply} replyTo={replyTo} />;
->>>>>>> bugfix/fix-tweetitem-data-format
   });
   return <StyledList>{renderedItems}</StyledList>;
 }
