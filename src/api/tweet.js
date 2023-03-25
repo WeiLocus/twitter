@@ -24,7 +24,6 @@ axiosInstance.interceptors.request.use(
 export async function getTweets() {
   try {
     const res = await axiosInstance.get(`${baseURL}/tweets`);
-    console.log(res);
     return res.data;
   } catch (error) {
     console.error('[Get Tweets failed]: ', error);
@@ -35,7 +34,6 @@ export async function getTweets() {
 export async function getSingleTweet(id) {
   try {
     const res = await axiosInstance.get(`${baseURL}/tweets/${id}`);
-    console.log(res);
     return res.data;
   } catch (error) {
     console.error('[Get Single Tweet failed]: ', error);
@@ -57,7 +55,7 @@ export async function createTweet(payload) {
 export async function getReplies(id) {
   try {
     const res = await axiosInstance.get(`${baseURL}/tweets/${id}/replies`);
-    return res;
+    return res.data;
   } catch (error) {
     console.error('[Get Replies failed]: ', error);
   }
