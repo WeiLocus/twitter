@@ -39,35 +39,14 @@ export default function ReplyPage() {
         const replies = await getReplies(id);
         if (replies !== undefined) {
           console.log(`tweet ${id} replies get!`);
-          localStorage.setItem(
-            `storedTweetReplies${id}`,
-            JSON.stringify(replies)
-          );
           setTweetReplies(replies);
-        } else {
-          localStorage.setItem(`storedTweetReplies${id}`, JSON.stringify([]));
         }
-
-        localStorage.setItem(`storedTweet${id}`, JSON.stringify(tweet));
-
         setSelectedTweet(tweet);
-
         setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
     };
-    const storedSelectedTweet = JSON.parse(
-      localStorage.getItem(`storedTweet${id}`)
-    );
-    const storedSelectedTweetReplies = JSON.parse(
-      localStorage.getItem(`storedTweetReplies${id}`)
-    );
-    if (storedSelectedTweet && storedSelectedTweetReplies) {
-      setSelectedTweet(storedSelectedTweet);
-      setTweetReplies(storedSelectedTweetReplies);
-      return setIsLoading(false);
-    }
     getSingleTweetAsync();
   }, []);
 
@@ -106,14 +85,7 @@ export default function ReplyPage() {
         User: { ...selectedTweet.User },
         replyCounts: selectedTweet.replyCounts + 1,
       };
-      localStorage.setItem(
-        `storedTweetReplies${id}`,
-        JSON.stringify(nextTweetReplies)
-      );
-      localStorage.setItem(
-        `storedTweet${id}`,
-        JSON.stringify(nextSelectedTweet)
-      );
+
       setTweetReplies(nextTweetReplies);
       setSelectedTweet(nextSelectedTweet);
       setReplyInput('');

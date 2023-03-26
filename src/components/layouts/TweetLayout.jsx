@@ -43,7 +43,6 @@ export default function TweetLayout() {
       ];
       setTweets(nextTweets);
       setTweetInput('');
-      localStorage.setItem('storedTweets', JSON.stringify(nextTweets));
       return { status: 'ok' };
     } catch (error) {
       console.log(error);
