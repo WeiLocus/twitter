@@ -42,7 +42,7 @@ export async function getUserData(id) {
   }
 }
 
-// * 取得特定使用者發過的貼文
+// * 取得特定使用者發過的推文
 export async function getUserTweets(id) {
   try {
     const res = await axiosInstance.get(`${baseURL}/users/${id}/tweets`);
@@ -62,5 +62,16 @@ export async function getUserReplies(id) {
     return res.data;
   } catch (error) {
     console.error('[Get User Replies failed]: ', error);
+  }
+}
+
+// * 取得特定使用者喜歡的推文
+export async function getUserLikes(id) {
+  try {
+    const res = await axiosInstance.get(`${baseURL}/users/${id}/likes`);
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.error('[Get User Likes failed]: ', error);
   }
 }
