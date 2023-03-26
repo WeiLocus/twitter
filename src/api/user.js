@@ -36,7 +36,6 @@ export async function getCurrentUser() {
 export async function getUserData(id) {
   try {
     const res = await axiosInstance.get(`${baseURL}/users/${id}`);
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error('[Get User Data failed]: ', error);
@@ -47,7 +46,8 @@ export async function getUserData(id) {
 export async function getUserTweets(id) {
   try {
     const res = await axiosInstance.get(`${baseURL}/users/${id}/tweets`);
-    return res;
+    console.log(res.data);
+    return res.data;
   } catch (error) {
     console.error('[Get User Tweets failed]: ', error);
   }

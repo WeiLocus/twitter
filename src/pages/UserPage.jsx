@@ -4,9 +4,8 @@ import styled from 'styled-components';
 import BeatLoader from 'react-spinners/BeatLoader';
 import Header from '../components/Header';
 import Profile from '../components/Profile';
-import { currentUser, users } from '../dummyData';
 import { useUser } from '../contexts/UserContext';
-import { getUserData } from '../api/user';
+import { getUserData, getUserTweets } from '../api/user';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 73px);
@@ -29,14 +28,18 @@ export default function UserPage() {
   const { pathname } = useLocation();
   const { currentUser } = useUser();
   const [shownUser, setShownUser] = useState(currentUser);
+  const [shownUserTweets, setshownUserTweets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getUserProfileAsync = async () => {
       try {
         const user = await getUserData(id);
-        console.log(`user ${id} data get!`);
+        console.log(`user ${id} profile get!`);
+        const userTweets = await getUserTweets(id);
+        console.log(`user ${id} tweets get!`);
         setShownUser(user);
+        setshownUserTweets(userTweets);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -61,10 +64,10 @@ export default function UserPage() {
             {!pathname.includes('follow') && (
               <Profile user={shownUser} key={shownUser.id} />
             )}
+            <Outlet context={{ currentUser, shownUser, shownUserTweets }} />
           </StyledDiv>
         </>
       )}
     </>
   );
 }
-// <Outlet context={{ currentUser, shownUser }} />
