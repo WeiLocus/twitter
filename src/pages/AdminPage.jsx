@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
 import {
@@ -11,7 +11,7 @@ import {
 import AuthInput from '../components/elements/Input';
 import AuthButton from '../components/elements/Button';
 import Alert from '../components/elements/Alert';
-import { adminLogin } from '../api/auth';
+import { adminLogin, login } from '../api/auth';
 
 // title style
 const StyledTitle = styled.div`
@@ -58,6 +58,13 @@ export default function AdminPage() {
       }, 1000);
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (token) {
+      navigate('/admin/tweets');
+    }
+  }, [navigate]);
   return (
     <AuthContainer>
       <div>
