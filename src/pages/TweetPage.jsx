@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import BeatLoader from 'react-spinners/BeatLoader';
 import Header from '../components/Header';
 import TweetInput from '../components/TweetInput';
 import { TweetList } from '../components/TweetList';
@@ -9,6 +10,15 @@ import { getTweets } from '../api/tweet';
 const StyledDiv = styled.div`
   height: calc(100vh - 68px);
   overflow-y: scroll;
+`;
+
+const StyledMessage = styled.div`
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  color: var(--color-secondary);
 `;
 
 export default function TweetPage() {
@@ -27,24 +37,18 @@ export default function TweetPage() {
       try {
         const tweets = await getTweets();
         console.log('tweets get!');
-        localStorage.setItem('storedTweets', JSON.stringify(tweets));
         setTweets(tweets);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
     };
-    const storedTweets = JSON.parse(localStorage.getItem('storedTweets'));
-    if (storedTweets) {
-      setTweets(storedTweets);
-      return setIsLoading(false);
-    }
     getTweetsAsync();
   }, []);
 
   return (
     <>
-      <Header headerText="首頁" />
+      <Header headerText="測試" />
       <StyledDiv>
         <TweetInput
           tweetInput={tweetInput}
@@ -52,7 +56,16 @@ export default function TweetPage() {
           onChange={handleInputChange}
           onAddTweet={handleAddTweet}
         />
-        <TweetList user={currentUser} tweets={tweets} type="tweet" />
+        {!isLoading && (
+          <TweetList user={currentUser} tweets={tweets} type="tweet" />
+        )}
+        {isLoading && (
+          <StyledMessage>
+            <div>
+              <BeatLoader color="var(--color-theme)" />
+            </div>
+          </StyledMessage>
+        )}
       </StyledDiv>
     </>
   );
