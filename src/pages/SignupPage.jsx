@@ -10,6 +10,7 @@ import {
 import AuthInput from '../components/elements/Input';
 import AuthButton from '../components/elements/Button';
 import { register } from '../api/auth';
+import Alert from '../components/elements/Alert';
 
 // title style
 const StyledTitle = styled.div`
@@ -24,26 +25,50 @@ export default function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
+  const [showErrorMsg, setShowErrorMsg] = useState('');
   // 確認名稱長度
   const nameLength = name.length;
   const navigate = useNavigate();
 
   // 註冊後導引至登入
   const handleClick = async () => {
-    if (account.length === 0) return;
-    if (name.length === 0) return;
-    if (email.length === 0) return;
-    if (password.length === 0) return;
-    if (checkPassword.length === 0) return;
-
-    await register({
+    if (
+      account.length === 0 ||
+      name.length === 0 ||
+      email.length === 0 ||
+      password.length === 0 ||
+      checkPassword.length === 0
+    ) {
+      setShowErrorMsg('欄位不可空白!');
+      setTimeout(() => {
+        setShowErrorMsg(false);
+      }, 1000);
+      return;
+    }
+    if (password !== checkPassword) {
+      setShowErrorMsg('密碼與確認密碼不符!');
+      setTimeout(() => {
+        setShowErrorMsg(false);
+      }, 1000);
+      return;
+    }
+    const { status, message } = await register({
       account,
       name,
       email,
       password,
       checkPassword,
     });
-    navigate('/login');
+    if (status !== 'error') {
+      navigate('/login');
+    }
+    if (status === 'error' && message) {
+      console.log(message);
+      setShowErrorMsg(message);
+      setTimeout(() => {
+        setShowErrorMsg(false);
+      }, 1000);
+    }
   };
 
   return (
@@ -99,6 +124,7 @@ export default function SignupPage() {
       <Link to="/login">
         <AuthLinkText>取消</AuthLinkText>
       </Link>
+      {showErrorMsg && <Alert type="error" message={showErrorMsg} />}
     </AuthContainer>
   );
 }

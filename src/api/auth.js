@@ -53,10 +53,14 @@ export async function register({
       checkPassword,
     });
     // 印出回傳值data
-    console.log('data', data);
+    // console.log('data', data);
 
-    return { ...data.data };
+    return { ...data };
   } catch (error) {
+    const { data, status } = error.response;
+    if (status === 400) {
+      return { status: 'error', message: data.message };
+    }
     console.log('[Register Failed]', error);
   }
 }
