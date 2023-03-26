@@ -1,11 +1,10 @@
 /* eslint-disable operator-assignment */
 import { useState } from 'react';
 import styled from 'styled-components';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { ReactComponent as CommentIcon } from '../assets/Comment.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
 import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
-import { ReplyModal } from './elements/TweetModal';
 import { countTimeDiff } from '../utilities';
 
 const StyledList = styled.ul`
@@ -70,10 +69,6 @@ const StyledListItem = styled.li`
     color: var(--color-secondary);
     font-size: var(--fs-small);
 
-    &.disable {
-      pointer-events: none;
-    }
-
     .stat {
       display: flex;
       align-items: center;
@@ -84,26 +79,15 @@ const StyledListItem = styled.li`
       cursor: pointer;
       width: 15px;
       height: 15px;
-
-      &:hover {
-        color: var(--color-theme);
-      }
     }
   }
 `;
 
-function TweetItem({ currentUser, tweet, shownUser }) {
-  const { pathname } = useLocation();
+function TweetItem({ tweet, shownUser }) {
   const { id, description, createdAt, replyCounts, likeCounts, isLiked, User } =
     tweet;
-  const [showModal, setShowModal] = useState(false);
   const [currentIsLiked, setCurrentIsLiked] = useState(isLiked); // todo to be fixed
   const timeAgo = countTimeDiff(createdAt);
-
-  const handleShowModal = () => {
-    const nextShowModal = !showModal;
-    setShowModal(nextShowModal);
-  };
 
   const handleLike = () => {
     const nextCurrentIsLiked = !currentIsLiked;
@@ -111,47 +95,38 @@ function TweetItem({ currentUser, tweet, shownUser }) {
   };
 
   return (
-    <>
-      <StyledListItem>
-        <NavLink to={`/users/${shownUser ? shownUser.id : User.id}/tweets`}>
-          <img src={shownUser ? shownUser.avatar : User.avatar} alt="avatar" />
+    <StyledListItem>
+      <NavLink to={`/users/${shownUser ? shownUser.id : User.id}/tweets`}>
+        <img src={shownUser ? shownUser.avatar : User.avatar} alt="avatar" />
+      </NavLink>
+      <div>
+        <div className="user">
+          <b>{shownUser ? shownUser.name : User.name}</b>
+          <span>@{shownUser ? shownUser.account : User.account}</span>
+          <span>．</span>
+          <span>{timeAgo}</span>
+        </div>
+        <NavLink to={`/tweets/${id}`}>
+          <p className="content">{description}</p>
         </NavLink>
-        <div>
-          <div className="user">
-            <b>{shownUser ? shownUser.name : User.name}</b>
-            <span>@{shownUser ? shownUser.account : User.account}</span>
-            <span>．</span>
-            <span>{timeAgo}</span>
+        <div className="stats">
+          <div className="stat">
+            <span>
+              <CommentIcon className="icon" />
+            </span>
+            <span>{replyCounts}</span>
           </div>
-          <NavLink to={`/tweets/${id}`}>
-            <p className="content">{description}</p>
-          </NavLink>
-          <div className={`stats ${pathname.includes('users') && 'disable'}`}>
-            <NavLink onClick={handleShowModal} className="stat">
-              <span>
-                <CommentIcon className="icon" />
-              </span>
-              <span>{replyCounts}</span>
-            </NavLink>
-            <NavLink className="stat">
-              {likeCounts > 0 ? (
-                <LikeBlackIcon className="icon" onClick={handleLike} />
-              ) : (
-                <LikeIcon className="icon" onClick={handleLike} />
-              )}
-              <span>{likeCounts}</span>
-            </NavLink>
+          <div className="stat">
+            {likeCounts > 0 ? (
+              <LikeBlackIcon className="icon" onClick={handleLike} />
+            ) : (
+              <LikeIcon className="icon" onClick={handleLike} />
+            )}
+            <span>{likeCounts}</span>
           </div>
         </div>
-      </StyledListItem>
-      {showModal && (
-        <ReplyModal
-          currentUser={currentUser}
-          tweet={tweet}
-          onClose={handleShowModal}
-        />
-      )}
-    </>
+      </div>
+    </StyledListItem>
   );
 }
 
