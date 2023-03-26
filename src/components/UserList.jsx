@@ -1,7 +1,6 @@
-// ! 暫時先放這邊
 import { useOutletContext } from 'react-router-dom';
 import { StyledList, TweetItem, ReplyItem } from './TweetList';
-import { tweetsByUser, repliesByUser, likes } from '../dummyData';
+import { repliesByUser, likes } from '../dummyData';
 
 function UserTweetList() {
   const { shownUser, shownUserTweets } = useOutletContext();

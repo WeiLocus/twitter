@@ -59,7 +59,12 @@ export default function UserPage() {
       )}
       {!isLoading && (
         <>
-          <Header headerText={shownUser.name} user={shownUser} goBack />
+          <Header
+            headerText={shownUser.name}
+            user={shownUser}
+            goBack
+            shownUserTweets={shownUserTweets}
+          />
           <StyledDiv>
             {!pathname.includes('follow') && (
               <Profile user={shownUser} key={shownUser.id} />
