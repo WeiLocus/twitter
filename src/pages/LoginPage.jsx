@@ -57,6 +57,13 @@ export default function LoginPage() {
     }
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/tweets');
+    }
+  }, [navigate]);
+
   return (
     <AuthContainer>
       <div>
