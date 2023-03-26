@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
 import { ReactComponent as HomeIcon } from '../assets/Home.svg';
@@ -65,11 +65,17 @@ const StyledNavButton = styled.button`
 export function Navbar({ tweetInput, currentUser, onChange, onAddTweet }) {
   const { pathname } = useLocation();
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleShowModal = () => {
     const nextShowModal = !showModal;
     setShowModal(nextShowModal);
   };
+
+  const handleUserLogoutClick = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  }
 
   return (
     <>
@@ -126,7 +132,7 @@ export function Navbar({ tweetInput, currentUser, onChange, onAddTweet }) {
           <StyledNavButton onClick={handleShowModal}>推文</StyledNavButton>
         </div>
         <ul>
-          <StyledLi>
+          <StyledLi onClick={handleUserLogoutClick}>
             <div className="icon">
               <LogoutIcon />
             </div>
@@ -149,6 +155,12 @@ export function Navbar({ tweetInput, currentUser, onChange, onAddTweet }) {
 
 export function AdminNavbar() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  const handleAdminLogoutClick = () => {
+    localStorage.removeItem('adminToken');
+    navigate('/admin');
+  };
 
   return (
     <StyledNav>
@@ -187,7 +199,7 @@ export function AdminNavbar() {
         </ul>
       </div>
       <ul>
-        <StyledLi>
+        <StyledLi onClick={handleAdminLogoutClick}>
           <div className="icon">
             <LogoutIcon />
           </div>
