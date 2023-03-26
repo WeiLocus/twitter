@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useNavigate } from 'react-router-dom';
 import BeatLoader from 'react-spinners/BeatLoader';
 import Header from '../components/Header';
 import TweetInput from '../components/TweetInput';
@@ -22,6 +22,7 @@ const StyledMessage = styled.div`
 `;
 
 export default function TweetPage() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const {
     currentUser,
@@ -31,6 +32,13 @@ export default function TweetPage() {
     handleInputChange,
     handleAddTweet,
   } = useOutletContext();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const getTweetsAsync = async () => {
@@ -48,7 +56,7 @@ export default function TweetPage() {
 
   return (
     <>
-      <Header headerText="測試" />
+      <Header headerText="首頁" />
       <StyledDiv>
         <TweetInput
           tweetInput={tweetInput}
