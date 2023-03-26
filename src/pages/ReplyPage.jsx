@@ -100,12 +100,23 @@ export default function ReplyPage() {
         },
         ...tweetReplies,
       ];
-      setTweetReplies(nextTweetReplies);
-      setReplyInput('');
+
+      const nextSelectedTweet = {
+        ...selectedTweet,
+        User: { ...selectedTweet.User },
+        replyCounts: selectedTweet.replyCounts + 1,
+      };
       localStorage.setItem(
         `storedTweetReplies${id}`,
         JSON.stringify(nextTweetReplies)
       );
+      localStorage.setItem(
+        `storedTweet${id}`,
+        JSON.stringify(nextSelectedTweet)
+      );
+      setTweetReplies(nextTweetReplies);
+      setSelectedTweet(nextSelectedTweet);
+      setReplyInput('');
       return { status: 'ok' };
     } catch (error) {
       console.log(error);

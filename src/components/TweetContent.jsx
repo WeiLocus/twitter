@@ -92,7 +92,7 @@ export default function TweetContent({
   onChange,
   onAddReply,
 }) {
-  const { id, description, createdAt, replyCounts, likeCounts, isLiked, User } =
+  const { description, createdAt, replyCounts, likeCounts, isLiked, User } =
     tweet;
   const { convertedDate, convertedTime } = getConvertedTime(createdAt);
   const [showModal, setShowModal] = useState(false);
