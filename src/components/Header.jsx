@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as GoBackIcon } from '../assets/GoBack.svg';
 
@@ -36,12 +36,17 @@ const StyledHeader = styled.header`
   }
 `;
 export default function Header({ headerText, goBack, user }) {
+  const { pathname } = useLocation();
   // todo 需要計算該使用者貼文總數
   const tweetsCount = undefined ?? 25;
   return (
     <StyledHeader>
       {goBack && (
-        <NavLink to={user ? `users/${user.id}/tweets` : '/tweets'}>
+        <NavLink
+          to={
+            pathname.includes('follow') ? `users/${user.id}/tweets` : '/tweets'
+          }
+        >
           <GoBackIcon />
         </NavLink>
       )}

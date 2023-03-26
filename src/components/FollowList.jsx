@@ -122,7 +122,7 @@ function FollowItem({ user }) {
 }
 
 export default function FollowList() {
-  const shownUser = useOutletContext();
+  const { shownUser } = useOutletContext();
   const renderedFollowItem = users.map((user) => {
     return <FollowItem user={user} key={user.id} />;
   });

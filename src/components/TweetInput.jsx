@@ -48,8 +48,13 @@ const StyledButtonDiv = styled.div`
   }
 `;
 
-export default function TweetInput({ user }) {
-  const { id, avatar } = user;
+export default function TweetInput({
+  tweetInput,
+  currentUser,
+  onChange,
+  onAddTweet,
+}) {
+  const { avatar } = currentUser;
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
@@ -70,7 +75,15 @@ export default function TweetInput({ user }) {
           </button>
         </StyledButtonDiv>
       </StyledDiv>
-      {showModal && <TweetModal user={user} onClose={handleShowModal} />}
+      {showModal && (
+        <TweetModal
+          tweetInput={tweetInput}
+          currentUser={currentUser}
+          onClose={handleShowModal}
+          onChange={onChange}
+          onAddTweet={onAddTweet}
+        />
+      )}
     </>
   );
 }
