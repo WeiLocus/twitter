@@ -85,10 +85,11 @@ export default function ReplyPage() {
         User: { ...selectedTweet.User },
         replyCounts: selectedTweet.replyCounts + 1,
       };
-
-      setTweetReplies(nextTweetReplies);
-      setSelectedTweet(nextSelectedTweet);
-      setReplyInput('');
+      setTimeout(() => {
+        setTweetReplies(nextTweetReplies);
+        setSelectedTweet(nextSelectedTweet);
+        setReplyInput('');
+      }, 2000);
       return { status: 'ok' };
     } catch (error) {
       console.log(error);

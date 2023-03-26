@@ -151,9 +151,11 @@ export function TweetModal({
 }) {
   const { avatar } = currentUser;
   const [errorMessage, setErrorMessage] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     if (!tweetInput.length) {
       setErrorMessage('內容不可空白');
       return;
@@ -165,8 +167,11 @@ export function TweetModal({
     // 這邊要發送修改請求
     const { status } = await onAddTweet();
     if (status === 'ok') {
-      setErrorMessage(null);
-      onClose();
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setErrorMessage(null);
+        onClose();
+      }, 2000);
     }
   };
 
@@ -205,7 +210,7 @@ export function TweetModal({
                   {errorMessage}
                 </span>
                 <button type="submit" onClick={handleSubmit}>
-                  推文
+                  {isSubmitting ? '送出中...' : '推文'}
                 </button>
               </div>
             </div>
@@ -227,10 +232,12 @@ export function ReplyModal({
   const { avatar } = currentUser;
   const { User, createdAt, description } = tweet;
   const timeAgo = countTimeDiff(createdAt);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     if (!replyInput.length) {
       setErrorMessage('內容不可空白');
       return;
@@ -242,8 +249,11 @@ export function ReplyModal({
     // 這邊要發送修改請求
     const { status } = await onAddReply();
     if (status === 'ok') {
-      setErrorMessage(null);
-      onClose();
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setErrorMessage(null);
+        onClose();
+      }, 2000);
     }
   };
 
@@ -297,7 +307,7 @@ export function ReplyModal({
                   {errorMessage}
                 </span>
                 <button type="submit" onClick={handleSubmit}>
-                  回覆
+                  {isSubmitting ? '送出中...' : '回覆'}
                 </button>
               </div>
             </div>
