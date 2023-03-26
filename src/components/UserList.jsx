@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
 import { StyledList, TweetItem, ReplyItem } from './TweetList';
-import { repliesByUser, likes } from '../dummyData';
+import { likes } from '../dummyData';
 
 function UserTweetList() {
   const { shownUser, shownUserTweets } = useOutletContext();
@@ -11,17 +11,18 @@ function UserTweetList() {
 }
 
 function UserReplyList() {
-  const { currentUser, shownUser } = useOutletContext();
-  const renderedItems = repliesByUser.map((reply) => {
+  const { shownUser, shownUserReplies } = useOutletContext();
+  const renderedItems = shownUserReplies.map((reply) => {
     return (
       <ReplyItem
-        currentUser={currentUser}
         reply={reply}
         shownUser={shownUser}
         key={reply.id}
+        replyTo={reply.replyTo}
       />
     );
   });
+
   return <StyledList>{renderedItems}</StyledList>;
 }
 
