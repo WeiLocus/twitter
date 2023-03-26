@@ -138,9 +138,9 @@ export function Navbar({ tweetInput, currentUser, onChange, onAddTweet }) {
         <TweetModal
           tweetInput={tweetInput}
           currentUser={currentUser}
-          onClose={handleShowModal}
           onChange={onChange}
           onAddTweet={onAddTweet}
+          onClose={handleShowModal}
         />
       )}
     </>
