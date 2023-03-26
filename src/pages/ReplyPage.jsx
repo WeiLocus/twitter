@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import TweetContent from '../components/TweetContent';
 import { ReplyList } from '../components/TweetList';
 import { useUser } from '../contexts/UserContext';
-import { getSingleTweet, getReplies } from '../api/tweet';
+import { getSingleTweet, getReplies, addReply } from '../api/tweet';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 68px);
@@ -77,17 +77,20 @@ export default function ReplyPage() {
 
   const handleAddReply = async () => {
     try {
-      // const data = await addTweet({ description: tweetInput });
-      // if (data === 'error') return;
+      const data = await addReply({
+        id: selectedTweet.id,
+        comment: replyInput,
+      });
+      if (data === 'error') return;
       console.log(
         `user ${currentUser.id} just submitted a reply to tweet ${selectedTweet.id}: ${replyInput}`
       );
       // 重新setTweets
       const nextTweetReplies = [
         {
-          id: 999, // data.id
-          comment: replyInput, // data.comment
-          createdAt: '2023-03-25T05:24:29.000Z', // data.createdAt
+          id: data.id,
+          comment: data.comment,
+          createdAt: data.createdAt,
           User: {
             id: currentUser.id,
             account: currentUser.account,

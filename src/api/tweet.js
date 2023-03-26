@@ -64,13 +64,13 @@ export async function getReplies(id) {
 }
 
 // * 在特定貼文新增回覆
-export async function createReply(payload) {
+export async function addReply(payload) {
   const { id, comment } = payload;
   try {
     const res = await axiosInstance.post(`${baseURL}/tweets/${id}/replies`, {
       comment,
     });
-    return res.replyInput;
+    return res.data;
   } catch (error) {
     console.error('[Create Reply failed]: ', error);
   }
