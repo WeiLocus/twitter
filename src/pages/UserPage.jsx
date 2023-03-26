@@ -5,7 +5,12 @@ import BeatLoader from 'react-spinners/BeatLoader';
 import Header from '../components/Header';
 import Profile from '../components/Profile';
 import { useUser } from '../contexts/UserContext';
-import { getUserData, getUserTweets, getUserReplies } from '../api/user';
+import {
+  getUserData,
+  getUserTweets,
+  getUserReplies,
+  getUserLikes,
+} from '../api/user';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 73px);
@@ -30,10 +35,11 @@ export default function UserPage() {
   const [shownUser, setShownUser] = useState(currentUser);
   const [shownUserTweets, setShownUserTweets] = useState([]);
   const [shownUserReplies, setShownUserReplies] = useState([]);
+  const [shownUserLikes, setShownUserLikes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const getUserProfileAsync = async () => {
+    const getUserPageDataAsync = async () => {
       try {
         const user = await getUserData(id);
         console.log(`user ${id} profile get!`);
@@ -41,15 +47,18 @@ export default function UserPage() {
         console.log(`user ${id} tweets get!`);
         const userReplies = await getUserReplies(id);
         console.log(`user ${id} replies get!`);
+        const userLikes = await getUserLikes(id);
+        console.log(`user ${id} likes get!`);
         setShownUser(user);
         setShownUserTweets(userTweets);
         setShownUserReplies(userReplies);
+        setShownUserLikes(userLikes);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
     };
-    getUserProfileAsync();
+    getUserPageDataAsync();
   }, [id]);
 
   return (
@@ -79,6 +88,7 @@ export default function UserPage() {
                 shownUser,
                 shownUserTweets,
                 shownUserReplies,
+                shownUserLikes,
               }}
             />
           </StyledDiv>
