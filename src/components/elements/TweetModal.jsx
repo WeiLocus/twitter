@@ -216,33 +216,35 @@ export function TweetModal({
   );
 }
 
-export function ReplyModal({ currentUser, tweet, onClose }) {
-  const { id, avatar } = currentUser;
+export function ReplyModal({
+  tweet,
+  currentUser,
+  replyInput,
+  onChange,
+  onAddReply,
+  onClose,
+}) {
+  const { avatar } = currentUser;
   const { User, createdAt, description } = tweet;
   const timeAgo = countTimeDiff(createdAt);
-  const [replyComment, setReplyComment] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const handleCommentChange = (e) => {
-    setReplyComment(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!replyComment.length) {
+    if (!replyInput.length) {
       setErrorMessage('內容不可空白');
       return;
     }
-    if (replyComment.length > 140) {
+    if (replyInput.length > 140) {
       setErrorMessage('字數不可超過 140 字');
       return;
     }
     // 這邊要發送修改請求
-    console.log(
-      `user ${id} just submitted a reply to user @${User.account}: ${replyComment}`
-    );
-    setErrorMessage(null);
-    setReplyComment('');
+    const { status } = await onAddReply();
+    if (status === 'ok') {
+      setErrorMessage(null);
+      onClose();
+    }
   };
 
   useEffect(() => {
@@ -282,12 +284,14 @@ export function ReplyModal({ currentUser, tweet, onClose }) {
             <textarea
               name="reply"
               id="reply-content"
-              value={replyComment}
+              value={replyInput}
               placeholder="推你的回覆"
-              onChange={handleCommentChange}
+              onChange={(event) => {
+                onChange?.(event.target.value);
+              }}
             />
             <div className="submit">
-              <span>{`${replyComment.length}/140`}</span>
+              <span>{`${replyInput.length}/140`}</span>
               <div>
                 <span className={errorMessage ? 'error' : undefined}>
                   {errorMessage}
