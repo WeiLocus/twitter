@@ -58,6 +58,7 @@ export default function UserPage() {
         console.error(error);
       }
     };
+    setIsLoading(true);
     getUserPageDataAsync();
   }, [id]);
 

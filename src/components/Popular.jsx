@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { users } from '../dummyData.js';
+import BeatLoader from 'react-spinners/BeatLoader';
+import { useUser } from '../contexts/UserContext.jsx';
+import { getTopUsers } from '../api/user.js';
 
 const StyledPopularAside = styled.aside`
   overflow-y: scroll;
@@ -14,6 +16,12 @@ const StyledPopularAside = styled.aside`
     border-bottom: 1px solid var(--color-gray-300);
     font-size: var(--fs-h4);
   }
+`;
+
+const StyledLoadingDiv = styled.div`
+  height: 25rem;
+  display: grid;
+  place-items: center;
 `;
 
 const StyledPopularItem = styled.li`
@@ -72,8 +80,10 @@ const StyledPopularItem = styled.li`
 
 export default function Popular() {
   const asideRef = useRef(null);
-  const renderedPopularUsers = users.map((user) => {
-    return <PopularItem key={user.id} user={user} />;
+  const [isLoading, setIsLoading] = useState(true);
+  const [popularUsers, setPopularUsers] = useState([]);
+  const renderedPopularUsers = popularUsers.map((user) => {
+    return <PopularItem key={user.followingId} user={user} />;
   });
 
   useEffect(() => {
@@ -82,37 +92,62 @@ export default function Popular() {
     }
   }, []);
 
+  useEffect(() => {
+    const getPopularUsersAsync = async () => {
+      try {
+        const users = await getTopUsers();
+        console.log('top users get!');
+        setPopularUsers(users);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getPopularUsersAsync();
+  }, []);
+
   return (
     <StyledPopularAside ref={asideRef}>
       <h2>推薦跟隨</h2>
-      <ul>{renderedPopularUsers}</ul>
+      {isLoading ? (
+        <StyledLoadingDiv>
+          <div>
+            <BeatLoader color="var(--color-theme)" />
+          </div>
+        </StyledLoadingDiv>
+      ) : (
+        <ul>{renderedPopularUsers}</ul>
+      )}
     </StyledPopularAside>
   );
 }
 
 function PopularItem({ user }) {
-  const { id, name, account, avatar } = user;
-  const [isFollowing, setIsFollowing] = useState(false);
+  const { userFollowings } = useUser();
+  const { followingId, name, account, avatar } = user;
+  const isFollowed = userFollowings.includes(followingId);
+
   const handleFollow = () => {
-    setIsFollowing((prev) => !prev);
+    // setIsFollowing((prev) => !prev);
   };
+
   return (
     <StyledPopularItem isFollowing>
       <div className="avatar">
-        <NavLink to={`users/${id}/tweets`}>
+        <NavLink to={`users/${followingId}/tweets`}>
           <img src={avatar} alt="avatar" />
         </NavLink>
       </div>
-      <div className={`user ${isFollowing ? 'active' : undefined}`}>
+      <div className={`user ${isFollowed ? 'active' : undefined}`}>
         <b>{name}</b>
         <p>@{account}</p>
       </div>
       <button
-        className={isFollowing ? 'active' : undefined}
+        className={isFollowed ? 'active' : undefined}
         type="button"
         onClick={handleFollow}
       >
-        {isFollowing ? '正在跟隨' : '跟隨'}
+        {isFollowed ? '正在跟隨' : '跟隨'}
       </button>
     </StyledPopularItem>
   );
