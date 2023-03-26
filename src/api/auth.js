@@ -56,4 +56,34 @@ export async function register({
   }
 }
 
-export default { login, register };
+// admin login
+export async function adminLogin({ account, password }) {
+  try {
+    const { data } = await axios.post(`${baseURL}/admin/signin`, {
+      account,
+      password,
+    });
+
+    // 如果登入成功，拿得到token
+    const { token } = data;
+    // 判斷是否登入要回傳的內容
+    if (token) {
+      return { ...data };
+    }
+    return data;
+  } catch (error) {
+    const { data, status } = error.response;
+    if (status === 400) {
+      return { status: 'error', message: data.message };
+    }
+    if (status === 403) {
+      return { status: 'error', message: data.message };
+    }
+    if (status === 404) {
+      return { status: 'error', message: data.message };
+    }
+    console.log('[Login Failed]:', error);
+  }
+}
+
+export default { login, register, adminLogin };
