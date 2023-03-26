@@ -37,14 +37,18 @@ export default function LoginPage() {
       }, 1000);
       return;
     }
-    const { token, status, message } = await login({ account, password });
+    const { token, status, message, isAdmin } = await login({
+      account,
+      password,
+    });
+    console.log('isAdmin', isAdmin);
 
-    if (token) {
+    if (token || isAdmin === false) {
       localStorage.setItem('token', token);
       setShowSuccessMsg(true);
       setTimeout(() => {
         setShowSuccessMsg(false);
-        navigate('/tweets');
+        // navigate('/tweets');
       }, 1000);
     }
     // get error message

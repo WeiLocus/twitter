@@ -4,21 +4,13 @@ const baseURL = 'https://murmuring-plains-40389.herokuapp.com/api';
 
 // eslint-disable-next-line consistent-return
 // login api
-export async function login({ account, password, isAdmin = false }) {
+export async function login({ account, password }) {
   try {
-    console.log(isAdmin);
-    const url = isAdmin ? `${baseURL}/admin/users` : `${baseURL}/users/signin`;
-    console.log(url);
-    const method = isAdmin ? 'GET' : 'POST';
-    const { data } = await axios({
-      method,
-      url,
-      data: {
-        account,
-        password,
-      },
+    const { data } = await axios.post(`${baseURL}/users/signin`, {
+      account,
+      password,
     });
-    console.log('data', data);
+
     // 如果登入成功，拿得到token
     const { token } = data;
 
@@ -30,9 +22,6 @@ export async function login({ account, password, isAdmin = false }) {
   } catch (error) {
     const { data, status } = error.response;
     if (status === 400) {
-      return { status: 'error', message: data.message };
-    }
-    if (status === 403) {
       return { status: 'error', message: data.message };
     }
     if (status === 404) {
