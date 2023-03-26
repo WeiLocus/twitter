@@ -41,14 +41,14 @@ export default function LoginPage() {
       account,
       password,
     });
-    console.log('isAdmin', isAdmin);
+    // console.log('isAdmin', isAdmin);
 
-    if (token || isAdmin === false) {
+    if (token && isAdmin === false) {
       localStorage.setItem('token', token);
       setShowSuccessMsg(true);
       setTimeout(() => {
         setShowSuccessMsg(false);
-        // navigate('/tweets');
+        navigate('/tweets');
       }, 1000);
     }
     // get error message
