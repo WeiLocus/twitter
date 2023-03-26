@@ -36,7 +36,8 @@ export async function getCurrentUser() {
 export async function getUserData(id) {
   try {
     const res = await axiosInstance.get(`${baseURL}/users/${id}`);
-    return res;
+    console.log(res.data);
+    return res.data;
   } catch (error) {
     console.error('[Get User Data failed]: ', error);
   }
