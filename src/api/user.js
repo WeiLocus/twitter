@@ -109,7 +109,7 @@ export async function getTopUsers() {
   }
 }
 
-// * 修改個人資料
+// * 修改個人資料 settings
 export async function changeUserInformation({
   id,
   account,
@@ -131,5 +131,22 @@ export async function changeUserInformation({
     return { data, status };
   } catch (error) {
     console.error('[Change User Information failed]: ', error);
+  }
+}
+
+// * 修改個人資料 profile
+export async function changeUserProfile(payload) {
+  const { id, name, introduction, avatar, cover } = payload;
+  try {
+    const res = await axiosInstance.put(`${baseURL}/users/${id}`, {
+      name,
+      introduction,
+      avatar,
+      cover,
+    });
+    const { data, status } = res;
+    return { data, status };
+  } catch (error) {
+    console.error('[Change User Profile failed]: ', error);
   }
 }
