@@ -11,7 +11,7 @@ axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -106,5 +106,30 @@ export async function getTopUsers() {
     return res.data;
   } catch (error) {
     console.error('[Get Top Users failed]: ', error);
+  }
+}
+
+// * 修改個人資料
+export async function changeUserInformation({
+  id,
+  account,
+  name,
+  email,
+  password,
+  checkPassword,
+}) {
+  try {
+    const response = await axiosInstance.put(`${baseURL}/users/${id}/setting`, {
+      account,
+      name,
+      email,
+      password,
+      checkPassword,
+    });
+    const { data, status } = response;
+    console.log(data);
+    return { data, status };
+  } catch (error) {
+    console.error('[Change User Information failed]: ', error);
   }
 }
