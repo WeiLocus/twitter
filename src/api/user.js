@@ -119,22 +119,20 @@ export async function changeUserInformation({
   checkPassword,
 }) {
   try {
-    const { data } = await axios.put(`${baseURL}/users/${id}/setting`, {
-      id,
+    const data = await axiosInstance.put(`${baseURL}/users/${id}/setting`, {
       account,
       name,
       email,
       password,
       checkPassword,
     });
-    console.log(data);
-    return { ...data };
+    return data;
   } catch (error) {
     const { data, status } = error.response;
     if (status === 400) {
       return { status: 'error', message: data.message };
     }
-    if (status === 403) {
+    if (status === 401) {
       return { status: 'error', message: data.message };
     }
     if (status === 404) {

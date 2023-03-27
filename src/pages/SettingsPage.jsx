@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import AuthInput from '../components/elements/Input';
 import { useUser } from '../contexts/UserContext';
@@ -35,21 +36,16 @@ const StyledButtonDiv = styled.div`
 export default function SettingsPage() {
   const { currentUser, setCurrentUser } = useUser();
   const nextUser = { ...currentUser };
-  const {
-    id,
-    account: userAccount,
-    name: userName,
-    email: userEmail,
-  } = nextUser;
-
+  const { account: userAccount, name: userName, email: userEmail } = nextUser;
   const [account, setAccount] = useState(userAccount);
   const [name, setName] = useState(userName);
   const [email, setEmail] = useState(userEmail);
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const nameLength = name.length;
-  console.log('account', userAccount);
+
   const handleClick = async () => {
+    console.log(`users ${currentUser.id}`);
     if (
       account.length === 0 ||
       name.length === 0 ||
@@ -60,21 +56,22 @@ export default function SettingsPage() {
       console.log('不可空白');
     }
     if (password !== checkPassword) return;
-
-    const { data, status, message } = await changeUserInformation(
-      id,
+    const data = await changeUserInformation({
+      id: currentUser.id,
       account,
       name,
       email,
       password,
-      checkPassword
-    );
-    console.log(data);
-    setCurrentUser(data);
-    console.log(`user ${id}`);
-    if (status === 'error' && message) {
-      console.log('error', message);
-    }
+      checkPassword,
+    });
+    // 將新data修正至 currentUser
+    const newCurrentUser = {
+      account: data.account,
+      name: data.name,
+      email: data.email,
+      ...currentUser,
+    };
+    setCurrentUser(newCurrentUser);
   };
   return (
     <>
