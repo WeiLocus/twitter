@@ -18,6 +18,7 @@ const StyledMessage = styled.div`
   margin: 0 auto;
   display: grid;
   place-items: center;
+  border-inline: 2px solid var(--color-gray-200);
   color: var(--color-secondary);
 `;
 

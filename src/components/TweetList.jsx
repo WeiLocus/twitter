@@ -148,7 +148,7 @@ function ReplyItem({ reply, replyTo, shownUser }) {
         </div>
         <p className="reply">
           回覆
-          <span>@{replyTo || 'user'}</span>
+          <span>@{replyTo}</span>
         </p>
         <p className="content">{comment}</p>
       </div>

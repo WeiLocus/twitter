@@ -36,17 +36,17 @@ export async function getCurrentUser() {
 export async function getUserData(id) {
   try {
     const res = await axiosInstance.get(`${baseURL}/users/${id}`);
-    return res;
+    return res.data;
   } catch (error) {
     console.error('[Get User Data failed]: ', error);
   }
 }
 
-// * 取得特定使用者發過的貼文
+// * 取得特定使用者發過的推文
 export async function getUserTweets(id) {
   try {
     const res = await axiosInstance.get(`${baseURL}/users/${id}/tweets`);
-    return res;
+    return res.data;
   } catch (error) {
     console.error('[Get User Tweets failed]: ', error);
   }
@@ -58,8 +58,19 @@ export async function getUserReplies(id) {
     const res = await axiosInstance.get(
       `${baseURL}/users/${id}/replied_tweets`
     );
-    return res;
+    return res.data;
   } catch (error) {
     console.error('[Get User Replies failed]: ', error);
+  }
+}
+
+// * 取得特定使用者喜歡的推文
+export async function getUserLikes(id) {
+  try {
+    const res = await axiosInstance.get(`${baseURL}/users/${id}/likes`);
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.error('[Get User Likes failed]: ', error);
   }
 }

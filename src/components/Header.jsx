@@ -35,10 +35,8 @@ const StyledHeader = styled.header`
     }
   }
 `;
-export default function Header({ headerText, goBack, user }) {
+export default function Header({ headerText, goBack, user, shownUserTweets }) {
   const { pathname } = useLocation();
-  // todo 需要計算該使用者貼文總數
-  const tweetsCount = undefined ?? 25;
   return (
     <StyledHeader>
       {goBack && (
@@ -53,7 +51,7 @@ export default function Header({ headerText, goBack, user }) {
       <div className={user && 'small'}>
         <h1>{headerText}</h1>
         <p>
-          <span>{tweetsCount}</span>推文
+          <span>{shownUserTweets?.length}</span>推文
         </p>
       </div>
     </StyledHeader>

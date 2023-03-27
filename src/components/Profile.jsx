@@ -5,6 +5,7 @@ import { ReactComponent as EmailIcon } from '../assets/Email.svg';
 import { ReactComponent as NotificationIcon } from '../assets/Notification.svg';
 import EditModal from './elements/EditModal';
 import { currentUser } from '../dummyData';
+import { useUser } from '../contexts/UserContext';
 
 const StyledDiv = styled.div`
   position: relative;
@@ -128,6 +129,7 @@ const StyledTabs = styled.div`
 `;
 
 export default function Profile({ user }) {
+  const { currentUser } = useUser();
   const {
     id,
     name,
@@ -137,11 +139,10 @@ export default function Profile({ user }) {
     cover,
     followerCounts,
     followingCounts,
+    isFollowed,
   } = user;
   // todo 需要再調整
   // 該使用者是否於目前登入的使用者的跟隨清單中
-  const isFollowing = undefined ?? true;
-  // todo
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
@@ -170,10 +171,10 @@ export default function Profile({ user }) {
                   <NotificationIcon />
                 </span>
                 <button
-                  className={isFollowing ? 'active' : undefined}
+                  className={isFollowed ? 'active' : undefined}
                   type="button"
                 >
-                  {isFollowing ? '正在追蹤' : '追蹤'}
+                  {isFollowed ? '正在追蹤' : '追蹤'}
                 </button>
               </>
             )}
