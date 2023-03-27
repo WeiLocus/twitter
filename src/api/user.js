@@ -119,25 +119,17 @@ export async function changeUserInformation({
   checkPassword,
 }) {
   try {
-    const data = await axiosInstance.put(`${baseURL}/users/${id}/setting`, {
+    const response = await axiosInstance.put(`${baseURL}/users/${id}/setting`, {
       account,
       name,
       email,
       password,
       checkPassword,
     });
-    return data;
+    const { data, status } = response;
+    console.log(data);
+    return { data, status };
   } catch (error) {
-    const { data, status } = error.response;
-    if (status === 400) {
-      return { status: 'error', message: data.message };
-    }
-    if (status === 401) {
-      return { status: 'error', message: data.message };
-    }
-    if (status === 404) {
-      return { status: 'error', message: data.message };
-    }
     console.error('[Change User Information failed]: ', error);
   }
 }

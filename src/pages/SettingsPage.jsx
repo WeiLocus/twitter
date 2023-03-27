@@ -56,6 +56,7 @@ export default function SettingsPage() {
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const [showErrorMsg, setShowErrorMsg] = useState('');
+  const [showSuccessMsg, setShowSuccessMsg] = useState(false);
   const nameLength = name.length;
 
   const handleClick = async () => {
@@ -80,9 +81,15 @@ export default function SettingsPage() {
       return;
     }
     const token = localStorage.getItem('token');
-    if (!token) return;
+    if (!token) {
+      setShowErrorMsg('unauthorized');
+      setTimeout(() => {
+        setShowErrorMsg(false);
+      }, 1000);
+      return;
+    }
 
-    const data = await changeUserInformation({
+    const { data, status } = await changeUserInformation({
       id: currentUser.id,
       account,
       name,
@@ -90,6 +97,13 @@ export default function SettingsPage() {
       password,
       checkPassword,
     });
+    console.log(status);
+    if (data && status === 200) {
+      setShowSuccessMsg(true);
+      setTimeout(() => {
+        setShowSuccessMsg(false);
+      }, 1000);
+    }
     // 將新data修正至 currentUser
     const newCurrentUser = {
       account: data.account,
@@ -106,6 +120,11 @@ export default function SettingsPage() {
         {showErrorMsg && (
           <StyledDiv>
             <Alert type="error" message={showErrorMsg} />
+          </StyledDiv>
+        )}
+        {showSuccessMsg && (
+          <StyledDiv>
+            <Alert type="success" message="修改成功" />
           </StyledDiv>
         )}
         <StyledInputContainer>
