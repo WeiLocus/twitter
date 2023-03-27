@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import BeatLoader from 'react-spinners/BeatLoader';
 import Header from '../components/Header';
 import TweetContent from '../components/TweetContent';
 import { ReplyList } from '../components/TweetList';
-import { currentUser } from '../dummyData';
-import { getSingleTweet, getReplies } from '../api/tweet';
-import BeatLoader from 'react-spinners/BeatLoader';
+import { useUser } from '../contexts/UserContext';
+import { getSingleTweet, getReplies, addReply } from '../api/tweet';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 68px);
@@ -25,8 +25,10 @@ const StyledMessage = styled.div`
 export default function ReplyPage() {
   // 注意 id 是字串
   const { id } = useParams();
+  const { currentUser } = useUser();
   const [selectedTweet, setSelectedTweet] = useState({});
   const [tweetReplies, setTweetReplies] = useState([]);
+  const [replyInput, setReplyInput] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -37,37 +39,63 @@ export default function ReplyPage() {
         const replies = await getReplies(id);
         if (replies !== undefined) {
           console.log(`tweet ${id} replies get!`);
-          localStorage.setItem(
-            `storedTweetReplies${id}`,
-            JSON.stringify(replies)
-          );
           setTweetReplies(replies);
-        } else {
-          localStorage.setItem(`storedTweetReplies${id}`, JSON.stringify([]));
         }
-
-        localStorage.setItem(`storedTweet${id}`, JSON.stringify(tweet));
-
         setSelectedTweet(tweet);
-
         setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
     };
-    const storedSelectedTweet = JSON.parse(
-      localStorage.getItem(`storedTweet${id}`)
-    );
-    const storedSelectedTweetReplies = JSON.parse(
-      localStorage.getItem(`storedTweetReplies${id}`)
-    );
-    if (storedSelectedTweet && storedSelectedTweetReplies) {
-      setSelectedTweet(storedSelectedTweet);
-      setTweetReplies(storedSelectedTweetReplies);
-      return setIsLoading(false);
-    }
     getSingleTweetAsync();
   }, []);
+
+  const handleInputChange = (value) => {
+    setReplyInput(value);
+  };
+
+  const handleAddReply = async () => {
+    try {
+      const data = await addReply({
+        id: selectedTweet.id,
+        comment: replyInput,
+      });
+      if (data === 'error') return;
+      console.log(
+        `user ${currentUser.id} just submitted a reply to tweet ${selectedTweet.id}: ${replyInput}`
+      );
+      // 重新setTweets
+      const nextTweetReplies = [
+        {
+          id: data.id,
+          comment: data.comment,
+          createdAt: data.createdAt,
+          User: {
+            id: currentUser.id,
+            account: currentUser.account,
+            name: currentUser.name,
+            avatar: currentUser.avatar,
+          },
+        },
+        ...tweetReplies,
+      ];
+
+      const nextSelectedTweet = {
+        ...selectedTweet,
+        User: { ...selectedTweet.User },
+        replyCounts: selectedTweet.replyCounts + 1,
+      };
+      setTimeout(() => {
+        setTweetReplies(nextTweetReplies);
+        setSelectedTweet(nextSelectedTweet);
+        setReplyInput('');
+      }, 2000);
+      return { status: 'ok' };
+    } catch (error) {
+      console.log(error);
+      return { status: 'error' };
+    }
+  };
 
   return (
     <>
@@ -79,7 +107,13 @@ export default function ReplyPage() {
           </StyledMessage>
         )}
         {!isLoading && (
-          <TweetContent tweet={selectedTweet} user={currentUser} />
+          <TweetContent
+            tweet={selectedTweet}
+            currentUser={currentUser}
+            replyInput={replyInput}
+            onChange={handleInputChange}
+            onAddReply={handleAddReply}
+          />
         )}
         {!isLoading && tweetReplies !== null && (
           <ReplyList replies={tweetReplies} replyTo={selectedTweet} />

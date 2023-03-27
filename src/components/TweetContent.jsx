@@ -85,8 +85,14 @@ const StyledDiv = styled.div`
   }
 `;
 
-export default function TweetContent({ tweet, user }) {
-  const { id, description, createdAt, replyCounts, likeCounts, isLiked, User } =
+export default function TweetContent({
+  tweet,
+  currentUser,
+  replyInput,
+  onChange,
+  onAddReply,
+}) {
+  const { description, createdAt, replyCounts, likeCounts, isLiked, User } =
     tweet;
   const { convertedDate, convertedTime } = getConvertedTime(createdAt);
   const [showModal, setShowModal] = useState(false);
@@ -144,7 +150,10 @@ export default function TweetContent({ tweet, user }) {
       {showModal && (
         <ReplyModal
           tweet={tweet}
-          currentUser={user}
+          currentUser={currentUser}
+          replyInput={replyInput}
+          onChange={onChange}
+          onAddReply={onAddReply}
           onClose={handleShowModal}
         />
       )}
