@@ -26,9 +26,9 @@ function UserReplyList() {
 }
 
 function UserLikeList() {
-  const { shownUser, shownUserLikes } = useOutletContext();
+  const { shownUserLikes } = useOutletContext();
   const renderedItems = shownUserLikes.map((tweet) => {
-    return <TweetItem key={tweet.id} tweet={tweet} shownUser={shownUser} />;
+    return <TweetItem key={tweet.id} tweet={tweet} />;
   });
   return <StyledList>{renderedItems}</StyledList>;
 }
