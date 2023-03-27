@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Header from '../components/Header';
 import AuthInput from '../components/elements/Input';
 import { useUser } from '../contexts/UserContext';
+import { changeUserInformation } from '../api/user';
 
 const StyedSettingsContainer = styled.div`
   height: calc(100vh - 68px);
@@ -32,13 +33,49 @@ const StyledButtonDiv = styled.div`
 `;
 
 export default function SettingsPage() {
-  const { currentUser } = useUser();
-  const { account, name, email } = currentUser;
-  const [changeAccount, setChangeAccount] = useState(account);
-  const [changeName, setChangeName] = useState(name);
-  const [changeEmail, setChangeEmail] = useState(email);
+  const { currentUser, setCurrentUser } = useUser();
+  const nextUser = { ...currentUser };
+  const {
+    id,
+    account: userAccount,
+    name: userName,
+    email: userEmail,
+  } = nextUser;
+
+  const [account, setAccount] = useState(userAccount);
+  const [name, setName] = useState(userName);
+  const [email, setEmail] = useState(userEmail);
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
+  const nameLength = name.length;
+  console.log('account', userAccount);
+  const handleClick = async () => {
+    if (
+      account.length === 0 ||
+      name.length === 0 ||
+      email.length === 0 ||
+      password.length === 0 ||
+      checkPassword.length === 0
+    ) {
+      console.log('不可空白');
+    }
+    if (password !== checkPassword) return;
+
+    const { data, status, message } = await changeUserInformation(
+      id,
+      account,
+      name,
+      email,
+      password,
+      checkPassword
+    );
+    console.log(data);
+    setCurrentUser(data);
+    console.log(`user ${id}`);
+    if (status === 'error' && message) {
+      console.log('error', message);
+    }
+  };
   return (
     <>
       <Header headerText="帳戶設定" />
@@ -47,24 +84,25 @@ export default function SettingsPage() {
           <AuthInput
             label="帳號"
             placeholder="請輸入帳號"
-            value={changeAccount}
-            onChange={(accountInput) => setChangeAccount(accountInput)}
+            value={account}
+            onChange={(accountInput) => setAccount(accountInput)}
           />
         </StyledInputContainer>
         <StyledInputContainer>
           <AuthInput
             label="名稱"
             placeholder="請輸入使用者名稱"
-            value={changeName}
-            onChange={(nameInput) => setChangeName(nameInput)}
+            value={name}
+            onChange={(nameInput) => setName(nameInput)}
+            InputLength={nameLength}
           />
         </StyledInputContainer>
         <StyledInputContainer>
           <AuthInput
             label="Email"
             placeholder="請輸入Email"
-            value={changeEmail}
-            onChange={(emailInput) => setChangeEmail(emailInput)}
+            value={email}
+            onChange={(emailInput) => setEmail(emailInput)}
           />
         </StyledInputContainer>
         <StyledInputContainer>
@@ -86,7 +124,9 @@ export default function SettingsPage() {
           />
         </StyledInputContainer>
         <StyledButtonDiv>
-          <button type="button">儲存</button>
+          <button type="button" onClick={handleClick}>
+            儲存
+          </button>
         </StyledButtonDiv>
       </StyedSettingsContainer>
     </>
