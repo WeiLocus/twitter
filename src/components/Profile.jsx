@@ -128,7 +128,7 @@ const StyledTabs = styled.div`
 `;
 
 export default function Profile({ user }) {
-  const { currentUser, userFollowings } = useUser();
+  const { currentUser, userFollowings, handleFollow } = useUser();
   const {
     id,
     name,
@@ -146,6 +146,11 @@ export default function Profile({ user }) {
     const nextShowModal = !showModal;
     setShowModal(nextShowModal);
   };
+
+  const handleFollowBtnClick = () => {
+    handleFollow(id);
+  };
+
   return (
     <>
       <StyledDiv>
@@ -170,8 +175,9 @@ export default function Profile({ user }) {
                 <button
                   className={isFollowed ? 'active' : undefined}
                   type="button"
+                  onClick={handleFollowBtnClick}
                 >
-                  {isFollowed ? '正在追蹤' : '追蹤'}
+                  {isFollowed ? '正在跟隨' : '跟隨'}
                 </button>
               </>
             )}
