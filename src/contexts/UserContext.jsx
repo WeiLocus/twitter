@@ -28,6 +28,11 @@ function UserProvider({ children }) {
   const [userFollowings, setUserFollowings] = useState(dummyArray);
   const [userLikes, setUserLikes] = useState(dummyArray);
 
+  const handleUserUpdate = (data) => {
+    setCurrentUser(data);
+    console.log('user data updated');
+  };
+
   const handleFollow = async (id) => {
     if (userFollowings.includes(id)) {
       await unfollowUser(id);
@@ -70,6 +75,7 @@ function UserProvider({ children }) {
         setUserLikes,
         handleFollow,
         handleLike,
+        handleUserUpdate,
       }}
     >
       {children}
