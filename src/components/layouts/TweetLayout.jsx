@@ -5,10 +5,15 @@ import { Navbar } from '../Navbar';
 import Popular from '../Popular';
 import { useUser } from '../../contexts/UserContext';
 import { addTweet } from '../../api/tweet';
-import { getCurrentUser, getUserFollowings } from '../../api/user';
+import {
+  getCurrentUser,
+  getUserFollowings,
+  getUserLikes,
+} from '../../api/user';
 
 export default function TweetLayout() {
-  const { currentUser, setCurrentUser, setUserFollowings } = useUser();
+  const { currentUser, setCurrentUser, setUserFollowings, setUserLikes } =
+    useUser();
   const [tweets, setTweets] = useState([]);
   const [tweetInput, setTweetInput] = useState('');
   const { pathname } = useLocation();
@@ -56,16 +61,30 @@ export default function TweetLayout() {
   useEffect(() => {
     const getUserAsync = async () => {
       try {
+        // get user data
         const user = await getCurrentUser();
         console.log(`user ${user.id} just logged in`);
+        // get user followinds
         const followings = await getUserFollowings(user.id);
+<<<<<<< HEAD
         const followingUsers = followings.map((following) => following.id);
         console.log(followingUsers);
+=======
+        const followingUsers = followings.map(
+          (following) => following.followingId
+        );
+>>>>>>> 04f3985 (feat: connect like/unlike api to tweet content)
         console.log('user following list get');
+        // get user likes
+        const likes = await getUserLikes(user.id);
+        const likedTweets = likes.map((tweet) => tweet.id);
+        console.log(likedTweets);
+        console.log('user liked tweets get');
         setCurrentUser(user);
         setUserFollowings(followingUsers);
+        setUserLikes(likedTweets);
         console.log('user context loaded');
-      } catch {
+      } catch (error) {
         console.error(error);
       }
     };

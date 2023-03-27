@@ -6,6 +6,7 @@ import { ReactComponent as LikeIcon } from '../assets/Like.svg';
 import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
 import { ReplyModal } from './elements/TweetModal';
 import { getConvertedTime } from '../utilities';
+import { useUser } from '../contexts/UserContext';
 
 const StyledDiv = styled.div`
   padding: 1rem;
@@ -81,6 +82,10 @@ const StyledDiv = styled.div`
       :hover {
         color: var(--color-theme);
       }
+
+      .disabled {
+        pointer-events: none;
+      }
     }
   }
 `;
@@ -92,20 +97,24 @@ export default function TweetContent({
   onChange,
   onAddReply,
 }) {
-  const { description, createdAt, replyCounts, likeCounts, isLiked, User } =
-    tweet;
+  const { id, description, createdAt, replyCounts, likeCounts, User } = tweet;
   const { convertedDate, convertedTime } = getConvertedTime(createdAt);
+  const { userLikes, handleLike } = useUser();
   const [showModal, setShowModal] = useState(false);
-  const [currentIsLiked, setCurrentIsLiked] = useState(isLiked); // todo to be fixed
+  const [disabled, setDisabled] = useState(false);
+  const isLiked = userLikes.includes(id);
 
   const handleShowModal = () => {
     const nextShowModal = !showModal;
     setShowModal(nextShowModal);
   };
 
-  const handleLike = () => {
-    const nextCurrentIsLiked = !currentIsLiked;
-    setCurrentIsLiked(nextCurrentIsLiked);
+  const handleLikeClick = () => {
+    console.log(id);
+    handleLike(id);
+    // setDisabled(true);
+    // await handleLike(id);
+    // setDisabled(false);
   };
 
   return (
@@ -138,11 +147,11 @@ export default function TweetContent({
           <button type="button" onClick={handleShowModal}>
             <CommentIcon className="icon" />
           </button>
-          <button type="button">
-            {currentIsLiked ? (
-              <LikeBlackIcon onClick={handleLike} />
+          <button type="button" className={disabled ? 'disabled' : 'disabled'}>
+            {isLiked ? (
+              <LikeBlackIcon onClick={handleLikeClick} />
             ) : (
-              <LikeIcon className="icon" onClick={handleLike} />
+              <LikeIcon className="icon" onClick={handleLikeClick} />
             )}
           </button>
         </div>
