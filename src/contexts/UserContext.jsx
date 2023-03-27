@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import { followUser, unfollowUser } from '../api/followship';
 
 const UserContext = createContext(null);
 const dummyUser = {
@@ -25,14 +26,16 @@ function UserProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(dummyUser);
   const [userFollowings, setUserFollowings] = useState(dummyArray);
 
-  const handleFollow = (id) => {
+  const handleFollow = async (id) => {
     if (userFollowings.includes(id)) {
+      await unfollowUser(id);
       const newFollowings = userFollowings.filter(
         (followingId) => followingId !== id
       );
       console.log(newFollowings);
       setUserFollowings(newFollowings);
     } else {
+      await followUser(id);
       const newFollowings = [...userFollowings, id];
       setUserFollowings(newFollowings);
       console.log(newFollowings);
