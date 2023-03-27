@@ -1,6 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { getCurrentUser, getUserFollowings } from '../api/user';
+import { createContext, useContext, useState } from 'react';
 
 const UserContext = createContext(null);
 const dummyUser = {
@@ -25,31 +23,44 @@ function useUser() {
 function UserProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(dummyUser);
   const [userFollowings, setUserFollowings] = useState([]);
-  const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    const getUserAsync = async () => {
-      if (token === undefined) return;
-      try {
-        const user = await getCurrentUser();
-        console.log(`user ${user.id} just logged in`);
-        const followings = await getUserFollowings(user.id);
-        const followingUsers = followings.map(
-          (following) => following.followingId
-        );
-        console.log('user following list get');
-        setCurrentUser(user);
-        setUserFollowings(followingUsers);
-        console.log('user context loaded');
-      } catch {
-        console.error(error);
-      }
-    };
-    getUserAsync();
-  }, [token]);
+  // useEffect(() => {
+  //   const getUserAsync = async () => {
+  //     try {
+  //       const user = await getCurrentUser();
+  //       console.log(`user ${user.id} just logged in`);
+  //       const followings = await getUserFollowings(user.id);
+  //       const followingUsers = followings.map(
+  //         (following) => following.followingId
+  //       );
+  //       console.log('user following list get');
+  //       setCurrentUser(user);
+  //       setUserFollowings(followingUsers);
+  //       console.log('user context loaded');
+  //     } catch {
+  //       console.error(error);
+  //     }
+  //   };
+  //   if (token === undefined) return;
+  //   if (pathname === '/tweets') {
+  //     getUserAsync();
+  //   }
+  // }, [pathname, token]);
+
+  // const handleFollow = (id) => {
+  //   const newFollowings = [ ...userFollowings, id ]
+  //   setUserFollowings(newFollowings);
+  // }
+
+  // const handleUnfollow = (id) => {
+  //   const newFollowings = userFollowings.filter(FollowingId !== id)
+  //   setUserFollowings(newFollowings);
+  // }
 
   return (
-    <UserContext.Provider value={{ currentUser, userFollowings }}>
+    <UserContext.Provider
+      value={{ currentUser, userFollowings, setCurrentUser, setUserFollowings }}
+    >
       {children}
     </UserContext.Provider>
   );
