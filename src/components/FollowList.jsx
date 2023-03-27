@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { NavLink, useOutletContext } from 'react-router-dom';
+import { NavLink, useLocation, useOutletContext } from 'react-router-dom';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { useUser } from '../contexts/UserContext.jsx';
-import { getUserFollowings } from '../api/user.js';
+import { getUserFollowings, getUserFollowers } from '../api/user.js';
 
 const StyledList = styled.ul`
   height: calc(100% - 53px);
@@ -94,19 +94,32 @@ const StyledTab = styled.div`
 `;
 
 export default function FollowList() {
+  const { pathname } = useLocation();
   const { shownUser } = useOutletContext();
   const [isLoading, setIsLoading] = useState(true);
-  const [followingUsers, setFollowingUsers] = useState([]);
-  const renderedFollowItem = followingUsers.map((user) => {
-    return <FollowItem key={user.followingId} user={user} />;
-  });
+  const [userFollowings, setUserFollowings] = useState([]);
+  const [userFollowers, setUserFollowers] = useState([]);
+  let renderedFollowItem;
+
+  if (pathname.includes('following')) {
+    renderedFollowItem = userFollowings.map((user) => {
+      return <FollowItem key={user.id} user={user} />;
+    });
+  } else {
+    renderedFollowItem = userFollowers.map((user) => {
+      return <FollowItem key={user.id} user={user} />;
+    });
+  }
 
   useEffect(() => {
     const getFollowUsersAsync = async () => {
       try {
-        const users = await getUserFollowings(shownUser.id);
+        const followings = await getUserFollowings(shownUser.id);
         console.log('user followings get!');
-        setFollowingUsers(users);
+        const followers = await getUserFollowers(shownUser.id);
+        console.log('user followers get!');
+        setUserFollowings(followings);
+        setUserFollowers(followers);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -138,19 +151,19 @@ function FollowTab({ id }) {
         <p>追隨者</p>
       </NavLink>
       <NavLink className="category" to={`/users/${id}/followings`}>
-        <p>正在追蹤</p>
+        <p>正在追隨</p>
       </NavLink>
     </StyledTab>
   );
 }
 
 function FollowItem({ user }) {
-  const { userFollowings } = useUser();
-  const { followingId, name, avatar, introduction } = user;
-  const isFollowed = userFollowings.includes(followingId);
+  const { userFollowings, handleFollow } = useUser();
+  const { id, name, avatar, introduction } = user;
+  const isFollowed = userFollowings.includes(id);
 
-  const handleFollow = () => {
-    // setIsFollowing((prev) => !prev);
+  const handleFollowBtnClick = () => {
+    handleFollow(id);
   };
 
   return (
@@ -162,7 +175,7 @@ function FollowItem({ user }) {
           <button
             className={`user ${isFollowed && 'active'}`}
             type="button"
-            onClick={handleFollow}
+            onClick={handleFollowBtnClick}
           >
             {isFollowed ? '正在跟隨' : '跟隨'}
           </button>
