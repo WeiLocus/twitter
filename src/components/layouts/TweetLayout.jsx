@@ -66,14 +66,8 @@ export default function TweetLayout() {
         console.log(`user ${user.id} just logged in`);
         // get user followinds
         const followings = await getUserFollowings(user.id);
-<<<<<<< HEAD
         const followingUsers = followings.map((following) => following.id);
         console.log(followingUsers);
-=======
-        const followingUsers = followings.map(
-          (following) => following.followingId
-        );
->>>>>>> 04f3985 (feat: connect like/unlike api to tweet content)
         console.log('user following list get');
         // get user likes
         const likes = await getUserLikes(user.id);
