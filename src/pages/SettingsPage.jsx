@@ -1,12 +1,21 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import AuthInput from '../components/elements/Input';
 import { useUser } from '../contexts/UserContext';
 import { changeUserInformation } from '../api/user';
+import Alert from '../components/elements/Alert';
+
+const StyledDiv = styled.div`
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+`;
 
 const StyedSettingsContainer = styled.div`
+  position: relative;
   height: calc(100vh - 68px);
   overflow-y: scroll;
   padding: 1.6rem;
@@ -30,6 +39,10 @@ const StyledButtonDiv = styled.div`
     border-radius: 3.125rem;
     color: white;
     background-color: var(--color-theme);
+    :hover {
+      border: 1px solid var(--color-light-orange);
+      background-color: var(--color-light-orange);
+    }
   }
 `;
 
@@ -42,10 +55,10 @@ export default function SettingsPage() {
   const [email, setEmail] = useState(userEmail);
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
+  const [showErrorMsg, setShowErrorMsg] = useState('');
   const nameLength = name.length;
 
   const handleClick = async () => {
-    console.log(`users ${currentUser.id}`);
     if (
       account.length === 0 ||
       name.length === 0 ||
@@ -53,9 +66,22 @@ export default function SettingsPage() {
       password.length === 0 ||
       checkPassword.length === 0
     ) {
-      console.log('不可空白');
+      setShowErrorMsg('欄位不可空白!');
+      setTimeout(() => {
+        setShowErrorMsg(false);
+      }, 1000);
+      return;
     }
-    if (password !== checkPassword) return;
+    if (password !== checkPassword) {
+      setShowErrorMsg('密碼與確認密碼不符!');
+      setTimeout(() => {
+        setShowErrorMsg(false);
+      }, 1000);
+      return;
+    }
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
     const data = await changeUserInformation({
       id: currentUser.id,
       account,
@@ -77,6 +103,11 @@ export default function SettingsPage() {
     <>
       <Header headerText="帳戶設定" />
       <StyedSettingsContainer>
+        {showErrorMsg && (
+          <StyledDiv>
+            <Alert type="error" message={showErrorMsg} />
+          </StyledDiv>
+        )}
         <StyledInputContainer>
           <AuthInput
             label="帳號"
