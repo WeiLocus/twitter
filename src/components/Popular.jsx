@@ -123,18 +123,18 @@ export default function Popular() {
 }
 
 function PopularItem({ user }) {
-  const { userFollowings } = useUser();
-  const { followingId, name, account, avatar } = user;
-  const isFollowed = userFollowings.includes(followingId);
+  const { userFollowings, handleFollow } = useUser();
+  const { id, name, account, avatar } = user;
+  const isFollowed = userFollowings.includes(id);
 
-  const handleFollow = () => {
-    // setIsFollowing((prev) => !prev);
+  const handleFollowBtnClick = () => {
+    handleFollow(id);
   };
 
   return (
     <StyledPopularItem isFollowing>
       <div className="avatar">
-        <NavLink to={`users/${followingId}/tweets`}>
+        <NavLink to={`users/${id}/tweets`}>
           <img src={avatar} alt="avatar" />
         </NavLink>
       </div>
@@ -145,7 +145,7 @@ function PopularItem({ user }) {
       <button
         className={isFollowed ? 'active' : undefined}
         type="button"
-        onClick={handleFollow}
+        onClick={handleFollowBtnClick}
       >
         {isFollowed ? '正在跟隨' : '跟隨'}
       </button>

@@ -59,10 +59,7 @@ export default function TweetLayout() {
         const user = await getCurrentUser();
         console.log(`user ${user.id} just logged in`);
         const followings = await getUserFollowings(user.id);
-        const followingUsers = followings.map(
-          (following) => following.followingId
-        );
-        // followingUsers = [34, 44]
+        const followingUsers = followings.map((following) => following.id);
         console.log('user following list get');
         setCurrentUser(user);
         setUserFollowings(followingUsers);
