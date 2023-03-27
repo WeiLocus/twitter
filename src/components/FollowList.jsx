@@ -54,10 +54,15 @@ const StyledListItem = styled.li`
     background-color: white;
     font-size: var(--fs-basic);
 
-    :hover,
+    &:hover,
     &.active {
       color: white;
       background-color: var(--color-theme);
+    }
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.75;
     }
   }
 
@@ -95,19 +100,20 @@ const StyledTab = styled.div`
 
 export default function FollowList() {
   const { pathname } = useLocation();
+  const { userFollowings } = useUser();
   const { shownUser } = useOutletContext();
   const [isLoading, setIsLoading] = useState(true);
-  const [userFollowings, setUserFollowings] = useState([]);
+  const [userFollowingsData, setUserFollowingsData] = useState([]);
   const [userFollowers, setUserFollowers] = useState([]);
   let renderedFollowItem;
 
   if (pathname.includes('following')) {
-    renderedFollowItem = userFollowings.map((user) => {
-      return <FollowItem key={user.id} user={user} />;
+    renderedFollowItem = userFollowingsData.map((user) => {
+      return <FollowItem key={user.followingId} user={user} />;
     });
   } else {
     renderedFollowItem = userFollowers.map((user) => {
-      return <FollowItem key={user.id} user={user} />;
+      return <FollowItem key={user.followerId} user={user} />;
     });
   }
 
@@ -118,15 +124,16 @@ export default function FollowList() {
         console.log('user followings get!');
         const followers = await getUserFollowers(shownUser.id);
         console.log('user followers get!');
-        setUserFollowings(followings);
+        setUserFollowingsData(followings);
         setUserFollowers(followers);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
     };
+    setIsLoading(true);
     getFollowUsersAsync();
-  }, []);
+  }, [userFollowings]);
 
   return (
     <>
@@ -159,11 +166,21 @@ function FollowTab({ id }) {
 
 function FollowItem({ user }) {
   const { userFollowings, handleFollow } = useUser();
-  const { id, name, avatar, introduction } = user;
-  const isFollowed = userFollowings.includes(id);
+  const { id, followingId, followerId, name, avatar, introduction } = user;
+  const isFollowed =
+    userFollowings.includes(followingId) || userFollowings.includes(followerId);
+  const [disabled, setDisabled] = useState(false);
 
-  const handleFollowBtnClick = () => {
-    handleFollow(id);
+  const handleFollowBtnClick = async () => {
+    if (followingId) {
+      setDisabled(true);
+      await handleFollow(followingId);
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+      await handleFollow(followerId);
+      setDisabled(false);
+    }
   };
 
   return (
@@ -173,7 +190,9 @@ function FollowItem({ user }) {
         <div className="user">
           <b>{name}</b>
           <button
-            className={`user ${isFollowed && 'active'}`}
+            className={`${isFollowed ? 'active' : undefined} ${
+              disabled ? 'disabled' : undefined
+            }`}
             type="button"
             onClick={handleFollowBtnClick}
           >

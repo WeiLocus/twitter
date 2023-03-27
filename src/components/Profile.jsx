@@ -94,10 +94,15 @@ const StyledEditDiv = styled.div`
     background-color: white;
     font-size: var(--fs-basic);
 
-    :hover,
+    &:hover,
     &.active {
       color: white;
       background-color: var(--color-theme);
+    }
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.75;
     }
   }
 `;
@@ -141,14 +146,17 @@ export default function Profile({ user }) {
   } = user;
   const isFollowed = userFollowings.includes(id);
   const [showModal, setShowModal] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const handleShowModal = () => {
     const nextShowModal = !showModal;
     setShowModal(nextShowModal);
   };
 
-  const handleFollowBtnClick = () => {
-    handleFollow(id);
+  const handleFollowBtnClick = async () => {
+    setDisabled(true);
+    await handleFollow(id);
+    setDisabled(false);
   };
 
   return (
@@ -173,7 +181,9 @@ export default function Profile({ user }) {
                   <NotificationIcon />
                 </span>
                 <button
-                  className={isFollowed ? 'active' : undefined}
+                  className={`${isFollowed ? 'active' : undefined} ${
+                    disabled ? 'disabled' : undefined
+                  }`}
                   type="button"
                   onClick={handleFollowBtnClick}
                 >

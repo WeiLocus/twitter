@@ -75,6 +75,11 @@ const StyledPopularItem = styled.li`
       color: white;
       background-color: var(--color-theme);
     }
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.75;
+    }
   }
 `;
 
@@ -83,7 +88,7 @@ export default function Popular() {
   const [isLoading, setIsLoading] = useState(true);
   const [popularUsers, setPopularUsers] = useState([]);
   const renderedPopularUsers = popularUsers.map((user) => {
-    return <PopularItem key={user.followingId} user={user} />;
+    return <PopularItem key={user.id} user={user} />;
   });
 
   useEffect(() => {
@@ -126,9 +131,12 @@ function PopularItem({ user }) {
   const { userFollowings, handleFollow } = useUser();
   const { id, name, account, avatar } = user;
   const isFollowed = userFollowings.includes(id);
+  const [disabled, setDisabled] = useState(false);
 
-  const handleFollowBtnClick = () => {
-    handleFollow(id);
+  const handleFollowBtnClick = async () => {
+    setDisabled(true);
+    await handleFollow(id);
+    setDisabled(false);
   };
 
   return (
@@ -143,7 +151,9 @@ function PopularItem({ user }) {
         <p>@{account}</p>
       </div>
       <button
-        className={isFollowed ? 'active' : undefined}
+        className={`${isFollowed ? 'active' : undefined} ${
+          disabled ? 'disabled' : undefined
+        }`}
         type="button"
         onClick={handleFollowBtnClick}
       >
