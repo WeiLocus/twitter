@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Header from '../components/Header';
 import AuthInput from '../components/elements/Input';
-import Alert from '../components/elements/Alert';
+import { useUser } from '../contexts/UserContext';
 
 const StyedSettingsContainer = styled.div`
   height: calc(100vh - 68px);
@@ -31,18 +31,20 @@ const StyledButtonDiv = styled.div`
 `;
 
 export default function SettingsPage() {
+  const { currentUser } = useUser();
+  const { account, name, email } = currentUser;
   return (
     <>
       <Header headerText="帳戶設定" />
       <StyedSettingsContainer>
         <StyledInputContainer>
-          <AuthInput label="帳號" placeholder="請輸入帳號" />
+          <AuthInput label="帳號" placeholder="請輸入帳號" value={account} />
         </StyledInputContainer>
         <StyledInputContainer>
-          <AuthInput label="名稱" placeholder="請輸入使用者名稱" />
+          <AuthInput label="名稱" placeholder="請輸入使用者名稱" value={name} />
         </StyledInputContainer>
         <StyledInputContainer>
-          <AuthInput label="Email" placeholder="請輸入Email" />
+          <AuthInput label="Email" placeholder="請輸入Email" value={email} />
         </StyledInputContainer>
         <StyledInputContainer>
           <AuthInput type="password" label="密碼" placeholder="請設定密碼" />
@@ -57,7 +59,6 @@ export default function SettingsPage() {
         <StyledButtonDiv>
           <button type="button">儲存</button>
         </StyledButtonDiv>
-        <Alert type="success" message="登入成功" />
       </StyedSettingsContainer>
     </>
   );
