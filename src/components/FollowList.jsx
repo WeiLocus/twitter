@@ -109,11 +109,11 @@ export default function FollowList() {
 
   if (pathname.includes('following')) {
     renderedFollowItem = userFollowingsData.map((user) => {
-      return <FollowItem key={user.followingId} user={user} />;
+      return <FollowItem key={user.id} user={user} />;
     });
   } else {
     renderedFollowItem = userFollowers.map((user) => {
-      return <FollowItem key={user.followerId} user={user} />;
+      return <FollowItem key={user.id} user={user} />;
     });
   }
 
@@ -166,21 +166,14 @@ function FollowTab({ id }) {
 
 function FollowItem({ user }) {
   const { userFollowings, handleFollow } = useUser();
-  const { id, followingId, followerId, name, avatar, introduction } = user;
-  const isFollowed =
-    userFollowings.includes(followingId) || userFollowings.includes(followerId);
+  const { id, name, avatar, introduction } = user;
+  const isFollowed = userFollowings.includes(id);
   const [disabled, setDisabled] = useState(false);
 
   const handleFollowBtnClick = async () => {
-    if (followingId) {
-      setDisabled(true);
-      await handleFollow(followingId);
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-      await handleFollow(followerId);
-      setDisabled(false);
-    }
+    setDisabled(true);
+    await handleFollow(id);
+    setDisabled(false);
   };
 
   return (
