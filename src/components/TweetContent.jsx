@@ -83,7 +83,7 @@ const StyledDiv = styled.div`
         color: var(--color-theme);
       }
 
-      .disabled {
+      &.disabled {
         pointer-events: none;
       }
     }
@@ -100,6 +100,7 @@ export default function TweetContent({
   const { id, description, createdAt, replyCounts, likeCounts, User } = tweet;
   const { convertedDate, convertedTime } = getConvertedTime(createdAt);
   const { userLikes, handleLike } = useUser();
+  const [currentLikeCounts, setCurrentLikeCounts] = useState(likeCounts);
   const [showModal, setShowModal] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const isLiked = userLikes.includes(id);
@@ -109,12 +110,15 @@ export default function TweetContent({
     setShowModal(nextShowModal);
   };
 
-  const handleLikeClick = () => {
-    console.log(id);
-    handleLike(id);
-    // setDisabled(true);
-    // await handleLike(id);
-    // setDisabled(false);
+  const handleLikeClick = async () => {
+    setDisabled(true);
+    await handleLike(id);
+    if (isLiked) {
+      setCurrentLikeCounts((prev) => prev - 1);
+    } else {
+      setCurrentLikeCounts((prev) => prev + 1);
+    }
+    setDisabled(false);
   };
 
   return (
@@ -140,16 +144,16 @@ export default function TweetContent({
             <span>{replyCounts}</span>回覆
           </p>
           <p>
-            <span>{likeCounts}</span>喜歡次數
+            <span>{currentLikeCounts}</span>喜歡次數
           </p>
         </div>
         <div className="reaction">
           <button type="button" onClick={handleShowModal}>
             <CommentIcon className="icon" />
           </button>
-          <button type="button" className={disabled ? 'disabled' : 'disabled'}>
+          <button type="button" className={disabled ? 'disabled' : undefined}>
             {isLiked ? (
-              <LikeBlackIcon onClick={handleLikeClick} />
+              <LikeBlackIcon className="icon" onClick={handleLikeClick} />
             ) : (
               <LikeIcon className="icon" onClick={handleLikeClick} />
             )}
