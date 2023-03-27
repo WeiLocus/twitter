@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { followUser, unfollowUser } from '../api/followship';
+import { likeTweet, unLikeTweet } from '../api/like.js';
 
 const UserContext = createContext(null);
 const dummyUser = {
@@ -25,6 +26,7 @@ function useUser() {
 function UserProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(dummyUser);
   const [userFollowings, setUserFollowings] = useState(dummyArray);
+  const [userLikes, setUserLikes] = useState(dummyArray);
 
   const handleFollow = async (id) => {
     if (userFollowings.includes(id)) {
@@ -42,16 +44,32 @@ function UserProvider({ children }) {
     }
   };
 
-  // const handleUnfollow = (id) => {};
+  const handleLike = async (id) => {
+    if (userLikes.includes(id)) {
+      await unLikeTweet(id);
+      const newLikes = userLikes.filter((tweetId) => tweetId !== id);
+      setUserLikes(newLikes);
+      console.log(newLikes);
+    } else {
+      await likeTweet(id);
+      console.log(id);
+      const newLikes = [...userLikes, id];
+      setUserLikes(newLikes);
+      console.log(newLikes);
+    }
+  };
 
   return (
     <UserContext.Provider
       value={{
         currentUser,
         userFollowings,
+        userLikes,
         setCurrentUser,
         setUserFollowings,
+        setUserLikes,
         handleFollow,
+        handleLike,
       }}
     >
       {children}
