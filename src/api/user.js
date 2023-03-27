@@ -74,3 +74,37 @@ export async function getUserLikes(id) {
     console.error('[Get User Likes failed]: ', error);
   }
 }
+
+// * 取得特定使用者的追隨者清單
+export async function getUserFollowers(id) {
+  try {
+    const res = await axiosInstance.get(`${baseURL}/users/${id}/followers`);
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.error('[Get User Followers failed]: ', error);
+  }
+}
+
+// * 取得特定使用者的正在追隨清單
+export async function getUserFollowings(id) {
+  try {
+    const res = await axiosInstance.get(`${baseURL}/users/${id}/followings`);
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.error('[Get User Followings failed]: ', error);
+  }
+}
+
+// * 取得追蹤人數 top N 的使用者名單
+export async function getTopUsers() {
+  const limit = 5;
+  try {
+    const res = await axiosInstance.get(`${baseURL}/users/top?limit=${limit}`);
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.error('[Get Top Users failed]: ', error);
+  }
+}

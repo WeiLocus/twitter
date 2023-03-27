@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 import { ReactComponent as EmailIcon } from '../assets/Email.svg';
 import { ReactComponent as NotificationIcon } from '../assets/Notification.svg';
 import EditModal from './elements/EditModal';
-import { currentUser } from '../dummyData';
 import { useUser } from '../contexts/UserContext';
 
 const StyledDiv = styled.div`
@@ -129,7 +128,7 @@ const StyledTabs = styled.div`
 `;
 
 export default function Profile({ user }) {
-  const { currentUser } = useUser();
+  const { currentUser, userFollowings } = useUser();
   const {
     id,
     name,
@@ -139,10 +138,8 @@ export default function Profile({ user }) {
     cover,
     followerCounts,
     followingCounts,
-    isFollowed,
   } = user;
-  // todo 需要再調整
-  // 該使用者是否於目前登入的使用者的跟隨清單中
+  const isFollowed = userFollowings.includes(id);
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
