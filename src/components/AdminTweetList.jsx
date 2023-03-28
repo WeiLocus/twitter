@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Header from './Header';
 import { StyledListItem } from './TweetList';
 import { ReactComponent as Cross } from '../assets/Cross.svg';
@@ -21,47 +22,56 @@ const StyledAdminTweetContainer = styled.div`
   background-color: #fff;
 
   .cross {
-    width: 2rem;
-    height: 2rem;
-    display: flex;
-    align-items: center;
+    width: 1rem;
+    height: 1rem;
+    padding-left: 0.25rem;
     color: var(--color-gray-700);
   }
 `;
 
 export default function AdminTweetList() {
+  const [allTweets, setAllTweets] = useState([]);
+
+  useEffect(() => {
+    const getAllTweets = async () => {
+      try {
+        const allTweets = await adminGetTweets();
+        console.log('check');
+        setAllTweets(allTweets);
+        console.log('get tweets');
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAllTweets();
+  }, []);
+  const renderedItems = allTweets.map((tweet) => {
+    return <TweetList key={tweet.id} tweet={tweet} />;
+  });
+
   return (
     <>
       <Header headerText="推文清單" />
-      <StyledAdminTweetContainer>
-        <TweetList />
-        <TweetList />
-        <TweetList />
-        <TweetList />
-        <TweetList />
-      </StyledAdminTweetContainer>
+      <StyledAdminTweetContainer>{renderedItems}</StyledAdminTweetContainer>
     </>
   );
 }
-function TweetList() {
+function TweetList({tweet}) {
+  const { id, description, createdAt, User } = tweet;
+  const { account, name, avatar } = User;
   return (
-    <StyledTweetContainer>
-      <NavLink to="/users/3">
-        <img src="https://placekitten.com/350/350" alt="avatar" />
+    <StyledTweetContainer id={id}>
+      <NavLink to={`/users/${User.id}`}>
+        <img src={avatar} alt="avatar" />
       </NavLink>
       <div>
         <div className="user">
-          <b>Apple</b>
-          <span>@apple</span>
+          <b>{name}</b>
+          <span>@{account}</span>
           <span>．</span>
           <span>3 小時</span>
         </div>
-        <p className="content">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita
-          excepturi corrupti velit vitae quasi. Ad corrupti laudantium qui,
-          molestiae inventore maiores architecto quasi possimus ut accusamus,
-          enim, neque consequuntur ea?
-        </p>
+        <p className="content">{description}</p>
       </div>
       <div className="cross">
         <Cross />

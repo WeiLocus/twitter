@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('adminToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -24,6 +24,7 @@ axiosInstance.interceptors.request.use(
 export async function adminGetTweets() {
   try {
     const res = await axiosInstance.get(`${baseURL}/admin/tweets`);
+    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error('[Admin Get Tweets failed]: ', error);
