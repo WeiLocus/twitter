@@ -37,28 +37,28 @@ export default function UserPage() {
   const [shownUserReplies, setShownUserReplies] = useState([]);
   const [shownUserLikes, setShownUserLikes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(currentUser);
+
+  const getUserPageDataAsync = async () => {
+    try {
+      const user = await getUserData(id);
+      console.log(`user ${id} profile get!`);
+      const userTweets = await getUserTweets(id);
+      console.log(`user ${id} tweets get!`);
+      const userReplies = await getUserReplies(id);
+      console.log(`user ${id} replies get!`);
+      const userLikes = await getUserLikes(id);
+      console.log(`user ${id} likes get!`);
+      setShownUser(user);
+      setShownUserTweets(userTweets);
+      setShownUserReplies(userReplies);
+      setShownUserLikes(userLikes);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    const getUserPageDataAsync = async () => {
-      try {
-        const user = await getUserData(id);
-        console.log(`user ${id} profile get!`);
-        const userTweets = await getUserTweets(id);
-        console.log(`user ${id} tweets get!`);
-        const userReplies = await getUserReplies(id);
-        console.log(`user ${id} replies get!`);
-        const userLikes = await getUserLikes(id);
-        console.log(`user ${id} likes get!`);
-        setShownUser(user);
-        setShownUserTweets(userTweets);
-        setShownUserReplies(userReplies);
-        setShownUserLikes(userLikes);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
-    };
     setIsLoading(true);
     getUserPageDataAsync();
   }, [id]);
@@ -82,7 +82,11 @@ export default function UserPage() {
           />
           <StyledDiv>
             {!pathname.includes('follow') && (
-              <Profile user={shownUser} key={shownUser.id} />
+              <Profile
+                user={shownUser}
+                key={shownUser.id}
+                onProfileChange={getUserPageDataAsync}
+              />
             )}
             <Outlet
               context={{

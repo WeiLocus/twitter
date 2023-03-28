@@ -132,7 +132,7 @@ const StyledTabs = styled.div`
   }
 `;
 
-export default function Profile({ user }) {
+export default function Profile({ user, onProfileChange }) {
   const { currentUser, userFollowings, handleFollow } = useUser();
   const {
     id,
@@ -218,7 +218,12 @@ export default function Profile({ user }) {
           </NavLink>
         </StyledTabs>
       </StyledDiv>
-      {showModal && <EditModal onClose={handleShowModal} />}
+      {showModal && (
+        <EditModal
+          onClose={handleShowModal}
+          onProfileChange={onProfileChange}
+        />
+      )}
     </>
   );
 }
