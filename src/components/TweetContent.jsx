@@ -6,6 +6,7 @@ import { ReactComponent as LikeIcon } from '../assets/Like.svg';
 import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
 import { ReplyModal } from './elements/TweetModal';
 import { getConvertedTime } from '../utilities';
+import { useUser } from '../contexts/UserContext';
 
 const StyledDiv = styled.div`
   padding: 1rem;
@@ -81,6 +82,10 @@ const StyledDiv = styled.div`
       :hover {
         color: var(--color-theme);
       }
+
+      &.disabled {
+        pointer-events: none;
+      }
     }
   }
 `;
@@ -92,20 +97,28 @@ export default function TweetContent({
   onChange,
   onAddReply,
 }) {
-  const { description, createdAt, replyCounts, likeCounts, isLiked, User } =
-    tweet;
+  const { id, description, createdAt, replyCounts, likeCounts, User } = tweet;
   const { convertedDate, convertedTime } = getConvertedTime(createdAt);
+  const { userLikes, handleLike } = useUser();
+  const [currentLikeCounts, setCurrentLikeCounts] = useState(likeCounts);
   const [showModal, setShowModal] = useState(false);
-  const [currentIsLiked, setCurrentIsLiked] = useState(isLiked); // todo to be fixed
+  const [disabled, setDisabled] = useState(false);
+  const isLiked = userLikes.includes(id);
 
   const handleShowModal = () => {
     const nextShowModal = !showModal;
     setShowModal(nextShowModal);
   };
 
-  const handleLike = () => {
-    const nextCurrentIsLiked = !currentIsLiked;
-    setCurrentIsLiked(nextCurrentIsLiked);
+  const handleLikeClick = async () => {
+    setDisabled(true);
+    await handleLike(id);
+    if (isLiked) {
+      setCurrentLikeCounts((prev) => prev - 1);
+    } else {
+      setCurrentLikeCounts((prev) => prev + 1);
+    }
+    setDisabled(false);
   };
 
   return (
@@ -131,18 +144,18 @@ export default function TweetContent({
             <span>{replyCounts}</span>回覆
           </p>
           <p>
-            <span>{likeCounts}</span>喜歡次數
+            <span>{currentLikeCounts}</span>喜歡次數
           </p>
         </div>
         <div className="reaction">
           <button type="button" onClick={handleShowModal}>
             <CommentIcon className="icon" />
           </button>
-          <button type="button">
-            {currentIsLiked ? (
-              <LikeBlackIcon onClick={handleLike} />
+          <button type="button" className={disabled ? 'disabled' : undefined}>
+            {isLiked ? (
+              <LikeBlackIcon className="icon" onClick={handleLikeClick} />
             ) : (
-              <LikeIcon className="icon" onClick={handleLike} />
+              <LikeIcon className="icon" onClick={handleLikeClick} />
             )}
           </button>
         </div>

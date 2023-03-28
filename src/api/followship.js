@@ -23,7 +23,7 @@ axiosInstance.interceptors.request.use(
 // * 追蹤特定使用者
 export async function followUser(id) {
   try {
-    const res = await axiosInstance.post(`${baseURL}/followship/`, { id });
+    const res = await axiosInstance.post(`${baseURL}/followships`, { id });
     console.log(res.data);
     return res.data;
   } catch (error) {
@@ -34,7 +34,7 @@ export async function followUser(id) {
 // * 取消追蹤特定使用者
 export async function unfollowUser(id) {
   try {
-    const res = await axiosInstance.delete(`${baseURL}/followship/${id}`);
+    const res = await axiosInstance.delete(`${baseURL}/followships/${id}`);
     console.log(res.data);
     return res.data;
   } catch (error) {

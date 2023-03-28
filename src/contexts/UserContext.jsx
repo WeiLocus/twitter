@@ -1,4 +1,6 @@
 import { createContext, useContext, useState } from 'react';
+import { followUser, unfollowUser } from '../api/followship';
+import { likeTweet, unLikeTweet } from '../api/like.js';
 
 const UserContext = createContext(null);
 const dummyUser = {
@@ -15,6 +17,7 @@ const dummyUser = {
   createdAt: '2023-03-20T15:44:34.000Z',
   updatedAt: '2023-03-20T15:44:34.000Z',
 };
+const dummyArray = [1, 2, 3];
 
 function useUser() {
   return useContext(UserContext);
@@ -22,44 +25,52 @@ function useUser() {
 
 function UserProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(dummyUser);
-  const [userFollowings, setUserFollowings] = useState([]);
+  const [userFollowings, setUserFollowings] = useState(dummyArray);
+  const [userLikes, setUserLikes] = useState(dummyArray);
 
-  // useEffect(() => {
-  //   const getUserAsync = async () => {
-  //     try {
-  //       const user = await getCurrentUser();
-  //       console.log(`user ${user.id} just logged in`);
-  //       const followings = await getUserFollowings(user.id);
-  //       const followingUsers = followings.map(
-  //         (following) => following.followingId
-  //       );
-  //       console.log('user following list get');
-  //       setCurrentUser(user);
-  //       setUserFollowings(followingUsers);
-  //       console.log('user context loaded');
-  //     } catch {
-  //       console.error(error);
-  //     }
-  //   };
-  //   if (token === undefined) return;
-  //   if (pathname === '/tweets') {
-  //     getUserAsync();
-  //   }
-  // }, [pathname, token]);
+  const handleFollow = async (id) => {
+    if (userFollowings.includes(id)) {
+      await unfollowUser(id);
+      const newFollowings = userFollowings.filter(
+        (followingId) => followingId !== id
+      );
+      console.log(newFollowings);
+      setUserFollowings(newFollowings);
+    } else {
+      await followUser(id);
+      const newFollowings = [...userFollowings, id];
+      setUserFollowings(newFollowings);
+      console.log(newFollowings);
+    }
+  };
 
-  // const handleFollow = (id) => {
-  //   const newFollowings = [ ...userFollowings, id ]
-  //   setUserFollowings(newFollowings);
-  // }
-
-  // const handleUnfollow = (id) => {
-  //   const newFollowings = userFollowings.filter(FollowingId !== id)
-  //   setUserFollowings(newFollowings);
-  // }
+  const handleLike = async (id) => {
+    if (userLikes.includes(id)) {
+      await unLikeTweet(id);
+      const newLikes = userLikes.filter((tweetId) => tweetId !== id);
+      setUserLikes(newLikes);
+      console.log(newLikes);
+    } else {
+      await likeTweet(id);
+      console.log(id);
+      const newLikes = [...userLikes, id];
+      setUserLikes(newLikes);
+      console.log(newLikes);
+    }
+  };
 
   return (
     <UserContext.Provider
-      value={{ currentUser, userFollowings, setCurrentUser, setUserFollowings }}
+      value={{
+        currentUser,
+        userFollowings,
+        userLikes,
+        setCurrentUser,
+        setUserFollowings,
+        setUserLikes,
+        handleFollow,
+        handleLike,
+      }}
     >
       {children}
     </UserContext.Provider>

@@ -14,10 +14,18 @@ const StyledDiv = styled.div`
   border-inline: 1px solid var(--color-gray-200);
 `;
 
-const StyledMessage = styled.div`
+const StyledLoadingDiv = styled.div`
   width: 100%;
   height: 100%;
-  padding: 2rem 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--color-secondary);
+`;
+
+const StyledNoReplyDiv = styled.div`
+  width: 100%;
+  padding-top: 2rem;
   text-align: center;
   color: var(--color-secondary);
 `;
@@ -102,9 +110,11 @@ export default function ReplyPage() {
       <Header headerText="推文" goBack />
       <StyledDiv>
         {isLoading && (
-          <StyledMessage>
-            <BeatLoader color="var(--color-theme)" />
-          </StyledMessage>
+          <StyledLoadingDiv>
+            <div>
+              <BeatLoader color="var(--color-theme)" />
+            </div>
+          </StyledLoadingDiv>
         )}
         {!isLoading && (
           <TweetContent
@@ -119,7 +129,7 @@ export default function ReplyPage() {
           <ReplyList replies={tweetReplies} replyTo={selectedTweet} />
         )}
         {!isLoading && tweetReplies.length === 0 && (
-          <StyledMessage>該貼文目前沒有回覆</StyledMessage>
+          <StyledNoReplyDiv>該貼文目前沒有回覆</StyledNoReplyDiv>
         )}
       </StyledDiv>
     </>

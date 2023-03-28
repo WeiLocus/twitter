@@ -75,6 +75,11 @@ const StyledPopularItem = styled.li`
       color: white;
       background-color: var(--color-theme);
     }
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.75;
+    }
   }
 `;
 
@@ -83,7 +88,7 @@ export default function Popular() {
   const [isLoading, setIsLoading] = useState(true);
   const [popularUsers, setPopularUsers] = useState([]);
   const renderedPopularUsers = popularUsers.map((user) => {
-    return <PopularItem key={user.followingId} user={user} />;
+    return <PopularItem key={user.id} user={user} />;
   });
 
   useEffect(() => {
@@ -123,18 +128,21 @@ export default function Popular() {
 }
 
 function PopularItem({ user }) {
-  const { userFollowings } = useUser();
-  const { followingId, name, account, avatar } = user;
-  const isFollowed = userFollowings.includes(followingId);
+  const { userFollowings, handleFollow } = useUser();
+  const { id, name, account, avatar } = user;
+  const isFollowed = userFollowings.includes(id);
+  const [disabled, setDisabled] = useState(false);
 
-  const handleFollow = () => {
-    // setIsFollowing((prev) => !prev);
+  const handleFollowBtnClick = async () => {
+    setDisabled(true);
+    await handleFollow(id);
+    setDisabled(false);
   };
 
   return (
     <StyledPopularItem isFollowing>
       <div className="avatar">
-        <NavLink to={`users/${followingId}/tweets`}>
+        <NavLink to={`users/${id}/tweets`}>
           <img src={avatar} alt="avatar" />
         </NavLink>
       </div>
@@ -143,9 +151,11 @@ function PopularItem({ user }) {
         <p>@{account}</p>
       </div>
       <button
-        className={isFollowed ? 'active' : undefined}
+        className={`${isFollowed ? 'active' : undefined} ${
+          disabled ? 'disabled' : undefined
+        }`}
         type="button"
-        onClick={handleFollow}
+        onClick={handleFollowBtnClick}
       >
         {isFollowed ? '正在跟隨' : '跟隨'}
       </button>

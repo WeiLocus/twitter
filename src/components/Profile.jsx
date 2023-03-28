@@ -94,10 +94,15 @@ const StyledEditDiv = styled.div`
     background-color: white;
     font-size: var(--fs-basic);
 
-    :hover,
+    &:hover,
     &.active {
       color: white;
       background-color: var(--color-theme);
+    }
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.75;
     }
   }
 `;
@@ -128,7 +133,7 @@ const StyledTabs = styled.div`
 `;
 
 export default function Profile({ user }) {
-  const { currentUser, userFollowings } = useUser();
+  const { currentUser, userFollowings, handleFollow } = useUser();
   const {
     id,
     name,
@@ -141,11 +146,19 @@ export default function Profile({ user }) {
   } = user;
   const isFollowed = userFollowings.includes(id);
   const [showModal, setShowModal] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const handleShowModal = () => {
     const nextShowModal = !showModal;
     setShowModal(nextShowModal);
   };
+
+  const handleFollowBtnClick = async () => {
+    setDisabled(true);
+    await handleFollow(id);
+    setDisabled(false);
+  };
+
   return (
     <>
       <StyledDiv>
@@ -168,10 +181,13 @@ export default function Profile({ user }) {
                   <NotificationIcon />
                 </span>
                 <button
-                  className={isFollowed ? 'active' : undefined}
+                  className={`${isFollowed ? 'active' : undefined} ${
+                    disabled ? 'disabled' : undefined
+                  }`}
                   type="button"
+                  onClick={handleFollowBtnClick}
                 >
-                  {isFollowed ? '正在追蹤' : '追蹤'}
+                  {isFollowed ? '正在跟隨' : '跟隨'}
                 </button>
               </>
             )}
