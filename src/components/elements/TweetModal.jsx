@@ -15,8 +15,10 @@ const StyledDiv = styled.div`
 `;
 
 const StyledModal = styled.div`
-  background-color: white;
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  background-color: white;
 
   .close {
     display: flex;
@@ -56,8 +58,6 @@ const StyledModal = styled.div`
   }
 
   @media screen and (${device.md}) {
-    display: flex;
-    flex-direction: column;
     position: absolute;
     inset: 3.5rem 0;
     width: 650px;
@@ -87,7 +87,7 @@ const StyledModal = styled.div`
 `;
 
 const StyledTextarea = styled.div`
-  height: calc(100% - 3.5rem);
+  flex: 1;
   padding: 1rem;
   padding-right: 1.5rem;
   display: grid;
@@ -133,9 +133,6 @@ const StyledTextarea = styled.div`
   }
 
   @media screen and (${device.md}) {
-    flex: 1;
-    padding: 1rem;
-
     form {
       align-items: flex-end;
       margin-top: 0.75rem;
@@ -203,7 +200,7 @@ const StyledTweetContent = styled.div`
     &::after {
       content: '';
       width: 2px;
-      height: 125%;
+      height: 110%;
       position: absolute;
       top: calc((50px / 2) + 0.5rem);
       left: calc(-0.75rem - 25px);
@@ -217,6 +214,14 @@ const StyledTweetContent = styled.div`
     .account {
       margin-left: 0.25rem;
       color: var(--color-theme);
+    }
+  }
+
+  @media screen and (${device.md}) {
+    .content {
+      &::after {
+        height: 125%;
+      }
     }
   }
 `;
@@ -333,10 +338,12 @@ export function ReplyModal({
     setIsSubmitting(true);
     if (!replyInput.length) {
       setErrorMessage('內容不可空白');
+      setIsSubmitting(false);
       return;
     }
     if (replyInput.length > 140) {
       setErrorMessage('字數不可超過 140 字');
+      setIsSubmitting(false);
       return;
     }
     // 這邊要發送修改請求
@@ -362,7 +369,15 @@ export function ReplyModal({
       <StyledModal reply>
         <div className="close">
           <button type="button" onClick={onClose}>
-            <CrossIcon />
+            <CrossIcon className="cross-icon" />
+            <GoBackIcon className="goback-icon" />
+          </button>
+          <button
+            className={`submit-btn ${isSubmitting ? 'disabled' : undefined}`}
+            type="submit"
+            onClick={handleSubmit}
+          >
+            {isSubmitting ? '送出中...' : '回覆'}
           </button>
         </div>
         <StyledTweetContent>
@@ -385,6 +400,7 @@ export function ReplyModal({
           <img src={avatar} alt="avatar" />
           <form>
             <textarea
+              className="reply-textarea"
               name="reply"
               id="reply-content"
               value={replyInput}
