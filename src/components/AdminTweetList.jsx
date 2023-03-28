@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import Header from './Header';
 import { StyledListItem } from './TweetList';
 import { ReactComponent as Cross } from '../assets/Cross.svg';
+import { adminGetTweets, deleteTweet } from '../api/admin';
 
 // follow StyledListItem style by TweetList.jsx
 const StyledTweetContainer = styled(StyledListItem)`
