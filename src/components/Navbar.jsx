@@ -9,6 +9,7 @@ import { ReactComponent as PersonBlackIcon } from '../assets/Person-black.svg';
 import { ReactComponent as SettingIcon } from '../assets/Setting.svg';
 import { ReactComponent as SettingBlackIcon } from '../assets/Setting-black.svg';
 import { ReactComponent as LogoutIcon } from '../assets/Logout.svg';
+import { ReactComponent as MobileTweetIcon } from '../assets/Mobile-Tweet.svg';
 import { TweetModal } from './elements/TweetModal';
 import { device } from '../globalStyles.js';
 
@@ -47,9 +48,26 @@ const StyledLi = styled.li`
       display: grid;
       place-items: center;
     }
-
     .active & {
       color: var(--color-theme);
+    }
+
+    .tweet-icon {
+      display: grid;
+      place-items: center;
+
+      .svg {
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        color: white;
+        background-color: var(--color-theme);
+        :hover {
+          background-color: var(--color-light-orange);
+        }
+      }
     }
 
     &.logout {
@@ -69,21 +87,30 @@ const StyledLi = styled.li`
     .icon {
       width: 20%;
     }
+
+    .tweet-icon {
+      display: none;
+    }
   }
 `;
 
 const StyledNavButton = styled.button`
-  cursor: pointer;
-  width: 100%;
-  margin: 1rem 0;
-  padding: 0.5rem 0;
-  border: none;
-  border-radius: 2rem;
-  color: white;
-  background-color: var(--color-theme);
+  display: none;
 
-  :hover {
-    background-color: var(--color-light-orange);
+  @media screen and (${device.lg}) {
+    display: block;
+    cursor: pointer;
+    width: 100%;
+    margin: 1rem 0;
+    padding: 0.5rem 0;
+    border: none;
+    border-radius: 2rem;
+    color: white;
+    background-color: var(--color-theme);
+
+    :hover {
+      background-color: var(--color-light-orange);
+    }
   }
 `;
 
@@ -153,6 +180,13 @@ export function Navbar({ tweetInput, currentUser, onChange, onAddTweet }) {
                 <span>設定</span>
               </StyledLi>
             </NavLink>
+            <StyledLi>
+              <div className="tweet-icon">
+                <div className="svg">
+                  <MobileTweetIcon onClick={handleShowModal} />
+                </div>
+              </div>
+            </StyledLi>
           </ul>
           <StyledNavButton onClick={handleShowModal}>推文</StyledNavButton>
         </div>
