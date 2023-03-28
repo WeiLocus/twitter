@@ -8,10 +8,11 @@ const StyedContainer = styled(Container)`
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-width: 400px;
   padding-top: 3rem;
+  padding-inline: 24px;
   background-color: #fff;
   @media screen and (${device.md}) {
+    /* min-width: 400px; */
     width: 50%;
   }
 `;
