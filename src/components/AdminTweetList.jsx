@@ -99,12 +99,12 @@ function TweetList({ tweet, onDelete }) {
   const { id, description, createdAt, User } = tweet;
   const { account, name, avatar } = User;
   const timeAgo = countTimeDiff(createdAt);
+  const tweetDescription =
+    description.length > 50 ? `${description.slice(0, 50)}...` : description;
 
   return (
     <StyledTweetContainer>
-      <NavLink to={`/users/${User.id}`}>
-        <img src={avatar} alt="avatar" />
-      </NavLink>
+      <img src={avatar} alt="avatar" />
       <div>
         <div className="user">
           <b>{name}</b>
@@ -112,7 +112,7 @@ function TweetList({ tweet, onDelete }) {
           <span>．</span>
           <span>{timeAgo}</span>
         </div>
-        <p className="content">{description}</p>
+        <p className="content">{tweetDescription}</p>
       </div>
       <div className="cross">
         <Cross onClick={() => onDelete(id)} />
