@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import BeatLoader from 'react-spinners/BeatLoader';
 import Header from './Header';
 import { ReactComponent as TweetIcon } from '../assets/Mobile-Tweet.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
@@ -101,14 +101,26 @@ const StyledName = styled.div`
   }
 `;
 
+const StyledMessage = styled.div`
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  border-inline: 2px solid var(--color-gray-200);
+  color: var(--color-secondary);
+`;
+
 export default function AdminUserList() {
   const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getUsers = async () => {
       try {
         const users = await adminGetAllUsers();
         setUsers(users);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -117,12 +129,23 @@ export default function AdminUserList() {
   }, []);
 
   const renderedItems = users.map((user) => {
-    return <UserCard key={user.id} user={user} />;
+    if (!isLoading) {
+      return <UserCard key={user.id} user={user} />;
+    }
   });
   return (
     <>
       <Header headerText="使用者列表" />
-      <StyledContainer>{renderedItems}</StyledContainer>
+      <StyledContainer>
+        {renderedItems}
+        {isLoading && (
+          <StyledMessage>
+            <div>
+              <BeatLoader color="var(--color-theme)" />
+            </div>
+          </StyledMessage>
+        )}
+      </StyledContainer>
     </>
   );
 }
