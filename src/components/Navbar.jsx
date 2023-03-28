@@ -48,6 +48,7 @@ const StyledLi = styled.li`
       display: grid;
       place-items: center;
     }
+    :hover,
     .active & {
       color: var(--color-theme);
     }
