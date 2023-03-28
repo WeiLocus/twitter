@@ -163,9 +163,16 @@ export default function Profile({ user, onProfileChange }) {
     <>
       <StyledDiv>
         <div className="cover">
-          <img src={cover} alt="user-cover" />
+          <img
+            src={cover ?? 'https://loremflickr.com/640/480/nature?lock=27430'}
+            alt="user-cover"
+          />
         </div>
-        <img className="avatar" src={avatar} alt="avatar" />
+        <img
+          className="avatar"
+          src={avatar ?? 'http://placekitten.com/g/500/500'}
+          alt="avatar"
+        />
         <StyledContentDiv>
           <StyledEditDiv>
             {id === currentUser.id ? (
@@ -196,7 +203,7 @@ export default function Profile({ user, onProfileChange }) {
             <b>{name}</b>
             <p>@{account}</p>
           </div>
-          <p className="intro">{introduction}</p>
+          <p className="intro">{introduction ?? 'I like alpha camp'}</p>
           <div className="stats">
             <NavLink to={`/users/${id}/followings`}>
               <span>{followingCounts}</span>個跟隨中
