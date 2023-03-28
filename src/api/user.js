@@ -137,13 +137,23 @@ export async function changeUserInformation({
 // * 修改個人資料 profile
 export async function changeUserProfile(payload) {
   const { id, name, introduction, avatar, cover } = payload;
+  const config = {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
+    },
+  };
   try {
-    const res = await axiosInstance.put(`${baseURL}/users/${id}`, {
-      name,
-      introduction,
-      avatar,
-      cover,
-    });
+    const res = await axiosInstance.put(
+      `${baseURL}/users/${id}`,
+      {
+        name,
+        introduction,
+        avatar,
+        cover,
+      },
+      config
+    );
     const { data, status } = res;
     return { data, status };
   } catch (error) {
