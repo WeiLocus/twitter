@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
+/* eslint-disable import/no-extraneous-dependencies */
 import axios from 'axios';
 
 const baseURL = 'https://murmuring-plains-40389.herokuapp.com/api';
@@ -35,7 +36,8 @@ export async function deleteTweet
 (id) {
   try {
     const res = await axiosInstance.delete(`${baseURL}/admin/tweets/${id}`);
-    return res.message;
+    const { data, status } = res;
+    return { data, status };
   } catch (error) {
     console.error('[Admin Delete Tweet failed]: ', error);
   }
