@@ -5,6 +5,7 @@ import Header from './Header';
 import { StyledListItem } from './TweetList';
 import { ReactComponent as Cross } from '../assets/Cross.svg';
 import { adminGetTweets, deleteTweet } from '../api/admin';
+import { countTimeDiff } from '../utilities';
 
 // follow StyledListItem style by TweetList.jsx
 const StyledTweetContainer = styled(StyledListItem)`
@@ -59,6 +60,7 @@ export default function AdminTweetList() {
 function TweetList({tweet}) {
   const { id, description, createdAt, User } = tweet;
   const { account, name, avatar } = User;
+  const timeAgo = countTimeDiff(createdAt);
   return (
     <StyledTweetContainer id={id}>
       <NavLink to={`/users/${User.id}`}>
@@ -69,7 +71,7 @@ function TweetList({tweet}) {
           <b>{name}</b>
           <span>@{account}</span>
           <span>．</span>
-          <span>3 小時</span>
+          <span>{timeAgo}</span>
         </div>
         <p className="content">{description}</p>
       </div>
