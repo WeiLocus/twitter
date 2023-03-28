@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CrossIcon } from '../../assets/Cross.svg';
+import { ReactComponent as GoBackIcon } from '../../assets/GoBack.svg';
 import { countTimeDiff } from '../../utilities';
+import { device } from '../../globalStyles.js';
 
 const StyledDiv = styled.div`
   position: absolute;
@@ -13,31 +15,81 @@ const StyledDiv = styled.div`
 `;
 
 const StyledModal = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  inset: 3.5rem 0;
-  width: 650px;
-  height: ${(props) => (props.reply ? '450px' : '300px')};
-  margin: 0 auto;
-  border-radius: 1rem;
   background-color: white;
+  height: 100%;
 
   .close {
-    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--color-gray-200);
 
     button {
       all: unset;
       cursor: pointer;
+    }
+
+    .cross-icon {
+      display: none;
+    }
+
+    .submit-btn {
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      margin-left: 1rem;
+      border: 1px solid var(--color-theme);
+      border-radius: 3.125rem;
+      color: white;
+      background-color: var(--color-theme);
+      font-size: var(--fs-basic);
+
+      :hover {
+        border: 1px solid var(--color-light-orange);
+        background-color: var(--color-light-orange);
+      }
+
+      &.disabled {
+        pointer-events: none;
+        opacity: 0.75;
+      }
+    }
+  }
+
+  @media screen and (${device.md}) {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    inset: 3.5rem 0;
+    width: 650px;
+    height: ${(props) => (props.reply ? '450px' : '300px')};
+    margin: 0 auto;
+    border-radius: 1rem;
+
+    .close {
+      display: unset;
+      justify-content: unset;
+      padding: 1rem;
       color: var(--color-theme);
+
+      .cross-icon {
+        display: block;
+      }
+
+      .goback-icon {
+        display: none;
+      }
+
+      .submit-btn {
+        display: none;
+      }
     }
   }
 `;
 
 const StyledTextarea = styled.div`
-  flex: 1;
+  height: calc(100% - 3.5rem);
   padding: 1rem;
+  padding-right: 1.5rem;
   display: grid;
   grid-template-columns: calc(50px + 0.75rem) 1fr;
 
@@ -51,14 +103,13 @@ const StyledTextarea = styled.div`
   form {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    margin-top: 0.75rem;
 
     textarea {
       all: unset;
       flex: 1;
       align-self: flex-start;
-      width: calc(100% - 1rem);
+      width: 100%;
+      margin-block: 1rem;
     }
 
     .submit {
@@ -66,6 +117,7 @@ const StyledTextarea = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 1rem;
     }
 
     span {
@@ -76,19 +128,46 @@ const StyledTextarea = styled.div`
     }
 
     button {
-      all: unset;
-      cursor: pointer;
-      padding: 0.5rem 1rem;
-      margin-left: 1rem;
-      border: 1px solid var(--color-theme);
-      border-radius: 3.125rem;
-      color: white;
-      background-color: var(--color-theme);
-      font-size: var(--fs-basic);
+      display: none;
+    }
+  }
 
-      :hover {
-        border: 1px solid var(--color-light-orange);
-        background-color: var(--color-light-orange);
+  @media screen and (${device.md}) {
+    flex: 1;
+    padding: 1rem;
+
+    form {
+      align-items: flex-end;
+      margin-top: 0.75rem;
+
+      textarea {
+        width: calc(100% - 1rem);
+        margin-block: unset;
+      }
+
+      .submit {
+        margin-bottom: unset;
+      }
+
+      button {
+        all: unset;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        margin-left: 1rem;
+        border: 1px solid var(--color-theme);
+        border-radius: 3.125rem;
+        color: white;
+        background-color: var(--color-theme);
+        font-size: var(--fs-basic);
+
+        :hover {
+          border: 1px solid var(--color-light-orange);
+          background-color: var(--color-light-orange);
+        }
+        &.disabled {
+          pointer-events: none;
+          opacity: 0.75;
+        }
       }
     }
   }
@@ -158,10 +237,12 @@ export function TweetModal({
     setIsSubmitting(true);
     if (!tweetInput.length) {
       setErrorMessage('內容不可空白');
+      setIsSubmitting(false);
       return;
     }
     if (tweetInput.length > 140) {
       setErrorMessage('字數不可超過 140 字');
+      setIsSubmitting(false);
       return;
     }
     // 這邊要發送修改請求
@@ -187,7 +268,15 @@ export function TweetModal({
       <StyledModal>
         <div className="close">
           <button type="button" onClick={onClose}>
-            <CrossIcon />
+            <CrossIcon className="cross-icon" />
+            <GoBackIcon className="goback-icon" />
+          </button>
+          <button
+            className={`submit-btn ${isSubmitting ? 'disabled' : undefined}`}
+            type="submit"
+            onClick={handleSubmit}
+          >
+            {isSubmitting ? '送出中...' : '推文'}
           </button>
         </div>
         <StyledTextarea>
@@ -209,7 +298,11 @@ export function TweetModal({
                 <span className={errorMessage ? 'error' : undefined}>
                   {errorMessage}
                 </span>
-                <button type="submit" onClick={handleSubmit}>
+                <button
+                  className={isSubmitting ? 'disabled' : undefined}
+                  type="submit"
+                  onClick={handleSubmit}
+                >
                   {isSubmitting ? '送出中...' : '推文'}
                 </button>
               </div>
