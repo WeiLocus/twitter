@@ -17,6 +17,7 @@ const StyledNav = styled.nav`
   width: 100%;
   position: absolute;
   bottom: 0;
+  border-top: 2px solid var(--color-gray-200);
   background-color: white;
 
   .logo,
@@ -46,6 +47,7 @@ const StyledNav = styled.nav`
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 1rem;
+    border-top: unset;
 
     .logo {
       display: block;
