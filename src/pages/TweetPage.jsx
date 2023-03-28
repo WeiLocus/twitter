@@ -6,10 +6,20 @@ import Header from '../components/Header';
 import TweetInput from '../components/TweetInput';
 import { TweetList } from '../components/TweetList';
 import { getTweets } from '../api/tweet';
+import { device } from '../globalStyles';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 68px);
   overflow-y: scroll;
+
+  .tweet-input {
+    display: none;
+  }
+  @media screen and (${device.md}) {
+    .tweet-input {
+      display: block;
+    }
+  }
 `;
 
 const StyledMessage = styled.div`
@@ -59,12 +69,14 @@ export default function TweetPage() {
     <>
       <Header headerText="首頁" />
       <StyledDiv>
-        <TweetInput
-          tweetInput={tweetInput}
-          currentUser={currentUser}
-          onChange={handleInputChange}
-          onAddTweet={handleAddTweet}
-        />
+        <div className="tweet-input">
+          <TweetInput
+            tweetInput={tweetInput}
+            currentUser={currentUser}
+            onChange={handleInputChange}
+            onAddTweet={handleAddTweet}
+          />
+        </div>
         {!isLoading && (
           <TweetList user={currentUser} tweets={tweets} type="tweet" />
         )}
