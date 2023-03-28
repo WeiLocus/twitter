@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import BeatLoader from 'react-spinners/BeatLoader';
 import Header from './Header';
 import { StyledListItem } from './TweetList';
 import { ReactComponent as Cross } from '../assets/Cross.svg';
+import { adminGetTweets, deleteTweet } from '../api/admin';
+import { countTimeDiff } from '../utilities';
 
 // follow StyledListItem style by TweetList.jsx
 const StyledTweetContainer = styled(StyledListItem)`
@@ -20,50 +24,98 @@ const StyledAdminTweetContainer = styled.div`
   background-color: #fff;
 
   .cross {
-    width: 2rem;
-    height: 2rem;
-    display: flex;
-    align-items: center;
+    width: 1rem;
+    height: 1rem;
+    padding-left: 0.25rem;
     color: var(--color-gray-700);
   }
 `;
 
+const StyledMessage = styled.div`
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  border-inline: 2px solid var(--color-gray-200);
+  color: var(--color-secondary);
+`;
+
 export default function AdminTweetList() {
+  const [allTweets, setAllTweets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getAllTweets = async () => {
+      try {
+        const allTweets = await adminGetTweets();
+        setAllTweets(allTweets);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAllTweets();
+  }, []);
+
+  const handleDeleteClick = async (id) => {
+    try {
+      await deleteTweet(id);
+      setAllTweets((prevAllTweets) =>
+        prevAllTweets.filter((tweet) => {
+          return tweet.id !== id;
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const renderedItems = allTweets.map((tweet) => {
+    if (!isLoading) {
+      return (
+        <TweetList key={tweet.id} tweet={tweet} onDelete={handleDeleteClick} />
+      );
+    }
+  });
+
   return (
     <>
       <Header headerText="推文清單" />
       <StyledAdminTweetContainer>
-        <TweetList />
-        <TweetList />
-        <TweetList />
-        <TweetList />
-        <TweetList />
+        {renderedItems}
+        {isLoading && (
+          <StyledMessage>
+            <div>
+              <BeatLoader color="var(--color-theme)" />
+            </div>
+          </StyledMessage>
+        )}
       </StyledAdminTweetContainer>
     </>
   );
 }
-function TweetList() {
+function TweetList({ tweet, onDelete }) {
+  const { id, description, createdAt, User } = tweet;
+  const { account, name, avatar } = User;
+  const timeAgo = countTimeDiff(createdAt);
+
   return (
     <StyledTweetContainer>
-      <NavLink to="/users/3">
-        <img src="https://placekitten.com/350/350" alt="avatar" />
+      <NavLink to={`/users/${User.id}`}>
+        <img src={avatar} alt="avatar" />
       </NavLink>
       <div>
         <div className="user">
-          <b>Apple</b>
-          <span>@apple</span>
+          <b>{name}</b>
+          <span>@{account}</span>
           <span>．</span>
-          <span>3 小時</span>
+          <span>{timeAgo}</span>
         </div>
-        <p className="content">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita
-          excepturi corrupti velit vitae quasi. Ad corrupti laudantium qui,
-          molestiae inventore maiores architecto quasi possimus ut accusamus,
-          enim, neque consequuntur ea?
-        </p>
+        <p className="content">{description}</p>
       </div>
       <div className="cross">
-        <Cross />
+        <Cross onClick={() => onDelete(id)} />
       </div>
     </StyledTweetContainer>
   );
