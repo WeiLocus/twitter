@@ -166,7 +166,7 @@ const StyledInputLimit = styled.div`
   color: var(--color-error);
 `;
 
-export default function EditModal({ onClose }) {
+export default function EditModal({ onClose, onProfileChange }) {
   const { currentUser, handleUserUpdate } = useUser();
   const nextUser = { ...currentUser };
   const [name, setName] = useState(nextUser.name);
@@ -246,6 +246,7 @@ export default function EditModal({ onClose }) {
       cover: data.cover,
     };
     handleUserUpdate(newCurrentUser);
+    onProfileChange();
     console.log('data submitted!');
     onClose();
   };

@@ -10,40 +10,65 @@ import { ReactComponent as SettingIcon } from '../assets/Setting.svg';
 import { ReactComponent as SettingBlackIcon } from '../assets/Setting-black.svg';
 import { ReactComponent as LogoutIcon } from '../assets/Logout.svg';
 import { TweetModal } from './elements/TweetModal';
+import { device } from '../globalStyles.js';
 
 const StyledNav = styled.nav`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
-  background-color: white;
+  @media screen and (${device.md}) {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: white;
 
-  .logo {
-    margin-bottom: 0.25rem;
+    .logo {
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  @media screen and (${device.lg}) {
+    align-items: unset;
   }
 `;
 
 const StyledLi = styled.li`
-  cursor: pointer;
-  display: flex;
-  gap: 1rem;
-  padding: 0.75rem 0.5rem;
-  font-weight: 700;
-  color: var(--color-gray-800);
+  @media screen and (${device.md}) {
+    cursor: pointer;
+    padding-top: 2rem;
+    font-weight: 700;
+    color: var(--color-gray-800);
 
-  .icon {
-    width: 15%;
-    display: grid;
-    place-items: center;
+    span {
+      display: none;
+    }
+
+    .icon {
+      display: grid;
+      place-items: center;
+    }
+
+    .active & {
+      color: var(--color-theme);
+    }
+
+    &.logout {
+      padding-bottom: 1rem;
+    }
   }
 
-  .active & {
-    color: var(--color-theme);
-  }
+  @media screen and (${device.lg}) {
+    display: flex;
+    gap: 1rem;
+    padding: 0.75rem 0.5rem;
 
-  :hover {
-    color: var(--color-theme);
+    span {
+      display: block;
+    }
+
+    .icon {
+      width: 20%;
+    }
   }
 `;
 
@@ -75,7 +100,7 @@ export function Navbar({ tweetInput, currentUser, onChange, onAddTweet }) {
   const handleUserLogoutClick = () => {
     localStorage.removeItem('token');
     navigate('/login');
-  }
+  };
 
   return (
     <>
@@ -132,7 +157,7 @@ export function Navbar({ tweetInput, currentUser, onChange, onAddTweet }) {
           <StyledNavButton onClick={handleShowModal}>推文</StyledNavButton>
         </div>
         <ul>
-          <StyledLi onClick={handleUserLogoutClick}>
+          <StyledLi className="logout" onClick={handleUserLogoutClick}>
             <div className="icon">
               <LogoutIcon />
             </div>
