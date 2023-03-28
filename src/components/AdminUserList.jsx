@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import BeatLoader from 'react-spinners/BeatLoader';
+import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import { ReactComponent as TweetIcon } from '../assets/Mobile-Tweet.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
@@ -124,8 +125,13 @@ const StyledMessage = styled.div`
 export default function AdminUserList() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const adminToken = localStorage.getItem('adminToken');
+    if (!adminToken) {
+      navigate('/admin');
+    }
     const getUsers = async () => {
       try {
         const users = await adminGetAllUsers();
