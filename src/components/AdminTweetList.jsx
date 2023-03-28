@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import BeatLoader from 'react-spinners/BeatLoader';
 import Header from './Header';
 import { StyledListItem } from './TweetList';
 import { ReactComponent as Cross } from '../assets/Cross.svg';
@@ -30,14 +31,26 @@ const StyledAdminTweetContainer = styled.div`
   }
 `;
 
+const StyledMessage = styled.div`
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  border-inline: 2px solid var(--color-gray-200);
+  color: var(--color-secondary);
+`;
+
 export default function AdminTweetList() {
   const [allTweets, setAllTweets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getAllTweets = async () => {
       try {
         const allTweets = await adminGetTweets();
         setAllTweets(allTweets);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -59,15 +72,26 @@ export default function AdminTweetList() {
   };
 
   const renderedItems = allTweets.map((tweet) => {
-    return (
-      <TweetList key={tweet.id} tweet={tweet} onDelete={handleDeleteClick} />
-    );
+    if (!isLoading) {
+      return (
+        <TweetList key={tweet.id} tweet={tweet} onDelete={handleDeleteClick} />
+      );
+    }
   });
 
   return (
     <>
       <Header headerText="推文清單" />
-      <StyledAdminTweetContainer>{renderedItems}</StyledAdminTweetContainer>
+      <StyledAdminTweetContainer>
+        {renderedItems}
+        {isLoading && (
+          <StyledMessage>
+            <div>
+              <BeatLoader color="var(--color-theme)" />
+            </div>
+          </StyledMessage>
+        )}
+      </StyledAdminTweetContainer>
     </>
   );
 }
