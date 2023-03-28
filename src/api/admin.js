@@ -24,7 +24,6 @@ axiosInstance.interceptors.request.use(
 export async function adminGetTweets() {
   try {
     const res = await axiosInstance.get(`${baseURL}/admin/tweets`);
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error('[Admin Get Tweets failed]: ', error);
@@ -47,7 +46,6 @@ export async function adminGetAllUsers() {
   try {
     console.log('test api');
     const res = await axiosInstance.get(`${baseURL}/admin/users`);
-    console.log(res);
     return res.data;
   } catch (error) {
     console.error('[Admin Delete Tweet failed]: ', error);

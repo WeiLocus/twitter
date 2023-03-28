@@ -28,12 +28,13 @@ const StyledCardContainer = styled.div`
   background-color: var(--color-gray-200);
   border-radius: 10px;
 
-  .cover {
+  img {
     border-radius: 10px 10px 0 0;
+  }
 
-    img {
-      border-radius: 10px 10px 0 0;
-    }
+  :hover {
+    border: 1px solid var(--color-gray-400);
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
   }
 
   .avatar {
@@ -68,6 +69,15 @@ const StyledCardContainer = styled.div`
       color: var(--color-gray-900);
     }
   }
+`;
+
+const StyledCover = styled.div`
+  width: 100%;
+  background-image: url(${(props) => props.backgroundImage});
+  background-size: cover;
+  background-position: center;
+  padding-bottom: 75%;
+  border-radius: 10px 10px 0 0;
 `;
 
 const StyledDiv = styled.div`
@@ -162,10 +172,8 @@ function UserCard({ user }) {
     userTweetLikeCounts,
   } = user;
   return (
-    <StyledCardContainer>
-      <div className="cover">
-        <img src={cover} alt="user-cover" />
-      </div>
+    <StyledCardContainer backgroundImage={cover}>
+      <StyledCover backgroundImage={cover} />
       <img className="avatar" src={avatar} alt="avatar" />
       <StyledName>
         <div className="title">{name}</div>
@@ -184,10 +192,17 @@ function UserCard({ user }) {
             <span>{userTweetLikeCounts}</span>
           </div>
         </div>
-        <div className="follow">
-          <span>{followingCounts} </span>個跟隨中
-          <span>{followerCounts} </span>位跟隨者
-        </div>
+        {account !== 'root' ? (
+          <div className="follow">
+            <span>{followingCounts} </span>個跟隨中
+            <span>{followerCounts} </span>位跟隨者
+          </div>
+        ) : (
+          <div className="follow">
+            <span>0</span>個跟隨中
+            <span>0</span>位跟隨者
+          </div>
+        )}
       </StyledDiv>
     </StyledCardContainer>
   );
