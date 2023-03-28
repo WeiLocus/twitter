@@ -32,10 +32,23 @@ export async function adminGetTweets() {
 }
 
 // * 刪除特定推文
-export async function deleteTweet(id) {
+export async function deleteTweet
+(id) {
   try {
     const res = await axiosInstance.delete(`${baseURL}/admin/tweets/${id}`);
     return res.message;
+  } catch (error) {
+    console.error('[Admin Delete Tweet failed]: ', error);
+  }
+}
+
+// * 後台的所有使用者資訊
+export async function adminGetAllUsers() {
+  try {
+    console.log('test api');
+    const res = await axiosInstance.get(`${baseURL}/admin/users`);
+    console.log(res);
+    return res.data;
   } catch (error) {
     console.error('[Admin Delete Tweet failed]: ', error);
   }

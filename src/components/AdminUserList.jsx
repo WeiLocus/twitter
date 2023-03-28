@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Header from './Header';
-import Cover from '../assets/Cover.png';
 import { ReactComponent as TweetIcon } from '../assets/Mobile-Tweet.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
+import { adminGetAllUsers } from '../api/admin';
 
 // List container
 const StyledContainer = styled.div`
@@ -23,17 +24,21 @@ const StyledCardContainer = styled.div`
   position: relative;
   width: 200px;
   height: 300px;
-  margin: 0.5rem auto;
+  margin: 0.5rem 0.5rem;
   background-color: var(--color-gray-200);
   border-radius: 10px;
 
   .cover {
     border-radius: 10px 10px 0 0;
+
+    img {
+      border-radius: 10px 10px 0 0;
+    }
   }
 
   .avatar {
     position: absolute;
-    top: 35%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100px;
@@ -49,9 +54,10 @@ const StyledCardContainer = styled.div`
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    margin-top: 1rem;
+    margin-top: 0.6rem;
     color: var(--color-secondary);
     font-size: var(--fs-basic);
+
     .stat {
       display: flex;
       align-items: center;
@@ -82,7 +88,7 @@ const StyledDiv = styled.div`
 // title、account
 const StyledName = styled.div`
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 1.6rem;
 
   .title {
     font-size: var(--fs-basic);
@@ -96,54 +102,68 @@ const StyledName = styled.div`
 `;
 
 export default function AdminUserList() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const users = await adminGetAllUsers();
+        setUsers(users);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUsers();
+  }, []);
+
+  const renderedItems = users.map((user) => {
+    return <UserCard key={user.id} user={user} />;
+  });
   return (
     <>
       <Header headerText="使用者列表" />
-      <StyledContainer>
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-      </StyledContainer>
+      <StyledContainer>{renderedItems}</StyledContainer>
     </>
   );
 }
 
-function UserCard() {
+function UserCard({ user }) {
+  const {
+    account,
+    name,
+    avatar,
+    cover,
+    tweetCounts,
+    followerCounts,
+    followingCounts,
+    userTweetLikeCounts,
+  } = user;
   return (
     <StyledCardContainer>
       <div className="cover">
-        <img src={Cover} alt="user-cover" />
+        <img src={cover} alt="user-cover" />
       </div>
-      <img
-        className="avatar"
-        src="https://placekitten.com/700/700"
-        alt="avatar"
-      />
+      <img className="avatar" src={avatar} alt="avatar" />
       <StyledName>
-        <div className="title">John Doe</div>
-        <div className="account">@heyjohn</div>
+        <div className="title">{name}</div>
+        <div className="account">@{account}</div>
       </StyledName>
       <StyledDiv>
         <div className="stats">
-          <NavLink to="/tweets/5" className="stat">
+          <div className="stat">
             <span>
               <TweetIcon width="1.2rem" height="1.2rem" />
             </span>
-            <span>1.5K</span>
-          </NavLink>
+            <span>{tweetCounts}</span>
+          </div>
           <div className="stat">
             <LikeIcon width="1.2rem" height="1.2rem" />
-            <span>20K</span>
+            <span>{userTweetLikeCounts}</span>
           </div>
         </div>
         <div className="follow">
-          <span>34 </span>個跟隨中
-          <span>59 </span>位跟隨者
+          <span>{followingCounts} </span>個跟隨中
+          <span>{followerCounts} </span>位跟隨者
         </div>
       </StyledDiv>
     </StyledCardContainer>
