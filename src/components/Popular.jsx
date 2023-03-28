@@ -54,6 +54,7 @@ const StyledPopularItem = styled.li`
       display: inline-block;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     p {

@@ -37,6 +37,7 @@ export default function UserPage() {
   const [shownUserReplies, setShownUserReplies] = useState([]);
   const [shownUserLikes, setShownUserLikes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  console.log(currentUser);
 
   useEffect(() => {
     const getUserPageDataAsync = async () => {

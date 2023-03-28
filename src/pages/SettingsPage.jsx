@@ -47,7 +47,7 @@ const StyledButtonDiv = styled.div`
 `;
 
 export default function SettingsPage() {
-  const { currentUser, setCurrentUser } = useUser();
+  const { currentUser, handleUserUpdate } = useUser();
   const nextUser = { ...currentUser };
   const { account: userAccount, name: userName, email: userEmail } = nextUser;
   const [account, setAccount] = useState(userAccount);
@@ -106,13 +106,14 @@ export default function SettingsPage() {
     }
     // 將新data修正至 currentUser
     const newCurrentUser = {
+      ...currentUser,
       account: data.account,
       name: data.name,
       email: data.email,
-      ...currentUser,
     };
-    setCurrentUser(newCurrentUser);
+    handleUserUpdate(newCurrentUser);
   };
+
   return (
     <>
       <Header headerText="帳戶設定" />

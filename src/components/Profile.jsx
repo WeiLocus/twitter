@@ -218,7 +218,7 @@ export default function Profile({ user }) {
           </NavLink>
         </StyledTabs>
       </StyledDiv>
-      {showModal && <EditModal user={user} onClose={handleShowModal} />}
+      {showModal && <EditModal onClose={handleShowModal} />}
     </>
   );
 }
