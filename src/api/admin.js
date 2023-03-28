@@ -34,9 +34,8 @@ export async function adminGetTweets() {
 // * 刪除特定推文
 export async function deleteTweet(id) {
   try {
-    const res = await axiosInstance.delete(`${baseURL}/admin/tweet/${id}`);
-    console.log(res.data);
-    return res.data;
+    const res = await axiosInstance.delete(`${baseURL}/admin/tweets/${id}`);
+    return res.message;
   } catch (error) {
     console.error('[Admin Delete Tweet failed]: ', error);
   }

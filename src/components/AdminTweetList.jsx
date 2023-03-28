@@ -37,17 +37,31 @@ export default function AdminTweetList() {
     const getAllTweets = async () => {
       try {
         const allTweets = await adminGetTweets();
-        console.log('check');
         setAllTweets(allTweets);
-        console.log('get tweets');
       } catch (error) {
         console.log(error);
       }
     };
     getAllTweets();
   }, []);
+
+  const handleDeleteClick = async (id) => {
+    try {
+      await deleteTweet(id);
+      setAllTweets((prevAllTweets) =>
+        prevAllTweets.filter((tweet) => {
+          return tweet.id !== id;
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const renderedItems = allTweets.map((tweet) => {
-    return <TweetList key={tweet.id} tweet={tweet} />;
+    return (
+      <TweetList key={tweet.id} tweet={tweet} onDelete={handleDeleteClick} />
+    );
   });
 
   return (
@@ -57,12 +71,13 @@ export default function AdminTweetList() {
     </>
   );
 }
-function TweetList({tweet}) {
+function TweetList({ tweet, onDelete }) {
   const { id, description, createdAt, User } = tweet;
   const { account, name, avatar } = User;
   const timeAgo = countTimeDiff(createdAt);
+
   return (
-    <StyledTweetContainer id={id}>
+    <StyledTweetContainer>
       <NavLink to={`/users/${User.id}`}>
         <img src={avatar} alt="avatar" />
       </NavLink>
@@ -76,7 +91,7 @@ function TweetList({tweet}) {
         <p className="content">{description}</p>
       </div>
       <div className="cross">
-        <Cross />
+        <Cross onClick={() => onDelete(id)} />
       </div>
     </StyledTweetContainer>
   );
