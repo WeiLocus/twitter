@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import clsx from 'clsx';
 import AuthInput, { StyledInputCount } from './Input';
 import { ReactComponent as CrossIcon } from '../../assets/Cross.svg';
 import { ReactComponent as ChangeImgIcon } from '../../assets/ChangeImg.svg';
 import { useUser } from '../../contexts/UserContext';
 import { changeUserProfile } from '../../api/user';
-import Alert from '../elements/Alert';
+import Alert from './Alert';
 
 const StyledMsgDiv = styled.div`
   position: absolute;
@@ -119,6 +120,7 @@ const StyledFilterDiv = styled.div`
 `;
 
 const StyledInputContainer = styled.div`
+  position: relative;
   margin-top: 5rem;
   padding: 1rem;
   .introduction {
@@ -153,6 +155,15 @@ const StyledInput = styled.textarea`
   :hover {
     border-bottom: 2px solid var(--color-light-blue);
   }
+  &.error {
+    border-bottom: 2px solid var(--color-error);
+  }
+`;
+const StyledInputLimit = styled.div`
+  position: absolute;
+  bottom: 1rem;
+  text-align: end;
+  color: var(--color-error);
 `;
 
 export default function EditModal({ onClose }) {
@@ -290,6 +301,7 @@ export default function EditModal({ onClose }) {
               <div className="introduction">
                 <label>自我介紹</label>
                 <StyledInput
+                  className={clsx('', { error: introductionLength > 160 })}
                   rows="3"
                   placeholder="Hello! My name is John Doe"
                   value={introduction}
@@ -298,6 +310,9 @@ export default function EditModal({ onClose }) {
               </div>
               {introductionLength > 0 && (
                 <StyledInputCount>{introductionLength}/160</StyledInputCount>
+              )}
+              {introductionLength > 160 && (
+                <StyledInputLimit>字數超出上限！</StyledInputLimit>
               )}
             </StyledInputContainer>
             <div className="avatar">
