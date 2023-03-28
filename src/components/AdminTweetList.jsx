@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import BeatLoader from 'react-spinners/BeatLoader';
+import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import { StyledListItem } from './TweetList';
 import { ReactComponent as Cross } from '../assets/Cross.svg';
 import { adminGetTweets, deleteTweet } from '../api/admin';
 import { countTimeDiff } from '../utilities';
+import Alert from './elements/Alert';
 
 // follow StyledListItem style by TweetList.jsx
 const StyledTweetContainer = styled(StyledListItem)`
@@ -14,20 +15,22 @@ const StyledTweetContainer = styled(StyledListItem)`
   border: none;
   border-top: 1px solid var(--color-gray-200);
   border-bottom: 1px solid var(--color-gray-200);
+  cursor: default;
 `;
 
 const StyledAdminTweetContainer = styled.div`
+  position: relative;
   height: calc(100vh - 68px);
   overflow-y: scroll;
   overflow-x: hidden;
   border-inline: 1px solid var(--color-gray-200);
-  background-color: #fff;
 
   .cross {
     width: 1rem;
     height: 1rem;
     padding-left: 0.25rem;
     color: var(--color-gray-700);
+    cursor: pointer;
   }
 `;
 
@@ -40,12 +43,26 @@ const StyledMessage = styled.div`
   border-inline: 2px solid var(--color-gray-200);
   color: var(--color-secondary);
 `;
+const StyledDiv = styled.div`
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  z-index: 999;
+`;
 
 export default function AdminTweetList() {
   const [allTweets, setAllTweets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showMessage, setShowMessage] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const adminToken = localStorage.getItem('adminToken');
+    if (!adminToken) {
+      navigate('/admin');
+    }
     const getAllTweets = async () => {
       try {
         const allTweets = await adminGetTweets();
@@ -59,15 +76,24 @@ export default function AdminTweetList() {
   }, []);
 
   const handleDeleteClick = async (id) => {
-    try {
-      await deleteTweet(id);
-      setAllTweets((prevAllTweets) =>
-        prevAllTweets.filter((tweet) => {
-          return tweet.id !== id;
-        })
-      );
-    } catch (error) {
-      console.log(error);
+    const confirmed = window.confirm('確定要刪除這筆推文嗎？');
+    if (confirmed) {
+      try {
+        const { data, status } = await deleteTweet(id);
+        if (data && status === 200) {
+          setShowMessage('刪除一筆資料');
+          setTimeout(() => {
+            setShowMessage(false);
+          }, 1000);
+        }
+        setAllTweets((prevAllTweets) =>
+          prevAllTweets.filter((tweet) => {
+            return tweet.id !== id;
+          })
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -83,6 +109,11 @@ export default function AdminTweetList() {
     <>
       <Header headerText="推文清單" />
       <StyledAdminTweetContainer>
+        {showMessage && (
+          <StyledDiv>
+            <Alert type="info" message={showMessage} />
+          </StyledDiv>
+        )}
         {renderedItems}
         {isLoading && (
           <StyledMessage>
