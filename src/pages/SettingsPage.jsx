@@ -15,7 +15,6 @@ const StyledDiv = styled.div`
 `;
 
 const StyedSettingsContainer = styled.div`
-  position: relative;
   height: calc(100vh - 68px);
   overflow-y: scroll;
   padding: 1.6rem;

@@ -14,43 +14,81 @@ import { TweetModal } from './elements/TweetModal';
 import { device } from '../globalStyles.js';
 
 const StyledNav = styled.nav`
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+
+  .logo,
+  .logout {
+    display: none;
+  }
+
+  ul.nav-links {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+
+    a:first-of-type {
+      order: -2;
+    }
+    .tweet-icon-li {
+      order: -1;
+    }
+  }
+
   @media screen and (${device.md}) {
     height: 100vh;
+    width: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 1rem;
-    background-color: white;
 
     .logo {
+      display: block;
       margin-bottom: 0.25rem;
+    }
+
+    .logout {
+      display: flex;
+    }
+
+    ul.nav-links {
+      display: unset;
+      padding: unset;
     }
   }
 
   @media screen and (${device.lg}) {
     align-items: unset;
+
+    width: 10rem;
   }
 `;
 
 const StyledLi = styled.li`
-  @media screen and (${device.md}) {
-    cursor: pointer;
-    padding-top: 2rem;
-    font-weight: 700;
-    color: var(--color-gray-800);
+  cursor: pointer;
+  color: var(--color-gray-800);
 
-    span {
-      display: none;
+  .icon {
+    :hover,
+    .active & {
+      color: var(--color-theme);
     }
+  }
+
+  span {
+    display: none;
+  }
+  @media screen and (${device.md}) {
+    padding-top: 2rem;
 
     .icon {
       display: grid;
       place-items: center;
-    }
-    :hover,
-    .active & {
-      color: var(--color-theme);
     }
 
     .tweet-icon {
@@ -80,6 +118,12 @@ const StyledLi = styled.li`
     display: flex;
     gap: 1rem;
     padding: 0.75rem 0.5rem;
+    font-weight: 700;
+
+    :hover,
+    .active & {
+      color: var(--color-theme);
+    }
 
     span {
       display: block;
@@ -137,7 +181,7 @@ export function Navbar({ tweetInput, currentUser, onChange, onAddTweet }) {
           <div className="logo">
             <LogoIcon />
           </div>
-          <ul>
+          <ul className="nav-links">
             <NavLink to="/tweets">
               <StyledLi>
                 <div className="icon">
@@ -181,7 +225,7 @@ export function Navbar({ tweetInput, currentUser, onChange, onAddTweet }) {
                 <span>設定</span>
               </StyledLi>
             </NavLink>
-            <StyledLi>
+            <StyledLi className="tweet-icon-li">
               <div className="tweet-icon">
                 <div className="svg">
                   <MobileTweetIcon onClick={handleShowModal} />
