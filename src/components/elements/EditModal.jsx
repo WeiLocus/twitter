@@ -202,12 +202,6 @@ export default function EditModal({ onClose, onProfileChange }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
-      name,
-      introduction,
-      avatar,
-      cover,
-    });
     if (name.length === 0 || introduction.length === 0) {
       setShowErrorMsg('欄位不可空白!');
       setTimeout(() => {
@@ -230,7 +224,7 @@ export default function EditModal({ onClose, onProfileChange }) {
       avatar,
       cover,
     });
-
+    console.log('returned: ', data);
     if (data && status === 200) {
       setShowSuccessMsg(true);
       setTimeout(() => {
@@ -261,7 +255,7 @@ export default function EditModal({ onClose, onProfileChange }) {
   return (
     <StyledDiv>
       <StyledModal>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
           <StyledCloseDiv>
             <button className="close-btn" type="button" onClick={onClose}>
               <CrossIcon />
@@ -282,6 +276,7 @@ export default function EditModal({ onClose, onProfileChange }) {
                   <CrossIcon className="icon" onClick={onClose} />
                   <input
                     className="cover-input"
+                    name="cover"
                     id="cover-input"
                     placeholder="none"
                     type="file"
@@ -326,6 +321,7 @@ export default function EditModal({ onClose, onProfileChange }) {
                   <input
                     className="avatar-input"
                     id="avatar-input"
+                    name="avatar"
                     placeholder="none"
                     type="file"
                     accept="image/*"
