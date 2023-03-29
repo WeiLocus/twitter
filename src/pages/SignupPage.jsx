@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
 import {
   AuthContainer,
@@ -11,6 +12,7 @@ import AuthInput from '../components/elements/Input';
 import AuthButton from '../components/elements/Button';
 import { register } from '../api/auth';
 import Alert from '../components/elements/Alert';
+import { breakpoint, GlobalStyle } from '../globalStyles';
 
 // title style
 const StyledTitle = styled.div`
@@ -26,9 +28,19 @@ export default function SignupPage() {
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const [showErrorMsg, setShowErrorMsg] = useState('');
-  // 確認名稱長度
+  const [linkText, setLinkText] = useState('取消重填');
+
   const nameLength = name.length;
+  const isMobile = useMediaQuery({ query: `(max-width: ${breakpoint.md} )` });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isMobile) {
+      setLinkText('取消');
+    } else {
+      setLinkText('取消重填');
+    }
+  }, [isMobile]);
 
   // 註冊後導引至登入
   const handleClick = async () => {
@@ -71,6 +83,17 @@ export default function SignupPage() {
     }
   };
 
+  const handleBehavior = () => {
+    if (!isMobile) {
+      navigate('/login');
+    } else {
+      setAccount('');
+      setName('');
+      setEmail('');
+      setPassword('');
+      setCheckPassword('');
+    }
+  }
   return (
     <AuthContainer>
       <div>
@@ -121,9 +144,7 @@ export default function SignupPage() {
         />
       </AuthInputContainer>
       <AuthButton name="註冊" onClick={handleClick} />
-      <Link to="/login">
-        <AuthLinkText>取消</AuthLinkText>
-      </Link>
+      <AuthLinkText onClick={handleBehavior}>{linkText}</AuthLinkText>
       {showErrorMsg && <Alert type="error" message={showErrorMsg} />}
     </AuthContainer>
   );
