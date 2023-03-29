@@ -15,13 +15,10 @@ const StyledDiv = styled.div`
   left: 50%;
   display: grid;
   place-items: center;
-
-  @media screen and (${device.md}) {
-  }
 `;
 
 const StyedSettingsContainer = styled.div`
-  height: calc(100vh - 68px);
+  height: calc(100vh - 56px);
   overflow-y: scroll;
   padding: 1.6rem;
   padding-top: calc(73px + 1.6rem);
@@ -34,6 +31,7 @@ const StyedSettingsContainer = styled.div`
     text-align: end;
   }
   @media screen and (${device.md}) {
+    height: calc(100vh - 68px);
     padding-top: unset;
     padding: 1.6rem;
 

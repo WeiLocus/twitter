@@ -9,7 +9,7 @@ import { getTweets } from '../api/tweet';
 import { device } from '../globalStyles';
 
 const StyledDiv = styled.div`
-  height: calc(100vh - 68px);
+  height: calc(100vh - 56px);
   overflow-y: scroll;
   padding-top: 82px;
 
@@ -17,6 +17,7 @@ const StyledDiv = styled.div`
     display: none;
   }
   @media screen and (${device.md}) {
+    height: calc(100vh - 68px);
     padding-top: unset;
     .tweet-input {
       display: block;
