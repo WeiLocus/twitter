@@ -6,6 +6,7 @@ import { useUser } from '../contexts/UserContext';
 
 const StyledHeader = styled.header`
   position: fixed;
+  z-index: 1;
   width: 100%;
   display: flex;
   align-items: center;

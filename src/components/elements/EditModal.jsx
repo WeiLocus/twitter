@@ -18,7 +18,7 @@ const StyledMsgDiv = styled.div`
 
 const StyledDiv = styled.div`
   position: absolute;
-  z-index: 1;
+  z-index: 5;
   inset: 0;
   height: 100%;
   width: 100%;

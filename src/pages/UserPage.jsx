@@ -5,6 +5,7 @@ import BeatLoader from 'react-spinners/BeatLoader';
 import Header from '../components/Header';
 import Profile from '../components/Profile';
 import { useUser } from '../contexts/UserContext';
+import { device } from '../globalStyles';
 import {
   getUserData,
   getUserTweets,
@@ -15,6 +16,11 @@ import {
 const StyledDiv = styled.div`
   height: calc(100vh - 73px);
   overflow-y: scroll;
+  padding-top: 73px;
+
+  @media screen and (${device.md}) {
+    padding-top: unset;
+  }
 `;
 
 const StyledMessage = styled.div`
