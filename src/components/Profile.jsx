@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { ReactComponent as EmailIcon } from '../assets/Email.svg';
 import { ReactComponent as NotificationIcon } from '../assets/Notification.svg';
 import EditModal from './elements/EditModal';
@@ -9,7 +9,7 @@ import { device } from '../globalStyles.js';
 
 const StyledDiv = styled.div`
   position: relative;
-  border: 1px solid var(--color-gray-200);
+
   background-color: white;
 
   .cover {
@@ -33,6 +33,10 @@ const StyledDiv = styled.div`
   }
 
   @media screen and (${device.md}) {
+    border: 1px solid var(--color-gray-200);
+    display: ${(props) =>
+      props.pathname.includes('follow') ? 'none' : 'block'};
+
     .cover {
       height: 200px;
     }
@@ -167,6 +171,7 @@ const StyledTabs = styled.div`
 `;
 
 export default function Profile({ user, onProfileChange }) {
+  const { pathname } = useLocation();
   const { currentUser, userFollowings, handleFollow } = useUser();
   const {
     id,
@@ -195,7 +200,7 @@ export default function Profile({ user, onProfileChange }) {
 
   return (
     <>
-      <StyledDiv>
+      <StyledDiv pathname={pathname}>
         <div className="cover">
           <img
             src={cover ?? 'https://loremflickr.com/640/480/nature?lock=27430'}
@@ -247,17 +252,19 @@ export default function Profile({ user, onProfileChange }) {
             </NavLink>
           </div>
         </StyledContentDiv>
-        <StyledTabs>
-          <NavLink className="category" to={`/users/${id}/tweets`}>
-            <p>推文</p>
-          </NavLink>
-          <NavLink className="category" to={`/users/${id}/replies`}>
-            <p>回覆</p>
-          </NavLink>
-          <NavLink className="category" to={`/users/${id}/likes`}>
-            <p>喜歡的內容</p>
-          </NavLink>
-        </StyledTabs>
+        {!pathname.includes('follow') && (
+          <StyledTabs>
+            <NavLink className="category" to={`/users/${id}/tweets`}>
+              <p>推文</p>
+            </NavLink>
+            <NavLink className="category" to={`/users/${id}/replies`}>
+              <p>回覆</p>
+            </NavLink>
+            <NavLink className="category" to={`/users/${id}/likes`}>
+              <p>喜歡的內容</p>
+            </NavLink>
+          </StyledTabs>
+        )}
       </StyledDiv>
       {showModal && (
         <EditModal

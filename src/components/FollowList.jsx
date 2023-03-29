@@ -81,7 +81,6 @@ const StyledListItem = styled.li`
 const StyledTab = styled.div`
   display: flex;
   justify-content: start;
-  border: 1px solid var(--color-gray-200);
   color: var(--color-secondary);
   background-color: white;
   font-weight: 700;
@@ -102,6 +101,10 @@ const StyledTab = styled.div`
       border-bottom: 3px solid var(--color-theme);
       color: var(--color-theme);
     }
+  }
+
+  @media screen and (${device.md}) {
+    border: 1px solid var(--color-gray-200);
   }
 `;
 

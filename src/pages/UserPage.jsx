@@ -21,6 +21,10 @@ const StyledDiv = styled.div`
   @media screen and (${device.md}) {
     height: calc(100vh - 73px);
     padding-top: unset;
+
+    /* .profile {
+      display: none;
+    } */
   }
 `;
 
@@ -88,13 +92,22 @@ export default function UserPage() {
             shownUserTweets={shownUserTweets}
           />
           <StyledDiv>
-            {!pathname.includes('follow') && (
+            <div className="profile">
               <Profile
                 user={shownUser}
                 key={shownUser.id}
                 onProfileChange={getUserPageDataAsync}
               />
-            )}
+            </div>
+            {/* {!pathname.includes('follow') && (
+              <div className="profile">
+                <Profile
+                  user={shownUser}
+                  key={shownUser.id}
+                  onProfileChange={getUserPageDataAsync}
+                />
+              </div>
+            )} */}
             <Outlet
               context={{
                 currentUser,
