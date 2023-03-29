@@ -40,7 +40,7 @@ export async function register({
   checkPassword,
 }) {
   try {
-    const { data } = await axios.post(`${baseURL}/users`, {
+    const res = await axios.post(`${baseURL}/users`, {
       account,
       name,
       email,
@@ -49,8 +49,9 @@ export async function register({
     });
     // 印出回傳值data
     // console.log('data', data);
-
-    return { ...data };
+    const { data, status, message } = res;
+    console.log(data);
+    return { data, status, message };
   } catch (error) {
     const { data, status } = error.response;
     if (status === 400) {
