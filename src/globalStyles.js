@@ -125,7 +125,6 @@ export const device = {
 
 export const Container = styled.div`
   max-width: 100%;
-  padding: 0 24px;
   margin: 0 auto;
 
   @media screen and (${device.md}) {
@@ -139,9 +138,16 @@ export const Container = styled.div`
 `;
 
 export const GridContainer = styled(Container)`
+  .fr3 {
+    display: none;
+  }
   @media screen and (${device.md}) {
     display: grid;
     grid-template-columns: 1fr 4fr 3fr;
+
+    .fr3 {
+      display: unset;
+    }
   }
 
   @media screen and (${device.lg}) {

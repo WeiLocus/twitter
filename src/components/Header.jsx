@@ -1,6 +1,8 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as GoBackIcon } from '../assets/GoBack.svg';
+import { device } from '../globalStyles';
+import { useUser } from '../contexts/UserContext';
 
 const StyledHeader = styled.header`
   display: flex;
@@ -9,6 +11,23 @@ const StyledHeader = styled.header`
   padding: 1rem;
   border-inline: 1px solid var(--color-gray-200);
   background-color: white;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  div.small {
+    display: unset;
+    align-items: unset;
+  }
+
+  .user-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 1rem;
+    border-radius: 50%;
+  }
 
   h1 {
     font-size: var(--fs-h4);
@@ -34,9 +53,21 @@ const StyledHeader = styled.header`
       }
     }
   }
+
+  @media screen and (${device.md}) {
+    div {
+      display: unset;
+      align-items: unset;
+    }
+
+    .user-avatar {
+      display: none;
+    }
+  }
 `;
 export default function Header({ headerText, goBack, user, shownUserTweets }) {
   const { pathname } = useLocation();
+  const { currentUser } = useUser();
   return (
     <StyledHeader>
       {goBack && (
@@ -49,6 +80,13 @@ export default function Header({ headerText, goBack, user, shownUserTweets }) {
         </NavLink>
       )}
       <div className={user && 'small'}>
+        {pathname === '/tweets' && (
+          <img
+            className="user-avatar"
+            src={currentUser.avatar}
+            alt="user-avatar"
+          />
+        )}
         <h1>{headerText}</h1>
         <p>
           <span>{shownUserTweets?.length}</span>推文

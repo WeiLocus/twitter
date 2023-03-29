@@ -74,7 +74,13 @@ export default function TweetLayout() {
         const likedTweets = likes.map((tweet) => tweet.id);
         console.log(likedTweets);
         console.log('user liked tweets get');
-        setCurrentUser(user);
+        setCurrentUser({
+          ...user,
+          introduction: user.introduction ?? 'I like alpha camp',
+          avatar: user.avatar ?? 'http://placekitten.com/g/500/500',
+          cover:
+            user.cover ?? 'https://loremflickr.com/640/480/nature?lock=27430',
+        });
         setUserFollowings(followingUsers);
         setUserLikes(likedTweets);
         console.log('user context loaded');

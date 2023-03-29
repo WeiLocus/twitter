@@ -9,47 +9,106 @@ import { ReactComponent as PersonBlackIcon } from '../assets/Person-black.svg';
 import { ReactComponent as SettingIcon } from '../assets/Setting.svg';
 import { ReactComponent as SettingBlackIcon } from '../assets/Setting-black.svg';
 import { ReactComponent as LogoutIcon } from '../assets/Logout.svg';
+import { ReactComponent as MobileTweetIcon } from '../assets/Mobile-Tweet.svg';
 import { TweetModal } from './elements/TweetModal';
 import { device } from '../globalStyles.js';
 
 const StyledNav = styled.nav`
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  border-top: 2px solid var(--color-gray-200);
+  background-color: white;
+
+  .logo,
+  .logout {
+    display: none;
+  }
+
+  ul.nav-links {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+
+    a:first-of-type {
+      order: -2;
+    }
+    .tweet-icon-li {
+      order: -1;
+    }
+  }
+
   @media screen and (${device.md}) {
     height: 100vh;
+    width: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 1rem;
-    background-color: white;
+    border-top: unset;
 
     .logo {
+      display: block;
       margin-bottom: 0.25rem;
+    }
+
+    .logout {
+      display: flex;
+    }
+
+    ul.nav-links {
+      display: unset;
+      padding: unset;
     }
   }
 
   @media screen and (${device.lg}) {
     align-items: unset;
+
+    width: 10rem;
   }
 `;
 
 const StyledLi = styled.li`
-  @media screen and (${device.md}) {
-    cursor: pointer;
-    padding-top: 2rem;
-    font-weight: 700;
-    color: var(--color-gray-800);
+  cursor: pointer;
+  color: var(--color-gray-800);
 
-    span {
-      display: none;
+  .icon {
+    :hover,
+    .active & {
+      color: var(--color-theme);
     }
+  }
+
+  span {
+    display: none;
+  }
+  @media screen and (${device.md}) {
+    padding-top: 2rem;
 
     .icon {
       display: grid;
       place-items: center;
     }
 
-    .active & {
-      color: var(--color-theme);
+    .tweet-icon {
+      display: grid;
+      place-items: center;
+
+      .svg {
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        color: white;
+        background-color: var(--color-theme);
+        :hover {
+          background-color: var(--color-light-orange);
+        }
+      }
     }
 
     &.logout {
@@ -61,6 +120,12 @@ const StyledLi = styled.li`
     display: flex;
     gap: 1rem;
     padding: 0.75rem 0.5rem;
+    font-weight: 700;
+
+    :hover,
+    .active & {
+      color: var(--color-theme);
+    }
 
     span {
       display: block;
@@ -69,21 +134,30 @@ const StyledLi = styled.li`
     .icon {
       width: 20%;
     }
+
+    .tweet-icon {
+      display: none;
+    }
   }
 `;
 
 const StyledNavButton = styled.button`
-  cursor: pointer;
-  width: 100%;
-  margin: 1rem 0;
-  padding: 0.5rem 0;
-  border: none;
-  border-radius: 2rem;
-  color: white;
-  background-color: var(--color-theme);
+  display: none;
 
-  :hover {
-    background-color: var(--color-light-orange);
+  @media screen and (${device.lg}) {
+    display: block;
+    cursor: pointer;
+    width: 100%;
+    margin: 1rem 0;
+    padding: 0.5rem 0;
+    border: none;
+    border-radius: 2rem;
+    color: white;
+    background-color: var(--color-theme);
+
+    :hover {
+      background-color: var(--color-light-orange);
+    }
   }
 `;
 
@@ -109,7 +183,7 @@ export function Navbar({ tweetInput, currentUser, onChange, onAddTweet }) {
           <div className="logo">
             <LogoIcon />
           </div>
-          <ul>
+          <ul className="nav-links">
             <NavLink to="/tweets">
               <StyledLi>
                 <div className="icon">
@@ -153,6 +227,13 @@ export function Navbar({ tweetInput, currentUser, onChange, onAddTweet }) {
                 <span>設定</span>
               </StyledLi>
             </NavLink>
+            <StyledLi className="tweet-icon-li">
+              <div className="tweet-icon">
+                <div className="svg">
+                  <MobileTweetIcon onClick={handleShowModal} />
+                </div>
+              </div>
+            </StyledLi>
           </ul>
           <StyledNavButton onClick={handleShowModal}>推文</StyledNavButton>
         </div>
