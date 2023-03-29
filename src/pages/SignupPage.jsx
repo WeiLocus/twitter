@@ -29,6 +29,7 @@ export default function SignupPage() {
   const [checkPassword, setCheckPassword] = useState('');
   const [showErrorMsg, setShowErrorMsg] = useState('');
   const [linkText, setLinkText] = useState('取消重填');
+  const [showSuccessMsg, setShowSuccessMsg] = useState(false);
 
   const nameLength = name.length;
   const isMobile = useMediaQuery({ query: `(max-width: ${breakpoint.md} )` });
@@ -72,10 +73,13 @@ export default function SignupPage() {
       checkPassword,
     });
     if (status !== 'error') {
-      navigate('/login');
+      setShowSuccessMsg(true);
+      setTimeout(() => {
+        setShowSuccessMsg(false);
+        navigate('/login');
+      }, 1000);
     }
     if (status === 'error' && message) {
-      console.log(message);
       setShowErrorMsg(message);
       setTimeout(() => {
         setShowErrorMsg(false);
@@ -145,6 +149,7 @@ export default function SignupPage() {
       </AuthInputContainer>
       <AuthButton name="註冊" onClick={handleClick} />
       <AuthLinkText onClick={handleBehavior}>{linkText}</AuthLinkText>
+      {showSuccessMsg && <Alert type="success" message="註冊成功 請登入" />}
       {showErrorMsg && <Alert type="error" message={showErrorMsg} />}
     </AuthContainer>
   );
