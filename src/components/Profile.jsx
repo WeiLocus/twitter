@@ -5,6 +5,7 @@ import { ReactComponent as EmailIcon } from '../assets/Email.svg';
 import { ReactComponent as NotificationIcon } from '../assets/Notification.svg';
 import EditModal from './elements/EditModal';
 import { useUser } from '../contexts/UserContext';
+import { device } from '../globalStyles.js';
 
 const StyledDiv = styled.div`
   position: relative;
@@ -12,7 +13,7 @@ const StyledDiv = styled.div`
   background-color: white;
 
   .cover {
-    height: 200px;
+    height: 150px;
     overflow: hidden;
 
     img {
@@ -22,23 +23,36 @@ const StyledDiv = styled.div`
 
   .avatar {
     position: absolute;
-    top: 7.75rem;
+    top: 7rem;
     left: 1rem;
-    width: 140px;
+    width: 80px;
     aspect-ratio: 1/1;
-    border: 4px solid white;
+    border: 3px solid white;
     border-radius: 50%;
     overflow: hidden;
+  }
+
+  @media screen and (${device.md}) {
+    .cover {
+      height: 200px;
+    }
+
+    .avatar {
+      top: 7.75rem;
+      left: 1rem;
+      width: 140px;
+      border: 4px solid white;
+    }
   }
 `;
 
 const StyledContentDiv = styled.div`
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   color: var(--color-gray-900);
   font-size: var(--fs-secondary);
 
   .user {
-    margin: 0.75rem 0 0.25rem;
+    margin: 0.5rem 0 0.25rem;
     font-size: var(--fs-h5);
 
     p {
@@ -64,6 +78,14 @@ const StyledContentDiv = styled.div`
       color: var(--color-gray-900);
     }
   }
+
+  @media screen and (${device.md}) {
+    padding: 1rem;
+
+    .user {
+      margin: 0.75rem 0 0.25rem;
+    }
+  }
 `;
 
 const StyledEditDiv = styled.div`
@@ -87,7 +109,7 @@ const StyledEditDiv = styled.div`
 
   button {
     cursor: pointer;
-    padding: 0.5rem 1rem;
+    padding: 0.25rem 0.5rem;
     border: 1px solid var(--color-theme);
     border-radius: 3.125rem;
     color: var(--color-theme);
@@ -105,6 +127,12 @@ const StyledEditDiv = styled.div`
       opacity: 0.75;
     }
   }
+
+  @media screen and (${device.md}) {
+    button {
+      padding: 0.5rem 1rem;
+    }
+  }
 `;
 
 const StyledTabs = styled.div`
@@ -114,7 +142,7 @@ const StyledTabs = styled.div`
   font-weight: 700;
 
   .category {
-    width: 8em;
+    width: 7em;
     display: grid;
     place-items: center;
     border-bottom: 3px solid white;
@@ -128,6 +156,12 @@ const StyledTabs = styled.div`
     &.active {
       border-bottom: 3px solid var(--color-theme);
       color: var(--color-theme);
+    }
+  }
+
+  @media screen and (${device.md}) {
+    .category {
+      width: 8em;
     }
   }
 `;
