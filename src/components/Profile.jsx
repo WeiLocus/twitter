@@ -100,7 +100,7 @@ const StyledEditDiv = styled.div`
 
   .icon {
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.3rem;
     border: 1px solid var(--color-theme);
     border-radius: 50%;
     color: var(--color-theme);
@@ -135,6 +135,10 @@ const StyledEditDiv = styled.div`
   @media screen and (${device.md}) {
     button {
       padding: 0.5rem 1rem;
+    }
+
+    .icon {
+      padding: 0.5rem;
     }
   }
 `;
