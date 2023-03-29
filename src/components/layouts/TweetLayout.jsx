@@ -50,7 +50,7 @@ export default function TweetLayout() {
       setTimeout(() => {
         setTweets(nextTweets);
         setTweetInput('');
-      }, 2000);
+      }, 3000);
       return { status: 'ok' };
     } catch (error) {
       console.log(error);
