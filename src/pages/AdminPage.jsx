@@ -11,7 +11,7 @@ import {
 import AuthInput from '../components/elements/Input';
 import AuthButton from '../components/elements/Button';
 import Alert from '../components/elements/Alert';
-import { adminLogin, login } from '../api/auth';
+import { adminLogin } from '../api/auth';
 
 // title style
 const StyledTitle = styled.div`

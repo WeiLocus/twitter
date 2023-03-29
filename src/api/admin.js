@@ -46,7 +46,6 @@ export async function deleteTweet
 // * 後台的所有使用者資訊
 export async function adminGetAllUsers() {
   try {
-    console.log('test api');
     const res = await axiosInstance.get(`${baseURL}/admin/users`);
     return res.data;
   } catch (error) {
