@@ -36,11 +36,12 @@ const StyledListItem = styled.li`
 
   .user {
     display: grid;
-    grid-template-columns: calc(50px + 0.5rem) 1fr auto;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
     margin-bottom: 0.5rem;
 
     p {
+      margin-left: 0.5rem;
       font-size: var(--fs-secondary);
       color: var(--color-secondary);
     }
