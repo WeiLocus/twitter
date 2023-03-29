@@ -18,7 +18,8 @@ const StyledNav = styled.nav`
   position: absolute;
   bottom: 0;
   border-top: 2px solid var(--color-gray-200);
-  background-color: white;
+  background-color: pink;
+  z-index: 1;
 
   .logo,
   .logout {
@@ -274,7 +275,7 @@ export function AdminNavbar() {
         <div className="logo">
           <LogoIcon />
         </div>
-        <ul>
+        <ul className="nav-links">
           <NavLink to="/admin/tweets">
             <StyledLi>
               <div className="icon">
@@ -305,9 +306,9 @@ export function AdminNavbar() {
         </ul>
       </div>
       <ul>
-        <StyledLi onClick={handleAdminLogoutClick}>
+        <StyledLi className="logout" onClick={handleAdminLogoutClick}>
           <div className="icon">
-            <LogoutIcon />
+            <LogoutIcon className="logoutIcon" />
           </div>
           <span>登出</span>
         </StyledLi>
