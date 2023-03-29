@@ -11,11 +11,13 @@ import { device } from '../globalStyles';
 const StyledDiv = styled.div`
   height: calc(100vh - 68px);
   overflow-y: scroll;
+  padding-top: 82px;
 
   .tweet-input {
     display: none;
   }
   @media screen and (${device.md}) {
+    padding-top: unset;
     .tweet-input {
       display: block;
     }
