@@ -196,21 +196,15 @@ export default function EditModal({ onClose, onProfileChange }) {
   const handleAvatarChange = (e) => {
     const selectedImage = e.target.files[0];
     const previewURL = URL.createObjectURL(e.target.files[0]);
-    console.log(avatar);
-    console.log(previewURL);
     setAvatar(selectedImage);
     setAvatarPreview(previewURL);
-    console.log('avatar selected!');
   };
 
   const handleCoverChange = (e) => {
     const selectedImage = e.target.files[0];
     const previewURL = URL.createObjectURL(e.target.files[0]);
-    console.log(cover);
-    console.log(previewURL);
     setCover(selectedImage);
     setcoverPreview(previewURL);
-    console.log('cover selected!');
   };
 
   const handleSubmit = async (e) => {
@@ -240,7 +234,6 @@ export default function EditModal({ onClose, onProfileChange }) {
       avatar,
       cover,
     });
-    console.log('returned: ', data);
     if (data && status === 200) {
       setShowSuccessMsg(true);
       setIsSubmitting(false);
@@ -258,7 +251,6 @@ export default function EditModal({ onClose, onProfileChange }) {
     };
     handleUserUpdate(newCurrentUser);
     onProfileChange();
-    console.log('data submitted!');
     setIsSubmitting(false);
     onClose();
   };

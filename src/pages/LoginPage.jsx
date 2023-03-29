@@ -41,7 +41,6 @@ export default function LoginPage() {
       account,
       password,
     });
-    // console.log('isAdmin', isAdmin);
 
     if (token && isAdmin === false) {
       localStorage.setItem('token', token);

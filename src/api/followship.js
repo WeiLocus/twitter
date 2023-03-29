@@ -24,7 +24,6 @@ axiosInstance.interceptors.request.use(
 export async function followUser(id) {
   try {
     const res = await axiosInstance.post(`${baseURL}/followships`, { id });
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error('[Follow User failed]: ', error);
@@ -35,7 +34,6 @@ export async function followUser(id) {
 export async function unfollowUser(id) {
   try {
     const res = await axiosInstance.delete(`${baseURL}/followships/${id}`);
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error('[Unfollow User failed]: ', error);

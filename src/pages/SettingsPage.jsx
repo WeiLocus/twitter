@@ -122,7 +122,6 @@ export default function SettingsPage() {
       password,
       checkPassword,
     });
-    console.log(status);
     if (data && status === 200) {
       setShowSuccessMsg(true);
       setTimeout(() => {

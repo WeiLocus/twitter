@@ -75,7 +75,6 @@ export default function SignupPage() {
       navigate('/login');
     }
     if (status === 'error' && message) {
-      console.log(message);
       setShowErrorMsg(message);
       setTimeout(() => {
         setShowErrorMsg(false);
@@ -93,7 +92,7 @@ export default function SignupPage() {
       setPassword('');
       setCheckPassword('');
     }
-  }
+  };
   return (
     <AuthContainer>
       <div>

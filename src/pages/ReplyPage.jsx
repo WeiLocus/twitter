@@ -49,10 +49,8 @@ export default function ReplyPage() {
     const getSingleTweetAsync = async () => {
       try {
         const tweet = await getSingleTweet(id);
-        console.log(`tweet ${id} get!`);
         const replies = await getReplies(id);
         if (replies !== undefined) {
-          console.log(`tweet ${id} replies get!`);
           setTweetReplies(replies);
         }
         setSelectedTweet(tweet);
@@ -75,9 +73,6 @@ export default function ReplyPage() {
         comment: replyInput,
       });
       if (data === 'error') return;
-      console.log(
-        `user ${currentUser.id} just submitted a reply to tweet ${selectedTweet.id}: ${replyInput}`
-      );
       // 重新setTweets
       const nextTweetReplies = [
         {

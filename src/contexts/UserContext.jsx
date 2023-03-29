@@ -30,7 +30,6 @@ function UserProvider({ children }) {
 
   const handleUserUpdate = (data) => {
     setCurrentUser(data);
-    console.log('user data updated');
   };
 
   const handleFollow = async (id) => {
@@ -39,13 +38,11 @@ function UserProvider({ children }) {
       const newFollowings = userFollowings.filter(
         (followingId) => followingId !== id
       );
-      console.log(newFollowings);
       setUserFollowings(newFollowings);
     } else {
       await followUser(id);
       const newFollowings = [...userFollowings, id];
       setUserFollowings(newFollowings);
-      console.log(newFollowings);
     }
   };
 
@@ -54,13 +51,10 @@ function UserProvider({ children }) {
       await unLikeTweet(id);
       const newLikes = userLikes.filter((tweetId) => tweetId !== id);
       setUserLikes(newLikes);
-      console.log(newLikes);
     } else {
       await likeTweet(id);
-      console.log(id);
       const newLikes = [...userLikes, id];
       setUserLikes(newLikes);
-      console.log(newLikes);
     }
   };
 

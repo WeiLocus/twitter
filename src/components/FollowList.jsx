@@ -132,9 +132,7 @@ export default function FollowList() {
     const getFollowUsersAsync = async () => {
       try {
         const followings = await getUserFollowings(shownUser.id);
-        console.log('user followings get!');
         const followers = await getUserFollowers(shownUser.id);
-        console.log('user followers get!');
         setUserFollowingsData(followings);
         setUserFollowers(followers);
         setIsLoading(false);
