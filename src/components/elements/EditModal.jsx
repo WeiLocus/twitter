@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 import clsx from 'clsx';
 import AuthInput, { StyledInputCount } from './Input';
 import { ReactComponent as CrossIcon } from '../../assets/Cross.svg';
@@ -7,6 +8,7 @@ import { ReactComponent as ChangeImgIcon } from '../../assets/ChangeImg.svg';
 import { useUser } from '../../contexts/UserContext';
 import { changeUserProfile } from '../../api/user';
 import Alert from './Alert';
+import { device, breakpoint } from '../../globalStyles.js';
 
 const StyledMsgDiv = styled.div`
   position: absolute;
@@ -28,12 +30,7 @@ const StyledDiv = styled.div`
 const StyledModal = styled.div`
   display: flex;
   flex-direction: column;
-  position: absolute;
-  inset: 3.5rem 0;
-  width: 634px;
-  height: 650px;
-  margin: 0 auto;
-  border-radius: 1rem;
+  height: 100%;
   background-color: white;
 
   .content {
@@ -61,6 +58,15 @@ const StyledModal = styled.div`
     border: 4px solid white;
     border-radius: 50%;
     overflow: hidden;
+  }
+
+  @media screen and (${device.md}) {
+    position: absolute;
+    inset: 3.5rem 0;
+    width: 634px;
+    height: 650px;
+    margin: 0 auto;
+    border-radius: 1rem;
   }
 `;
 
@@ -172,6 +178,7 @@ const StyledInputLimit = styled.div`
 `;
 
 export default function EditModal({ onClose, onProfileChange }) {
+  const isMobile = useMediaQuery({ query: `(max-width: ${breakpoint.md} )` });
   const { currentUser, handleUserUpdate } = useUser();
   const nextUser = { ...currentUser };
   const [name, setName] = useState(nextUser.name);
@@ -312,7 +319,7 @@ export default function EditModal({ onClose, onProfileChange }) {
                 <label>自我介紹</label>
                 <StyledInput
                   className={clsx('', { error: introductionLength > 160 })}
-                  rows="3"
+                  rows={isMobile ? '6' : '3'}
                   placeholder="Hello! My name is ..."
                   value={introduction}
                   onChange={(event) => setIntroduction(event.target.value)}
