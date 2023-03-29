@@ -4,6 +4,7 @@ import { NavLink, useLocation, useOutletContext } from 'react-router-dom';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { useUser } from '../contexts/UserContext.jsx';
 import { getUserFollowings, getUserFollowers } from '../api/user.js';
+import { device } from '../globalStyles.js';
 
 const StyledList = styled.ul`
   height: calc(100% - 53px);
@@ -34,20 +35,20 @@ const StyledListItem = styled.li`
   }
 
   .user {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: calc(50px + 0.5rem) 1fr auto;
     align-items: center;
     margin-bottom: 0.5rem;
 
-    div {
-      display: flex;
-      align-items: center;
+    p {
+      font-size: var(--fs-secondary);
+      color: var(--color-secondary);
     }
   }
 
   button {
     cursor: pointer;
-    padding: 0.5rem 1rem;
+    padding: 0.25rem 0.5rem;
     border: 1px solid var(--color-theme);
     border-radius: 3.125rem;
     color: var(--color-theme);
@@ -68,6 +69,12 @@ const StyledListItem = styled.li`
 
   .content {
     color: var(--color-gray-900);
+  }
+
+  @media screen and (${device.md}) {
+    button {
+      padding: 0.5rem 1rem;
+    }
   }
 `;
 
@@ -166,7 +173,7 @@ function FollowTab({ id }) {
 
 function FollowItem({ user }) {
   const { userFollowings, handleFollow } = useUser();
-  const { id, name, avatar, introduction } = user;
+  const { id, name, account, avatar, introduction } = user;
   const isFollowed = userFollowings.includes(id);
   const [disabled, setDisabled] = useState(false);
 
@@ -182,6 +189,7 @@ function FollowItem({ user }) {
       <div>
         <div className="user">
           <b>{name}</b>
+          <p>@{account}</p>
           <button
             className={`${isFollowed ? 'active' : undefined} ${
               disabled ? 'disabled' : undefined
