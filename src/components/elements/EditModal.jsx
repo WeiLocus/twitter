@@ -89,6 +89,11 @@ const StyledCloseDiv = styled.div`
     border-radius: 3.125rem;
     color: white;
     background-color: var(--color-theme);
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.75;
+    }
   }
 `;
 
@@ -175,6 +180,7 @@ export default function EditModal({ onClose, onProfileChange }) {
   const [coverPreview, setcoverPreview] = useState(nextUser.cover);
   const [avatar, setAvatar] = useState(nextUser.avatar);
   const [cover, setCover] = useState(nextUser.cover);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showErrorMsg, setShowErrorMsg] = useState('');
   const [showSuccessMsg, setShowSuccessMsg] = useState(false);
   const nameLength = name.length;
@@ -202,10 +208,12 @@ export default function EditModal({ onClose, onProfileChange }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     if (name.length === 0 || introduction.length === 0) {
       setShowErrorMsg('欄位不可空白!');
       setTimeout(() => {
         setShowErrorMsg(false);
+        setIsSubmitting(false);
       }, 1000);
       return;
     }
@@ -213,6 +221,7 @@ export default function EditModal({ onClose, onProfileChange }) {
       setShowErrorMsg('字數超過上限!');
       setTimeout(() => {
         setShowErrorMsg(false);
+        setIsSubmitting(false);
       }, 1000);
       return;
     }
@@ -227,6 +236,7 @@ export default function EditModal({ onClose, onProfileChange }) {
     console.log('returned: ', data);
     if (data && status === 200) {
       setShowSuccessMsg(true);
+      setIsSubmitting(false);
       setTimeout(() => {
         setShowSuccessMsg(false);
       }, 1000);
@@ -242,6 +252,7 @@ export default function EditModal({ onClose, onProfileChange }) {
     handleUserUpdate(newCurrentUser);
     onProfileChange();
     console.log('data submitted!');
+    setIsSubmitting(false);
     onClose();
   };
 
@@ -261,8 +272,11 @@ export default function EditModal({ onClose, onProfileChange }) {
               <CrossIcon />
             </button>
             <p>編輯個人資料</p>
-            <button className="save-btn" type="submit">
-              儲存
+            <button
+              className={`save-btn ${isSubmitting ? 'disabled' : undefined}`}
+              type="submit"
+            >
+              {isSubmitting ? '儲存中...' : '儲存'}
             </button>
           </StyledCloseDiv>
           <div className="content">
