@@ -21,16 +21,12 @@ const StyledDiv = styled.div`
   @media screen and (${device.md}) {
     height: calc(100vh - 73px);
     padding-top: unset;
-
-    /* .profile {
-      display: none;
-    } */
   }
 `;
 
 const StyledMessage = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   margin: 0 auto;
   display: grid;
   place-items: center;
@@ -99,15 +95,6 @@ export default function UserPage() {
                 onProfileChange={getUserPageDataAsync}
               />
             </div>
-            {/* {!pathname.includes('follow') && (
-              <div className="profile">
-                <Profile
-                  user={shownUser}
-                  key={shownUser.id}
-                  onProfileChange={getUserPageDataAsync}
-                />
-              </div>
-            )} */}
             <Outlet
               context={{
                 currentUser,
