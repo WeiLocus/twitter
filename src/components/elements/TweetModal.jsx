@@ -415,7 +415,13 @@ export function ReplyModal({
                 <span className={errorMessage ? 'error' : undefined}>
                   {errorMessage}
                 </span>
-                <button type="submit" onClick={handleSubmit}>
+                <button
+                  className={`submit-btn ${
+                    isSubmitting ? 'disabled' : undefined
+                  }`}
+                  type="submit"
+                  onClick={handleSubmit}
+                >
                   {isSubmitting ? '送出中...' : '回覆'}
                 </button>
               </div>
