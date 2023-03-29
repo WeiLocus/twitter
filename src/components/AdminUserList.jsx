@@ -47,7 +47,6 @@ const StyledCardContainer = styled.div`
     aspect-ratio: 1/1;
     border: 4px solid white;
     border-radius: 50%;
-    z-index: 1;
     overflow: hidden;
   }
 
@@ -82,6 +81,9 @@ const StyledCover = styled.div`
 `;
 
 const StyledDiv = styled.div`
+  .svg {
+    color: var(--color-gray-700);
+  }
   .follow {
     display: flex;
     justify-content: center;
@@ -89,7 +91,6 @@ const StyledDiv = styled.div`
     padding: 0.6rem;
     color: var(--color-secondary);
     font-size: var(--fs-secondary);
-
     span {
       color: var(--color-gray-900);
     }
@@ -189,7 +190,7 @@ function UserCard({ user }) {
         <div className="stats">
           <div className="stat">
             <span>
-              <TweetIcon width="1.2rem" height="1.2rem" />
+              <TweetIcon className="svg" />
             </span>
             <span>{tweetCounts}</span>
           </div>
@@ -198,17 +199,10 @@ function UserCard({ user }) {
             <span>{userTweetLikeCounts}</span>
           </div>
         </div>
-        {account !== 'root' ? (
-          <div className="follow">
-            <span>{followingCounts} </span>個跟隨中
-            <span>{followerCounts} </span>位跟隨者
-          </div>
-        ) : (
-          <div className="follow">
-            <span>0</span>個跟隨中
-            <span>0</span>位跟隨者
-          </div>
-        )}
+        <div className="follow">
+          <span>{followingCounts} </span>個跟隨中
+          <span>{followerCounts} </span>位跟隨者
+        </div>
       </StyledDiv>
     </StyledCardContainer>
   );

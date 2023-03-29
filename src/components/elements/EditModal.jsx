@@ -289,7 +289,7 @@ export default function EditModal({ onClose, onProfileChange }) {
             <StyledInputContainer>
               <AuthInput
                 label="名稱"
-                placeholder="John Doe"
+                placeholder="name"
                 value={name}
                 onChange={(nameInput) => setName(nameInput)}
                 InputLength={nameLength}
@@ -299,7 +299,7 @@ export default function EditModal({ onClose, onProfileChange }) {
                 <StyledInput
                   className={clsx('', { error: introductionLength > 160 })}
                   rows="3"
-                  placeholder="Hello! My name is John Doe"
+                  placeholder="Hello! My name is ..."
                   value={introduction}
                   onChange={(event) => setIntroduction(event.target.value)}
                 />
