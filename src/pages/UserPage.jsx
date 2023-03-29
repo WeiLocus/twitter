@@ -46,6 +46,7 @@ export default function UserPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   const getUserPageDataAsync = async () => {
+    setIsLoading(true);
     try {
       const user = await getUserData(id);
       console.log(`user ${id} profile get!`);
@@ -66,7 +67,6 @@ export default function UserPage() {
   };
 
   useEffect(() => {
-    setIsLoading(true);
     getUserPageDataAsync();
   }, [id]);
 
