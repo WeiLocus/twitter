@@ -1,3 +1,4 @@
+/* eslint-disable operator-assignment */
 import styled from 'styled-components';
 import { device } from '../../globalStyles';
 
@@ -10,9 +11,9 @@ const StyledAuthButton = styled.button`
   color: #fff;
   background-color: var(--color-theme);
   font-weight: 400;
+  cursor: pointer;
 
   &:hover {
-    cursor: pointer;
     background-color: var(--color-light-orange);
   }
   @media screen and (${device.sm}) {

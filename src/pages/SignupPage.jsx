@@ -12,7 +12,7 @@ import AuthInput from '../components/elements/Input';
 import AuthButton from '../components/elements/Button';
 import { register } from '../api/auth';
 import Alert from '../components/elements/Alert';
-import { breakpoint, GlobalStyle } from '../globalStyles';
+import { breakpoint } from '../globalStyles';
 
 // title style
 const StyledTitle = styled.div`

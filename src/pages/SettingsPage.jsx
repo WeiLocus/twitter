@@ -1,10 +1,13 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import AuthInput from '../components/elements/Input';
 import { useUser } from '../contexts/UserContext';
 import { changeUserInformation } from '../api/user';
 import Alert from '../components/elements/Alert';
+import { AuthLinkText } from '../components/auth.styled';
+import { device } from '../globalStyles';
 
 const StyledDiv = styled.div`
   position: absolute;
@@ -21,6 +24,16 @@ const StyedSettingsContainer = styled.div`
   border: 1px solid var(--color-gray-200);
   border-bottom: none;
   background-color: #fff;
+
+  .logout {
+    margin-top: 1rem;
+    text-align: end;
+  }
+  @media screen and (${device.md}) {
+    .logout {
+      display: none;
+    }
+  }
 `;
 
 const StyledInputContainer = styled.div`
@@ -57,6 +70,14 @@ export default function SettingsPage() {
   const [showErrorMsg, setShowErrorMsg] = useState('');
   const [showSuccessMsg, setShowSuccessMsg] = useState(false);
   const nameLength = name.length;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+    }
+  }, [navigate]);
 
   const handleClick = async () => {
     if (
@@ -111,6 +132,10 @@ export default function SettingsPage() {
       email: data.email,
     };
     handleUserUpdate(newCurrentUser);
+  };
+  const handleLogoutClick = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
   };
 
   return (
@@ -175,6 +200,9 @@ export default function SettingsPage() {
             儲存
           </button>
         </StyledButtonDiv>
+        <div className="logout">
+          <AuthLinkText onClick={handleLogoutClick}>登出</AuthLinkText>
+        </div>
       </StyedSettingsContainer>
     </>
   );
