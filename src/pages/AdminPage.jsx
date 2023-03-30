@@ -59,6 +59,41 @@ export default function AdminPage() {
     }
   };
 
+  const handleKeyDown = async (e) => {
+    if (e.key === 'Enter') {
+      if (account.length === 0 || password.length === 0) {
+        setShowErrorMsg('欄位不可空白!');
+        setTimeout(() => {
+          setShowErrorMsg(false);
+          navigate('/admin');
+        }, 1000);
+        return;
+      }
+
+      const { token, status, message, isAdmin } = await adminLogin({
+        account,
+        password,
+      });
+
+      if (token && isAdmin === true) {
+        localStorage.setItem('adminToken', token);
+        setShowSuccessMsg(true);
+        setTimeout(() => {
+          setShowSuccessMsg(false);
+          navigate('/admin/tweets');
+        }, 1000);
+      }
+      // get error message
+      if (status === 'error' && message) {
+        setShowErrorMsg(message);
+        setTimeout(() => {
+          setShowErrorMsg(false);
+          navigate('/admin');
+        }, 1000);
+      }
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
     if (token) {
@@ -77,6 +112,7 @@ export default function AdminPage() {
           placeholder="請輸入帳號"
           value={account}
           onChange={(accountInput) => setAccount(accountInput)}
+          onKeyDown={handleKeyDown}
         />
       </AuthInputContainer>
       <AuthInputContainer>
@@ -86,6 +122,7 @@ export default function AdminPage() {
           placeholder="請輸入密碼"
           value={password}
           onChange={(passwordInput) => setPassword(passwordInput)}
+          onKeyDown={handleKeyDown}
         />
       </AuthInputContainer>
       <AuthButton name="登入" onClick={handleClick} />
