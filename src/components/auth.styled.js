@@ -12,7 +12,6 @@ const StyedContainer = styled(Container)`
   padding-inline: 24px;
   background-color: #fff;
   @media screen and (${device.md}) {
-    /* min-width: 400px; */
     width: 50%;
   }
 `;

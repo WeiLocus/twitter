@@ -64,6 +64,7 @@ export default function AuthInput({
   value,
   onChange,
   InputLength,
+  onKeyDown,
 }) {
   return (
     <>
@@ -77,6 +78,7 @@ export default function AuthInput({
           onChange={(event) => {
             onChange(event.target.value);
           }}
+          onKeyDown={onKeyDown}
         />
       </StyledContainer>
       <StyledInputCheckContainer>

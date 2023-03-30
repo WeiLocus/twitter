@@ -41,7 +41,6 @@ export default function LoginPage() {
       account,
       password,
     });
-    // console.log('isAdmin', isAdmin);
 
     if (token && isAdmin === false) {
       localStorage.setItem('token', token);
@@ -58,6 +57,40 @@ export default function LoginPage() {
         setShowErrorMsg(false);
         navigate('/login');
       }, 1000);
+    }
+  };
+
+  const handleKeyDown = async (e) => {
+    if (e.key === 'Enter') {
+      if (account.length === 0 || password.length === 0) {
+        setShowErrorMsg('欄位不可空白!');
+        setTimeout(() => {
+          setShowErrorMsg(false);
+          navigate('/login');
+        }, 1000);
+        return;
+      }
+      const { token, status, message, isAdmin } = await login({
+        account,
+        password,
+      });
+
+      if (token && isAdmin === false) {
+        localStorage.setItem('token', token);
+        setShowSuccessMsg(true);
+        setTimeout(() => {
+          setShowSuccessMsg(false);
+          navigate('/tweets');
+        }, 1000);
+      }
+      // get error message
+      if (status === 'error' && message) {
+        setShowErrorMsg(message);
+        setTimeout(() => {
+          setShowErrorMsg(false);
+          navigate('/login');
+        }, 1000);
+      }
     }
   };
 
@@ -80,6 +113,7 @@ export default function LoginPage() {
           placeholder="請輸入帳號"
           value={account}
           onChange={(accountInput) => setAccount(accountInput)}
+          onKeyDown={handleKeyDown}
         />
       </AuthInputContainer>
       <AuthInputContainer>
@@ -89,6 +123,7 @@ export default function LoginPage() {
           value={password}
           placeholder="請輸入密碼"
           onChange={(passwordInput) => setPassword(passwordInput)}
+          onKeyDown={handleKeyDown}
         />
       </AuthInputContainer>
       <AuthButton name="登入" onClick={handelClick} />
