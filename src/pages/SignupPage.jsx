@@ -12,7 +12,20 @@ import AuthInput from '../components/elements/Input';
 import AuthButton from '../components/elements/Button';
 import { register } from '../api/auth';
 import Alert from '../components/elements/Alert';
-import { breakpoint } from '../globalStyles';
+import { device, breakpoint } from '../globalStyles';
+
+// alert message container
+const StyledDiv = styled.div`
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+
+  @media screen and (${device.md}) {
+    top: 10%;
+  }
+`;
 
 // title style
 const StyledTitle = styled.div`
@@ -29,7 +42,7 @@ export default function SignupPage() {
   const [checkPassword, setCheckPassword] = useState('');
   const [showErrorMsg, setShowErrorMsg] = useState('');
   const [linkText, setLinkText] = useState('取消重填');
-  const [showSuccessMsg, setShowSuccessMsg] = useState(false);
+  const [showSuccessMsg, setShowSuccessMsg] = useState(true);
 
   const nameLength = name.length;
   const isMobile = useMediaQuery({ query: `(max-width: ${breakpoint.md} )` });
@@ -149,8 +162,16 @@ export default function SignupPage() {
       </AuthInputContainer>
       <AuthButton name="註冊" onClick={handleClick} />
       <AuthLinkText onClick={handleBehavior}>{linkText}</AuthLinkText>
-      {showSuccessMsg && <Alert type="success" message="註冊成功 請登入" />}
-      {showErrorMsg && <Alert type="error" message={showErrorMsg} />}
+      {showSuccessMsg && (
+        <StyledDiv>
+          <Alert type="success" message="註冊成功 請登入" />
+        </StyledDiv>
+      )}
+      {showErrorMsg && (
+        <StyledDiv>
+          <Alert type="error" message={showErrorMsg} />
+        </StyledDiv>
+      )}
     </AuthContainer>
   );
 }

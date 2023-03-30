@@ -13,12 +13,22 @@ import AuthButton from '../components/elements/Button';
 import Alert from '../components/elements/Alert';
 import { adminLogin } from '../api/auth';
 
+// alert message container
+const StyledDiv = styled.div`
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+`;
+
 // title style
 const StyledTitle = styled.div`
   margin-top: 1rem;
   font-size: var(--fs-h3);
   font-weight: 700;
 `;
+
 export default function AdminPage() {
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
@@ -94,8 +104,16 @@ export default function AdminPage() {
           <AuthLinkText>前台登入</AuthLinkText>
         </Link>
       </AuthLinkContainer>
-      {showSuccessMsg && <Alert type="success" message="登入成功" />}
-      {showErrorMsg && <Alert type="error" message={showErrorMsg} />}
+      {showSuccessMsg && (
+        <StyledDiv>
+          <Alert type="success" message="登入成功" />
+        </StyledDiv>
+      )}
+      {showErrorMsg && (
+        <StyledDiv>
+          <Alert type="error" message={showErrorMsg} />
+        </StyledDiv>
+      )}
     </AuthContainer>
   );
 }
