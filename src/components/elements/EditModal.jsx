@@ -235,24 +235,22 @@ export default function EditModal({ onClose, onProfileChange }) {
       cover,
     });
     if (data && status === 200) {
-      setShowSuccessMsg(true);
       setIsSubmitting(false);
+      setShowSuccessMsg(true);
+      const newCurrentUser = {
+        ...currentUser,
+        name: data.name,
+        introduction: data.introduction,
+        avatar: data.avatar,
+        cover: data.cover,
+      };
       setTimeout(() => {
         setShowSuccessMsg(false);
+        onClose();
+        handleUserUpdate(newCurrentUser);
+        onProfileChange();
       }, 1000);
     }
-
-    const newCurrentUser = {
-      ...currentUser,
-      name: data.name,
-      introduction: data.introduction,
-      avatar: data.avatar,
-      cover: data.cover,
-    };
-    handleUserUpdate(newCurrentUser);
-    onProfileChange();
-    setIsSubmitting(false);
-    onClose();
   };
 
   useEffect(() => {
