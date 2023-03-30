@@ -142,7 +142,7 @@ function PopularItem({ user }) {
   return (
     <StyledPopularItem isFollowing>
       <div className="avatar">
-        <NavLink to={`users/${id}/tweets`}>
+        <NavLink to={`/users/${id}/tweets`}>
           <img src={avatar} alt="avatar" />
         </NavLink>
       </div>
