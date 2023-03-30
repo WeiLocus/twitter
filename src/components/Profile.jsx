@@ -188,6 +188,8 @@ export default function Profile({ user, onProfileChange }) {
     followingCounts,
   } = user;
   const isFollowed = userFollowings.includes(id);
+  const [currentFollowerCounts, setCurrentFollowerCounts] =
+    useState(followerCounts);
   const [showModal, setShowModal] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
@@ -199,6 +201,11 @@ export default function Profile({ user, onProfileChange }) {
   const handleFollowBtnClick = async () => {
     setDisabled(true);
     await handleFollow(id);
+    if (isFollowed) {
+      setCurrentFollowerCounts((prev) => prev - 1);
+    } else {
+      setCurrentFollowerCounts((prev) => prev + 1);
+    }
     setDisabled(false);
   };
 
@@ -252,7 +259,7 @@ export default function Profile({ user, onProfileChange }) {
               <span>{followingCounts}</span>個跟隨中
             </NavLink>
             <NavLink to={`/users/${id}/followers`}>
-              <span>{followerCounts}</span>個跟隨者
+              <span>{currentFollowerCounts}</span>個跟隨者
             </NavLink>
           </div>
         </StyledContentDiv>

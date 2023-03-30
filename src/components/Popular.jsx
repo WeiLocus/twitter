@@ -102,7 +102,6 @@ export default function Popular() {
     const getPopularUsersAsync = async () => {
       try {
         const users = await getTopUsers();
-        console.log('top users get!');
         setPopularUsers(users);
         setIsLoading(false);
       } catch (error) {

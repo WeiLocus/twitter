@@ -11,6 +11,24 @@ const StyledList = styled.ul`
   background-color: white;
 `;
 
+const StyledDiv = styled.div`
+  position: relative;
+
+  .link-to-user {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+
+    img {
+      width: 50px;
+      aspect-ratio: 1/1;
+      margin-right: 0.5rem;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+  }
+`;
+
 const StyledListItem = styled.li`
   cursor: pointer;
   display: grid;
@@ -86,7 +104,7 @@ const StyledListItem = styled.li`
 function TweetItem({ tweet, shownUser }) {
   const { id, description, createdAt, replyCounts, likeCounts, isLiked, User } =
     tweet;
-  const [currentIsLiked, setCurrentIsLiked] = useState(isLiked); // todo to be fixed
+  const [currentIsLiked, setCurrentIsLiked] = useState(isLiked);
   const timeAgo = countTimeDiff(createdAt);
 
   const handleLike = () => {
@@ -95,38 +113,44 @@ function TweetItem({ tweet, shownUser }) {
   };
 
   return (
-    <StyledListItem>
-      <NavLink to={`/users/${shownUser ? shownUser.id : User.id}/tweets`}>
+    <StyledDiv>
+      <NavLink to={`/tweets/${id}`}>
+        <StyledListItem>
+          <img src={shownUser ? shownUser.avatar : User.avatar} alt="avatar" />
+          <div>
+            <div className="user">
+              <b>{shownUser ? shownUser.name : User.name}</b>
+              <span>@{shownUser ? shownUser.account : User.account}</span>
+              <span>．</span>
+              <span>{timeAgo}</span>
+            </div>
+            <p className="content">{description}</p>
+            <div className="stats">
+              <div className="stat">
+                <span>
+                  <CommentIcon className="icon" />
+                </span>
+                <span>{replyCounts}</span>
+              </div>
+              <div className="stat">
+                {likeCounts > 0 ? (
+                  <LikeBlackIcon className="icon" onClick={handleLike} />
+                ) : (
+                  <LikeIcon className="icon" onClick={handleLike} />
+                )}
+                <span>{likeCounts}</span>
+              </div>
+            </div>
+          </div>
+        </StyledListItem>
+      </NavLink>
+      <NavLink
+        to={`/users/${shownUser ? shownUser.id : User.id}/tweets`}
+        className="link-to-user"
+      >
         <img src={shownUser ? shownUser.avatar : User.avatar} alt="avatar" />
       </NavLink>
-      <div>
-        <div className="user">
-          <b>{shownUser ? shownUser.name : User.name}</b>
-          <span>@{shownUser ? shownUser.account : User.account}</span>
-          <span>．</span>
-          <span>{timeAgo}</span>
-        </div>
-        <NavLink to={`/tweets/${id}`}>
-          <p className="content">{description}</p>
-        </NavLink>
-        <div className="stats">
-          <div className="stat">
-            <span>
-              <CommentIcon className="icon" />
-            </span>
-            <span>{replyCounts}</span>
-          </div>
-          <div className="stat">
-            {likeCounts > 0 ? (
-              <LikeBlackIcon className="icon" onClick={handleLike} />
-            ) : (
-              <LikeIcon className="icon" onClick={handleLike} />
-            )}
-            <span>{likeCounts}</span>
-          </div>
-        </div>
-      </div>
-    </StyledListItem>
+    </StyledDiv>
   );
 }
 

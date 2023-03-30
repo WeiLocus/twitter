@@ -58,7 +58,6 @@ export default function TweetPage() {
     const getTweetsAsync = async () => {
       try {
         const tweets = await getTweets();
-        console.log('tweets get!');
         setTweets(tweets);
         setIsLoading(false);
       } catch (error) {

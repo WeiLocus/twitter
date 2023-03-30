@@ -48,9 +48,7 @@ export async function register({
       checkPassword,
     });
     // 印出回傳值data
-    // console.log('data', data);
     const { data, status, message } = res;
-    console.log(data);
     return { data, status, message };
   } catch (error) {
     const { data, status } = error.response;

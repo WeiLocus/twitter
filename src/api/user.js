@@ -24,7 +24,6 @@ axiosInstance.interceptors.request.use(
 export async function getCurrentUser() {
   try {
     const res = await axiosInstance.get(`${baseURL}/users/current_user`);
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error('[Get CurrentUser failed]: ', error);
@@ -68,7 +67,6 @@ export async function getUserReplies(id) {
 export async function getUserLikes(id) {
   try {
     const res = await axiosInstance.get(`${baseURL}/users/${id}/likes`);
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error('[Get User Likes failed]: ', error);
@@ -79,7 +77,6 @@ export async function getUserLikes(id) {
 export async function getUserFollowers(id) {
   try {
     const res = await axiosInstance.get(`${baseURL}/users/${id}/followers`);
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error('[Get User Followers failed]: ', error);
@@ -90,7 +87,6 @@ export async function getUserFollowers(id) {
 export async function getUserFollowings(id) {
   try {
     const res = await axiosInstance.get(`${baseURL}/users/${id}/followings`);
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error('[Get User Followings failed]: ', error);
@@ -102,7 +98,6 @@ export async function getTopUsers() {
   const limit = 5;
   try {
     const res = await axiosInstance.get(`${baseURL}/users/top?limit=${limit}`);
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error('[Get Top Users failed]: ', error);
@@ -127,7 +122,6 @@ export async function changeUserInformation({
       checkPassword,
     });
     const { data, status } = response;
-    console.log(data);
     return { data, status };
   } catch (error) {
     console.error('[Change User Information failed]: ', error);

@@ -24,7 +24,6 @@ axiosInstance.interceptors.request.use(
 export async function likeTweet(id) {
   try {
     const res = await axiosInstance.post(`${baseURL}/tweets/${id}/like`);
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error('[Like Tweet failed]: ', error);
@@ -35,7 +34,6 @@ export async function likeTweet(id) {
 export async function unLikeTweet(id) {
   try {
     const res = await axiosInstance.post(`${baseURL}/tweets/${id}/unlike`);
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error('[Unlike Tweet failed]: ', error);

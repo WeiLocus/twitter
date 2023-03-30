@@ -97,7 +97,7 @@ export default function SignupPage() {
       setPassword('');
       setCheckPassword('');
     }
-  }
+  };
   return (
     <AuthContainer>
       <div>

@@ -237,6 +237,30 @@ export function TweetModal({
   const [errorMessage, setErrorMessage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const handleKeyDown = async (e) => {
+    if (e.key === 'Enter') {
+      setIsSubmitting(true);
+      if (!tweetInput.length) {
+        setErrorMessage('內容不可空白');
+        setIsSubmitting(false);
+        return;
+      }
+      if (tweetInput.length > 140) {
+        setErrorMessage('字數不可超過 140 字');
+        setIsSubmitting(false);
+        return;
+      }
+      const { status } = await onAddTweet();
+      if (status === 'ok') {
+        setTimeout(() => {
+          setIsSubmitting(false);
+          setErrorMessage(null);
+          onClose();
+        }, 2000);
+      }
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -250,7 +274,6 @@ export function TweetModal({
       setIsSubmitting(false);
       return;
     }
-    // 這邊要發送修改請求
     const { status } = await onAddTweet();
     if (status === 'ok') {
       setTimeout(() => {
@@ -296,6 +319,7 @@ export function TweetModal({
               onChange={(event) => {
                 onChange?.(event.target.value);
               }}
+              onKeyDown={handleKeyDown}
             />
             <div className="submit">
               <span>{`${tweetInput.length}/140`}</span>
@@ -333,6 +357,30 @@ export function ReplyModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const handleKeyDown = async (e) => {
+    if (e.key === 'Enter') {
+      setIsSubmitting(true);
+      if (!replyInput.length) {
+        setErrorMessage('內容不可空白');
+        setIsSubmitting(false);
+        return;
+      }
+      if (replyInput.length > 140) {
+        setErrorMessage('字數不可超過 140 字');
+        setIsSubmitting(false);
+        return;
+      }
+      const { status } = await onAddReply();
+      if (status === 'ok') {
+        setTimeout(() => {
+          setIsSubmitting(false);
+          setErrorMessage(null);
+          onClose();
+        }, 2000);
+      }
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -346,7 +394,6 @@ export function ReplyModal({
       setIsSubmitting(false);
       return;
     }
-    // 這邊要發送修改請求
     const { status } = await onAddReply();
     if (status === 'ok') {
       setTimeout(() => {
@@ -408,6 +455,7 @@ export function ReplyModal({
               onChange={(event) => {
                 onChange?.(event.target.value);
               }}
+              onKeyDown={handleKeyDown}
             />
             <div className="submit">
               <span>{`${replyInput.length}/140`}</span>

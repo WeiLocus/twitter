@@ -46,15 +46,12 @@ export default function UserPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   const getUserPageDataAsync = async () => {
+    setIsLoading(true);
     try {
       const user = await getUserData(id);
-      console.log(`user ${id} profile get!`);
       const userTweets = await getUserTweets(id);
-      console.log(`user ${id} tweets get!`);
       const userReplies = await getUserReplies(id);
-      console.log(`user ${id} replies get!`);
       const userLikes = await getUserLikes(id);
-      console.log(`user ${id} likes get!`);
       setShownUser(user);
       setShownUserTweets(userTweets);
       setShownUserReplies(userReplies);
@@ -66,7 +63,6 @@ export default function UserPage() {
   };
 
   useEffect(() => {
-    setIsLoading(true);
     getUserPageDataAsync();
   }, [id]);
 

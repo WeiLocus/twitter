@@ -26,10 +26,6 @@ export default function TweetLayout() {
     try {
       const data = await addTweet({ description: tweetInput });
       if (data === 'error') return;
-      console.log(
-        `user ${currentUser.id} just submitted a tweet: ${tweetInput}`
-      );
-      // 重新setTweets
       const nextTweets = [
         {
           id: data.tweetInput.id,
@@ -63,17 +59,12 @@ export default function TweetLayout() {
       try {
         // get user data
         const user = await getCurrentUser();
-        console.log(`user ${user.id} just logged in`);
         // get user followinds
         const followings = await getUserFollowings(user.id);
         const followingUsers = followings.map((following) => following.id);
-        console.log(followingUsers);
-        console.log('user following list get');
         // get user likes
         const likes = await getUserLikes(user.id);
         const likedTweets = likes.map((tweet) => tweet.id);
-        console.log(likedTweets);
-        console.log('user liked tweets get');
         setCurrentUser({
           ...user,
           introduction: user.introduction ?? 'I like alpha camp',
@@ -83,7 +74,6 @@ export default function TweetLayout() {
         });
         setUserFollowings(followingUsers);
         setUserLikes(likedTweets);
-        console.log('user context loaded');
       } catch (error) {
         console.error(error);
       }
