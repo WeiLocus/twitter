@@ -7,7 +7,6 @@ const StyledContainer = styled.div`
   flex-direction: column;
   justify-content: space-around;
   width: 100%;
-  height: 4rem;
   background-color: var(--color-gray-100);
 `;
 
@@ -64,6 +63,7 @@ export default function AuthInput({
   value,
   onChange,
   InputLength,
+  onKeyDown,
 }) {
   return (
     <>
@@ -77,6 +77,7 @@ export default function AuthInput({
           onChange={(event) => {
             onChange(event.target.value);
           }}
+          onKeyDown={onKeyDown}
         />
       </StyledContainer>
       <StyledInputCheckContainer>

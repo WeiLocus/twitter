@@ -31,6 +31,10 @@ const StyledAdminTweetContainer = styled.div`
     padding-left: 0.25rem;
     color: var(--color-gray-700);
     cursor: pointer;
+
+    :hover {
+      color: red;
+    }
   }
 `;
 
@@ -128,7 +132,7 @@ export default function AdminTweetList() {
 }
 function TweetList({ tweet, onDelete }) {
   const { id, description, createdAt, User } = tweet;
-  const { account, name, avatar } = User;
+  const { account, addname, avatar } = User;
   const timeAgo = countTimeDiff(createdAt);
   const tweetDescription =
     description.length > 50 ? `${description.slice(0, 50)}...` : description;

@@ -10,22 +10,23 @@ import { adminGetAllUsers } from '../api/admin';
 // List container
 const StyledContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 4fr));
   grid-template-rows: auto;
+  gap: 0.5rem;
+  margin: 0 auto;
+  padding: 0.5rem;
   height: calc(100vh - 68px);
   overflow-y: scroll;
-  padding: 1rem;
-  background-color: #fff;
   border-top: 1px solid var(--color-gray-200);
   border-inline: 1px solid var(--color-gray-200);
 `;
 
 // Card container
-const StyledCardContainer = styled.div`
+const StyledCard = styled.div`
   position: relative;
   width: 200px;
   height: 300px;
-  margin: 0.5rem 0.5rem;
+  margin: 0.5rem auto;
   background-color: var(--color-gray-200);
   border-radius: 10px;
 
@@ -143,7 +144,7 @@ export default function AdminUserList() {
       }
     };
     getUsers();
-  }, []);
+  }, [navigate]);
 
   const renderedItems = users.map((user) => {
     if (!isLoading) {
@@ -178,12 +179,13 @@ function UserCard({ user }) {
     followingCounts,
     userTweetLikeCounts,
   } = user;
+  const username = name.length > 15 ? `${name.slice(0, 15)}...` : name;
   return (
-    <StyledCardContainer backgroundImage={cover}>
+    <StyledCard>
       <StyledCover backgroundImage={cover} />
       <img className="avatar" src={avatar} alt="avatar" />
       <StyledName>
-        <div className="title">{name}</div>
+        <div className="title">{username}</div>
         <div className="account">@{account}</div>
       </StyledName>
       <StyledDiv>
@@ -204,6 +206,6 @@ function UserCard({ user }) {
           <span>{followerCounts} </span>位跟隨者
         </div>
       </StyledDiv>
-    </StyledCardContainer>
+    </StyledCard>
   );
 }
