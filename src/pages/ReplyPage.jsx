@@ -10,13 +10,16 @@ import { getSingleTweet, getReplies, addReply } from '../api/tweet';
 import { device } from '../globalStyles';
 
 const StyledDiv = styled.div`
-  height: calc(100vh - 68px);
+  height: calc(100vh - 60px);
   overflow-y: scroll;
-  padding-top: 68px;
+  padding-top: 62px;
+  padding-bottom: 60px;
   border-inline: 1px solid var(--color-gray-200);
 
   @media screen and (${device.md}) {
+    height: calc(100vh - 68px);
     padding-top: unset;
+    padding-bottom: unset;
   }
 `;
 
