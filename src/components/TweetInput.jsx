@@ -78,7 +78,7 @@ export default function TweetInput({
   const handleKeyDown = async (e) => {
     if (e.key === 'Enter') {
       setIsSubmitting(true);
-      if (!tweetInput.length) {
+      if (!tweetInput.trim().length) {
         setErrorMessage('內容不可空白');
         setIsSubmitting(false);
         setTimeout(() => {

@@ -210,7 +210,7 @@ export default function EditModal({ onClose, onProfileChange }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    if (name.length === 0 || introduction.length === 0) {
+    if (name.trim().length === 0 || introduction.trim().length === 0) {
       setShowErrorMsg('欄位不可空白!');
       setTimeout(() => {
         setShowErrorMsg(false);
