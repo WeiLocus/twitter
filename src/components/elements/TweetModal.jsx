@@ -7,7 +7,7 @@ import { device } from '../../globalStyles.js';
 
 const StyledDiv = styled.div`
   position: absolute;
-  z-index: 1;
+  z-index: 5;
   inset: 0;
   height: 100%;
   width: 100%;
@@ -415,7 +415,13 @@ export function ReplyModal({
                 <span className={errorMessage ? 'error' : undefined}>
                   {errorMessage}
                 </span>
-                <button type="submit" onClick={handleSubmit}>
+                <button
+                  className={`submit-btn ${
+                    isSubmitting ? 'disabled' : undefined
+                  }`}
+                  type="submit"
+                  onClick={handleSubmit}
+                >
                   {isSubmitting ? '送出中...' : '回覆'}
                 </button>
               </div>

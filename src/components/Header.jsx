@@ -5,6 +5,9 @@ import { device } from '../globalStyles';
 import { useUser } from '../contexts/UserContext';
 
 const StyledHeader = styled.header`
+  position: fixed;
+  z-index: 1;
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -55,6 +58,9 @@ const StyledHeader = styled.header`
   }
 
   @media screen and (${device.md}) {
+    position: static;
+    width: unset;
+
     div {
       display: unset;
       align-items: unset;

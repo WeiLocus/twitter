@@ -7,11 +7,17 @@ import TweetContent from '../components/TweetContent';
 import { ReplyList } from '../components/TweetList';
 import { useUser } from '../contexts/UserContext';
 import { getSingleTweet, getReplies, addReply } from '../api/tweet';
+import { device } from '../globalStyles';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 68px);
   overflow-y: scroll;
+  padding-top: 68px;
   border-inline: 1px solid var(--color-gray-200);
+
+  @media screen and (${device.md}) {
+    padding-top: unset;
+  }
 `;
 
 const StyledLoadingDiv = styled.div`

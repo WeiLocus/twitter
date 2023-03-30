@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 import clsx from 'clsx';
 import AuthInput, { StyledInputCount } from './Input';
 import { ReactComponent as CrossIcon } from '../../assets/Cross.svg';
@@ -7,6 +8,7 @@ import { ReactComponent as ChangeImgIcon } from '../../assets/ChangeImg.svg';
 import { useUser } from '../../contexts/UserContext';
 import { changeUserProfile } from '../../api/user';
 import Alert from './Alert';
+import { device, breakpoint } from '../../globalStyles.js';
 
 const StyledMsgDiv = styled.div`
   position: absolute;
@@ -18,7 +20,7 @@ const StyledMsgDiv = styled.div`
 
 const StyledDiv = styled.div`
   position: absolute;
-  z-index: 1;
+  z-index: 5;
   inset: 0;
   height: 100%;
   width: 100%;
@@ -28,12 +30,7 @@ const StyledDiv = styled.div`
 const StyledModal = styled.div`
   display: flex;
   flex-direction: column;
-  position: absolute;
-  inset: 3.5rem 0;
-  width: 634px;
-  height: 650px;
-  margin: 0 auto;
-  border-radius: 1rem;
+  height: 100%;
   background-color: white;
 
   .content {
@@ -62,6 +59,15 @@ const StyledModal = styled.div`
     border-radius: 50%;
     overflow: hidden;
   }
+
+  @media screen and (${device.md}) {
+    position: absolute;
+    inset: 3.5rem 0;
+    width: 634px;
+    height: 650px;
+    margin: 0 auto;
+    border-radius: 1rem;
+  }
 `;
 
 const StyledCloseDiv = styled.div`
@@ -89,6 +95,11 @@ const StyledCloseDiv = styled.div`
     border-radius: 3.125rem;
     color: white;
     background-color: var(--color-theme);
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.75;
+    }
   }
 `;
 
@@ -167,6 +178,7 @@ const StyledInputLimit = styled.div`
 `;
 
 export default function EditModal({ onClose, onProfileChange }) {
+  const isMobile = useMediaQuery({ query: `(max-width: ${breakpoint.md} )` });
   const { currentUser, handleUserUpdate } = useUser();
   const nextUser = { ...currentUser };
   const [name, setName] = useState(nextUser.name);
@@ -175,6 +187,7 @@ export default function EditModal({ onClose, onProfileChange }) {
   const [coverPreview, setcoverPreview] = useState(nextUser.cover);
   const [avatar, setAvatar] = useState(nextUser.avatar);
   const [cover, setCover] = useState(nextUser.cover);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showErrorMsg, setShowErrorMsg] = useState('');
   const [showSuccessMsg, setShowSuccessMsg] = useState(false);
   const nameLength = name.length;
@@ -202,10 +215,12 @@ export default function EditModal({ onClose, onProfileChange }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     if (name.length === 0 || introduction.length === 0) {
       setShowErrorMsg('欄位不可空白!');
       setTimeout(() => {
         setShowErrorMsg(false);
+        setIsSubmitting(false);
       }, 1000);
       return;
     }
@@ -213,6 +228,7 @@ export default function EditModal({ onClose, onProfileChange }) {
       setShowErrorMsg('字數超過上限!');
       setTimeout(() => {
         setShowErrorMsg(false);
+        setIsSubmitting(false);
       }, 1000);
       return;
     }
@@ -227,6 +243,7 @@ export default function EditModal({ onClose, onProfileChange }) {
     console.log('returned: ', data);
     if (data && status === 200) {
       setShowSuccessMsg(true);
+      setIsSubmitting(false);
       setTimeout(() => {
         setShowSuccessMsg(false);
       }, 1000);
@@ -242,6 +259,7 @@ export default function EditModal({ onClose, onProfileChange }) {
     handleUserUpdate(newCurrentUser);
     onProfileChange();
     console.log('data submitted!');
+    setIsSubmitting(false);
     onClose();
   };
 
@@ -261,8 +279,11 @@ export default function EditModal({ onClose, onProfileChange }) {
               <CrossIcon />
             </button>
             <p>編輯個人資料</p>
-            <button className="save-btn" type="submit">
-              儲存
+            <button
+              className={`save-btn ${isSubmitting ? 'disabled' : undefined}`}
+              type="submit"
+            >
+              {isSubmitting ? '儲存中...' : '儲存'}
             </button>
           </StyledCloseDiv>
           <div className="content">
@@ -298,7 +319,7 @@ export default function EditModal({ onClose, onProfileChange }) {
                 <label>自我介紹</label>
                 <StyledInput
                   className={clsx('', { error: introductionLength > 160 })}
-                  rows="3"
+                  rows={isMobile ? '6' : '3'}
                   placeholder="Hello! My name is ..."
                   value={introduction}
                   onChange={(event) => setIntroduction(event.target.value)}

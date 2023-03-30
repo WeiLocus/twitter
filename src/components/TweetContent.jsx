@@ -7,6 +7,7 @@ import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
 import { ReplyModal } from './elements/TweetModal';
 import { getConvertedTime } from '../utilities';
 import { useUser } from '../contexts/UserContext';
+import { device } from '../globalStyles.js';
 
 const StyledDiv = styled.div`
   padding: 1rem;
@@ -71,7 +72,7 @@ const StyledDiv = styled.div`
 
   .reaction {
     display: flex;
-    gap: 9rem;
+    gap: 3rem;
     padding-top: 1rem;
     color: var(--color-secondary);
 
@@ -87,6 +88,52 @@ const StyledDiv = styled.div`
         pointer-events: none;
       }
     }
+  }
+
+  @media screen and (${device.md}) {
+    .reaction {
+      gap: 9rem;
+    }
+  }
+`;
+
+const StyledMobileReplyDiv = styled.div`
+  display: grid;
+  grid-template-columns: calc(50px + 0.5rem) 1fr auto;
+  align-items: center;
+  padding: 1rem;
+
+  img {
+    width: 50px;
+    aspect-ratio: 1/1;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  p {
+    color: var(--color-secondary);
+  }
+
+  button {
+    all: unset;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    margin-left: 1rem;
+    border: 1px solid var(--color-theme);
+    border-radius: 3.125rem;
+    color: white;
+    background-color: var(--color-theme);
+    font-size: var(--fs-basic);
+
+    :hover {
+      border: 1px solid var(--color-light-orange);
+      background-color: var(--color-light-orange);
+    }
+  }
+
+  @media screen and (${device.md}) {
+    display: none;
   }
 `;
 
@@ -160,6 +207,11 @@ export default function TweetContent({
           </button>
         </div>
       </StyledDiv>
+      <StyledMobileReplyDiv className="mobile-reply" onClick={handleShowModal}>
+        <img src={currentUser.avatar} alt="" />
+        <p>推你的回覆</p>
+        <button type="button">推文</button>
+      </StyledMobileReplyDiv>
       {showModal && (
         <ReplyModal
           tweet={tweet}

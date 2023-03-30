@@ -1,18 +1,19 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { ReactComponent as EmailIcon } from '../assets/Email.svg';
 import { ReactComponent as NotificationIcon } from '../assets/Notification.svg';
 import EditModal from './elements/EditModal';
 import { useUser } from '../contexts/UserContext';
+import { device } from '../globalStyles.js';
 
 const StyledDiv = styled.div`
   position: relative;
-  border: 1px solid var(--color-gray-200);
+
   background-color: white;
 
   .cover {
-    height: 200px;
+    height: 150px;
     overflow: hidden;
 
     img {
@@ -22,23 +23,40 @@ const StyledDiv = styled.div`
 
   .avatar {
     position: absolute;
-    top: 7.75rem;
+    top: 7rem;
     left: 1rem;
-    width: 140px;
+    width: 80px;
     aspect-ratio: 1/1;
-    border: 4px solid white;
+    border: 3px solid white;
     border-radius: 50%;
     overflow: hidden;
+  }
+
+  @media screen and (${device.md}) {
+    border: 1px solid var(--color-gray-200);
+    display: ${(props) =>
+      props.pathname.includes('follow') ? 'none' : 'block'};
+
+    .cover {
+      height: 200px;
+    }
+
+    .avatar {
+      top: 7.75rem;
+      left: 1rem;
+      width: 140px;
+      border: 4px solid white;
+    }
   }
 `;
 
 const StyledContentDiv = styled.div`
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   color: var(--color-gray-900);
   font-size: var(--fs-secondary);
 
   .user {
-    margin: 0.75rem 0 0.25rem;
+    margin: 0.5rem 0 0.25rem;
     font-size: var(--fs-h5);
 
     p {
@@ -64,6 +82,14 @@ const StyledContentDiv = styled.div`
       color: var(--color-gray-900);
     }
   }
+
+  @media screen and (${device.md}) {
+    padding: 1rem;
+
+    .user {
+      margin: 0.75rem 0 0.25rem;
+    }
+  }
 `;
 
 const StyledEditDiv = styled.div`
@@ -74,7 +100,7 @@ const StyledEditDiv = styled.div`
 
   .icon {
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.3rem;
     border: 1px solid var(--color-theme);
     border-radius: 50%;
     color: var(--color-theme);
@@ -87,7 +113,7 @@ const StyledEditDiv = styled.div`
 
   button {
     cursor: pointer;
-    padding: 0.5rem 1rem;
+    padding: 0.25rem 0.5rem;
     border: 1px solid var(--color-theme);
     border-radius: 3.125rem;
     color: var(--color-theme);
@@ -105,6 +131,16 @@ const StyledEditDiv = styled.div`
       opacity: 0.75;
     }
   }
+
+  @media screen and (${device.md}) {
+    button {
+      padding: 0.5rem 1rem;
+    }
+
+    .icon {
+      padding: 0.5rem;
+    }
+  }
 `;
 
 const StyledTabs = styled.div`
@@ -114,7 +150,7 @@ const StyledTabs = styled.div`
   font-weight: 700;
 
   .category {
-    width: 8em;
+    width: 7em;
     display: grid;
     place-items: center;
     border-bottom: 3px solid white;
@@ -130,9 +166,16 @@ const StyledTabs = styled.div`
       color: var(--color-theme);
     }
   }
+
+  @media screen and (${device.md}) {
+    .category {
+      width: 8em;
+    }
+  }
 `;
 
 export default function Profile({ user, onProfileChange }) {
+  const { pathname } = useLocation();
   const { currentUser, userFollowings, handleFollow } = useUser();
   const {
     id,
@@ -161,7 +204,7 @@ export default function Profile({ user, onProfileChange }) {
 
   return (
     <>
-      <StyledDiv>
+      <StyledDiv pathname={pathname}>
         <div className="cover">
           <img
             src={cover ?? 'https://loremflickr.com/640/480/nature?lock=27430'}
@@ -213,17 +256,19 @@ export default function Profile({ user, onProfileChange }) {
             </NavLink>
           </div>
         </StyledContentDiv>
-        <StyledTabs>
-          <NavLink className="category" to={`/users/${id}/tweets`}>
-            <p>推文</p>
-          </NavLink>
-          <NavLink className="category" to={`/users/${id}/replies`}>
-            <p>回覆</p>
-          </NavLink>
-          <NavLink className="category" to={`/users/${id}/likes`}>
-            <p>喜歡的內容</p>
-          </NavLink>
-        </StyledTabs>
+        {!pathname.includes('follow') && (
+          <StyledTabs>
+            <NavLink className="category" to={`/users/${id}/tweets`}>
+              <p>推文</p>
+            </NavLink>
+            <NavLink className="category" to={`/users/${id}/replies`}>
+              <p>回覆</p>
+            </NavLink>
+            <NavLink className="category" to={`/users/${id}/likes`}>
+              <p>喜歡的內容</p>
+            </NavLink>
+          </StyledTabs>
+        )}
       </StyledDiv>
       {showModal && (
         <EditModal

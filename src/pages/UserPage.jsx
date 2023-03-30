@@ -5,6 +5,7 @@ import BeatLoader from 'react-spinners/BeatLoader';
 import Header from '../components/Header';
 import Profile from '../components/Profile';
 import { useUser } from '../contexts/UserContext';
+import { device } from '../globalStyles';
 import {
   getUserData,
   getUserTweets,
@@ -13,13 +14,19 @@ import {
 } from '../api/user';
 
 const StyledDiv = styled.div`
-  height: calc(100vh - 73px);
+  height: calc(100vh - 56px);
   overflow-y: scroll;
+  padding-top: 73px;
+
+  @media screen and (${device.md}) {
+    height: calc(100vh - 73px);
+    padding-top: unset;
+  }
 `;
 
 const StyledMessage = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   margin: 0 auto;
   display: grid;
   place-items: center;
@@ -81,13 +88,13 @@ export default function UserPage() {
             shownUserTweets={shownUserTweets}
           />
           <StyledDiv>
-            {!pathname.includes('follow') && (
+            <div className="profile">
               <Profile
                 user={shownUser}
                 key={shownUser.id}
                 onProfileChange={getUserPageDataAsync}
               />
-            )}
+            </div>
             <Outlet
               context={{
                 currentUser,
