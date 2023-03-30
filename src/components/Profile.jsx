@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { ReactComponent as EmailIcon } from '../assets/Email.svg';
 import { ReactComponent as NotificationIcon } from '../assets/Notification.svg';
@@ -194,6 +194,14 @@ export default function Profile({ user, onProfileChange }) {
   const [showModal, setShowModal] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
+  useEffect(() => {
+    if (isFollowed) {
+      setCurrentFollowerCounts((prev) => prev + 1);
+    } else {
+      setCurrentFollowerCounts((prev) => prev - 1);
+    }
+  }, [isFollowed]);
+
   const handleShowModal = () => {
     const nextShowModal = !showModal;
     setShowModal(nextShowModal);
@@ -202,11 +210,6 @@ export default function Profile({ user, onProfileChange }) {
   const handleFollowBtnClick = async () => {
     setDisabled(true);
     await handleFollow(id);
-    if (isFollowed) {
-      setCurrentFollowerCounts((prev) => prev - 1);
-    } else {
-      setCurrentFollowerCounts((prev) => prev + 1);
-    }
     setDisabled(false);
   };
 
@@ -257,10 +260,26 @@ export default function Profile({ user, onProfileChange }) {
           <p className="intro">{introduction ?? 'I like alpha camp'}</p>
           <div className="stats">
             <NavLink to={`/users/${id}/followings`}>
-              <span>{followingCounts}</span>個跟隨中
+              {id === currentUser.id ? (
+                <>
+                  <span>{userFollowings.length}</span>個跟隨中
+                </>
+              ) : (
+                <>
+                  <span>{followingCounts}</span>個跟隨中
+                </>
+              )}
             </NavLink>
             <NavLink to={`/users/${id}/followers`}>
-              <span>{currentFollowerCounts}</span>個跟隨者
+              {id === currentUser.id ? (
+                <>
+                  <span>{followerCounts}</span>個跟隨者
+                </>
+              ) : (
+                <>
+                  <span>{currentFollowerCounts}</span>個跟隨者
+                </>
+              )}
             </NavLink>
           </div>
         </StyledContentDiv>
