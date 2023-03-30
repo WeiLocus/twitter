@@ -87,6 +87,51 @@ export default function SignupPage() {
     }
   };
 
+  const handleKeyDown = async (e) => {
+    if (e.key === 'Enter') {
+      if (
+        account.length === 0 ||
+        name.length === 0 ||
+        email.length === 0 ||
+        password.length === 0 ||
+        checkPassword.length === 0
+      ) {
+        setShowErrorMsg('欄位不可空白!');
+        setTimeout(() => {
+          setShowErrorMsg(false);
+        }, 1000);
+        return;
+      }
+      if (password !== checkPassword) {
+        setShowErrorMsg('密碼與確認密碼不符!');
+        setTimeout(() => {
+          setShowErrorMsg(false);
+        }, 1000);
+        return;
+      }
+      const { status, message } = await register({
+        account,
+        name,
+        email,
+        password,
+        checkPassword,
+      });
+      if (status !== 'error') {
+        setShowSuccessMsg(true);
+        setTimeout(() => {
+          setShowSuccessMsg(false);
+          navigate('/login');
+        }, 1000);
+      }
+      if (status === 'error' && message) {
+        setShowErrorMsg(message);
+        setTimeout(() => {
+          setShowErrorMsg(false);
+        }, 1000);
+      }
+    }
+  };
+
   const handleBehavior = () => {
     if (!isMobile) {
       navigate('/login');
@@ -97,7 +142,7 @@ export default function SignupPage() {
       setPassword('');
       setCheckPassword('');
     }
-  }
+  };
   return (
     <AuthContainer>
       <div>
@@ -110,6 +155,7 @@ export default function SignupPage() {
           placeholder="請輸入帳號"
           value={account}
           onChange={(accountInput) => setAccount(accountInput)}
+          onKeyDown={handleKeyDown}
         />
       </AuthInputContainer>
       <AuthInputContainer>
@@ -119,6 +165,7 @@ export default function SignupPage() {
           value={name}
           InputLength={nameLength}
           onChange={(nameInput) => setName(nameInput)}
+          onKeyDown={handleKeyDown}
         />
       </AuthInputContainer>
       <AuthInputContainer>
@@ -127,6 +174,7 @@ export default function SignupPage() {
           placeholder="請輸入Email"
           value={email}
           onChange={(emailInput) => setEmail(emailInput)}
+          onKeyDown={handleKeyDown}
         />
       </AuthInputContainer>
       <AuthInputContainer>
@@ -136,6 +184,7 @@ export default function SignupPage() {
           placeholder="請設定密碼"
           value={password}
           onChange={(passwordInput) => setPassword(passwordInput)}
+          onKeyDown={handleKeyDown}
         />
       </AuthInputContainer>
       <AuthInputContainer>
@@ -145,6 +194,7 @@ export default function SignupPage() {
           placeholder="請再次輸入密碼"
           value={checkPassword}
           onChange={(pwdConfirmValue) => setCheckPassword(pwdConfirmValue)}
+          onKeyDown={handleKeyDown}
         />
       </AuthInputContainer>
       <AuthButton name="註冊" onClick={handleClick} />
