@@ -6,6 +6,7 @@ import { useUser } from '../contexts/UserContext.jsx';
 import { getTopUsers } from '../api/user.js';
 
 const StyledPopularAside = styled.aside`
+  height: calc(100vh - 2rem);
   overflow-y: scroll;
   margin: 1rem;
   border-radius: 1rem;

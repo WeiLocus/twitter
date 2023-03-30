@@ -95,7 +95,7 @@ export async function getUserFollowings(id) {
 
 // * 取得追蹤人數 top N 的使用者名單
 export async function getTopUsers() {
-  const limit = 5;
+  const limit = 10;
   try {
     const res = await axiosInstance.get(`${baseURL}/users/top?limit=${limit}`);
     return res.data;
