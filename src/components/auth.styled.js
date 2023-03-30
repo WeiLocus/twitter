@@ -8,9 +8,8 @@ const StyedContainer = styled(Container)`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding-top: 3rem;
+  padding-top: 2rem;
   padding-inline: 24px;
-  background-color: #fff;
   @media screen and (${device.md}) {
     width: 50%;
   }
