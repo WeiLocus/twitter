@@ -143,7 +143,7 @@ export default function AdminUserList() {
       }
     };
     getUsers();
-  }, []);
+  }, [navigate]);
 
   const renderedItems = users.map((user) => {
     if (!isLoading) {
@@ -178,12 +178,13 @@ function UserCard({ user }) {
     followingCounts,
     userTweetLikeCounts,
   } = user;
+  const username = name.length > 15 ? `${name.slice(0, 15)}...` : name;
   return (
     <StyledCardContainer backgroundImage={cover}>
       <StyledCover backgroundImage={cover} />
       <img className="avatar" src={avatar} alt="avatar" />
       <StyledName>
-        <div className="title">{name}</div>
+        <div className="title">{username}</div>
         <div className="account">@{account}</div>
       </StyledName>
       <StyledDiv>
