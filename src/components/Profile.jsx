@@ -53,7 +53,7 @@ const StyledDiv = styled.div`
 const StyledContentDiv = styled.div`
   padding: 1rem 1.5rem;
   color: var(--color-gray-900);
-  font-size: var(--fs-secondary);
+  font-size: var(--fs-basic);
 
   .user {
     margin: 0.5rem 0 0.25rem;
@@ -85,6 +85,7 @@ const StyledContentDiv = styled.div`
 
   @media screen and (${device.md}) {
     padding: 1rem;
+    font-size: var(--fs-secondary);
 
     .user {
       margin: 0.75rem 0 0.25rem;
