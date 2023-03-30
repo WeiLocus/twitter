@@ -42,7 +42,7 @@ export default function SignupPage() {
   const [checkPassword, setCheckPassword] = useState('');
   const [showErrorMsg, setShowErrorMsg] = useState('');
   const [linkText, setLinkText] = useState('取消重填');
-  const [showSuccessMsg, setShowSuccessMsg] = useState(true);
+  const [showSuccessMsg, setShowSuccessMsg] = useState(false);
 
   const nameLength = name.length;
   const isMobile = useMediaQuery({ query: `(max-width: ${breakpoint.md} )` });
