@@ -187,7 +187,9 @@ function FollowItem({ user }) {
 
   return (
     <StyledListItem>
-      <img src={avatar} alt="avatar" />
+      <NavLink to={`/users/${id}/tweets`}>
+        <img src={avatar} alt="avatar" />
+      </NavLink>
       <div>
         <div className="user">
           <b>{name}</b>
