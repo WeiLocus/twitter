@@ -18,10 +18,11 @@ const StyledDiv = styled.div`
 `;
 
 const StyedSettingsContainer = styled.div`
-  height: calc(100vh - 56px);
+  height: calc(100vh - 60px);
   overflow-y: scroll;
   padding: 1.6rem;
-  padding-top: calc(73px + 1.6rem);
+  padding-top: calc(62px + 1.6rem);
+  padding-bottom: calc(60px + 1.6rem);
   border: 1px solid var(--color-gray-200);
   border-bottom: none;
   background-color: #fff;
@@ -33,6 +34,7 @@ const StyedSettingsContainer = styled.div`
   @media screen and (${device.md}) {
     height: calc(100vh - 68px);
     padding-top: unset;
+    padding-bottom: unset;
     padding: 1.6rem;
 
     .logout {

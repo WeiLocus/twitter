@@ -1,5 +1,19 @@
 import styled, { createGlobalStyle } from 'styled-components';
 
+export const breakpoint = {
+  xs: '320px',
+  sm: '768px',
+  md: '992px',
+  lg: '1200px',
+};
+
+export const device = {
+  xs: `min-width: ${breakpoint.xs}`,
+  sm: `min-width: ${breakpoint.sm}`,
+  md: `min-width: ${breakpoint.md}`,
+  lg: `min-width: ${breakpoint.lg}`,
+};
+
 export const GlobalStyle = createGlobalStyle`
   // css reset
   *, *::before, *::after {
@@ -43,14 +57,14 @@ export const GlobalStyle = createGlobalStyle`
     --ff-basic: 'Montserrat','Noto Sans TC', sans-serif;
 
     /* font-size */
-    --fs-basic: 1rem; 
-    --fs-secondary: 0.875rem;
+    --fs-basic: 0.875rem; 
+    --fs-secondary: 0.8rem;
     --fs-small: 0.75rem;
-    --fs-h1: 4.25rem;
-    --fs-h2: 2.625rem;
-    --fs-h3: 1.75rem;
-    --fs-h4: 1.5rem;
-    --fs-h5: 1.125rem;
+    --fs-h1: 3.75rem; 
+    --fs-h2: 2.25rem; 
+    --fs-h3: 1.5rem; 
+    --fs-h4: 1.25rem; 
+    --fs-h5: 1rem; 
 
     /* colors */
     --color-theme: #FF6600;
@@ -75,11 +89,22 @@ export const GlobalStyle = createGlobalStyle`
     --color-gray-700: #696974;
     --color-gray-800: #44444F;
     --color-gray-900: #171725;
+
+    @media screen and (${device.sm}) {
+      /* font-size */
+      --fs-basic: 1rem; 
+      --fs-secondary: 0.875rem;
+      --fs-small: 0.75rem;
+      --fs-h1: 4.25rem;
+      --fs-h2: 2.625rem;
+      --fs-h3: 1.75rem;
+      --fs-h4: 1.5rem;
+      --fs-h5: 1.125rem;
+    }
   }
 
   body {
     font-family: var(--ff-basic);
-    /* font-variant-numeric: tabular-nums; */
     font-size: var(--fs-basic);
   }
 
@@ -108,20 +133,6 @@ export const GlobalStyle = createGlobalStyle`
 	  border-radius:4px;
 }
 `;
-
-export const breakpoint = {
-  xs: '320px',
-  sm: '768px',
-  md: '992px',
-  lg: '1200px',
-};
-
-export const device = {
-  xs: `min-width: ${breakpoint.xs}`,
-  sm: `min-width: ${breakpoint.sm}`,
-  md: `min-width: ${breakpoint.md}`,
-  lg: `min-width: ${breakpoint.lg}`,
-};
 
 export const Container = styled.div`
   max-width: 100%;

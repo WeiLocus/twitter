@@ -14,13 +14,15 @@ import {
 } from '../api/user';
 
 const StyledDiv = styled.div`
-  height: calc(100vh - 56px);
+  height: calc(100vh - 60px);
   overflow-y: scroll;
-  padding-top: 73px;
+  padding-top: 68px;
+  padding-bottom: 60px;
 
   @media screen and (${device.md}) {
     height: calc(100vh - 73px);
     padding-top: unset;
+    padding-bottom: unset;
   }
 `;
 
