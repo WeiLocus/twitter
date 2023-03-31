@@ -240,14 +240,20 @@ export function TweetModal({
   const handleKeyDown = async (e) => {
     if (e.key === 'Enter') {
       setIsSubmitting(true);
-      if (!tweetInput.length) {
+      if (!tweetInput.trim().length) {
         setErrorMessage('內容不可空白');
         setIsSubmitting(false);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 1000);
         return;
       }
       if (tweetInput.length > 140) {
         setErrorMessage('字數不可超過 140 字');
         setIsSubmitting(false);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 1000);
         return;
       }
       const { status } = await onAddTweet();
@@ -264,14 +270,20 @@ export function TweetModal({
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    if (!tweetInput.length) {
+    if (!tweetInput.trim().length) {
       setErrorMessage('內容不可空白');
       setIsSubmitting(false);
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 1000);
       return;
     }
     if (tweetInput.length > 140) {
       setErrorMessage('字數不可超過 140 字');
       setIsSubmitting(false);
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 1000);
       return;
     }
     const { status } = await onAddTweet();
@@ -360,7 +372,7 @@ export function ReplyModal({
   const handleKeyDown = async (e) => {
     if (e.key === 'Enter') {
       setIsSubmitting(true);
-      if (!replyInput.length) {
+      if (!replyInput.trim().length) {
         setErrorMessage('內容不可空白');
         setIsSubmitting(false);
         return;
@@ -384,14 +396,20 @@ export function ReplyModal({
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    if (!replyInput.length) {
+    if (!replyInput.trim().length) {
       setErrorMessage('內容不可空白');
       setIsSubmitting(false);
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 1000);
       return;
     }
     if (replyInput.length > 140) {
       setErrorMessage('字數不可超過 140 字');
       setIsSubmitting(false);
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 1000);
       return;
     }
     const { status } = await onAddReply();

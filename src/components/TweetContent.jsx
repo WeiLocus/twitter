@@ -210,7 +210,7 @@ export default function TweetContent({
       <StyledMobileReplyDiv className="mobile-reply" onClick={handleShowModal}>
         <img src={currentUser.avatar} alt="" />
         <p>推你的回覆</p>
-        <button type="button">推文</button>
+        <button type="button">回覆</button>
       </StyledMobileReplyDiv>
       {showModal && (
         <ReplyModal
