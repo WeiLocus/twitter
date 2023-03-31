@@ -72,7 +72,7 @@ export default function LoginPage() {
 
   const handleKeyDown = async (e) => {
     if (e.key === 'Enter') {
-      if (account.length === 0 || password.length === 0) {
+      if (account.trim().length === 0 || password.trim().length === 0) {
         setShowErrorMsg('欄位不可空白!');
         setTimeout(() => {
           setShowErrorMsg(false);

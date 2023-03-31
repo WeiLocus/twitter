@@ -59,11 +59,11 @@ export default function SignupPage() {
   // 註冊後導引至登入
   const handleClick = async () => {
     if (
-      account.length === 0 ||
-      name.length === 0 ||
-      email.length === 0 ||
-      password.length === 0 ||
-      checkPassword.length === 0
+      account.trim().length === 0 ||
+      name.trim().length === 0 ||
+      email.trim().length === 0 ||
+      password.trim().length === 0 ||
+      checkPassword.trim().length === 0
     ) {
       setShowErrorMsg('欄位不可空白!');
       setTimeout(() => {
