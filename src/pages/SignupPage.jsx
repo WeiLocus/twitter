@@ -59,13 +59,20 @@ export default function SignupPage() {
   // 註冊後導引至登入
   const handleClick = async () => {
     if (
-      account.length === 0 ||
-      name.length === 0 ||
-      email.length === 0 ||
-      password.length === 0 ||
-      checkPassword.length === 0
+      account.trim().length === 0 ||
+      name.trim().length === 0 ||
+      email.trim().length === 0 ||
+      password.trim().length === 0 ||
+      checkPassword.trim().length === 0
     ) {
       setShowErrorMsg('欄位不可空白!');
+      setTimeout(() => {
+        setShowErrorMsg(false);
+      }, 1000);
+      return;
+    }
+    if (name.length > 50) {
+      setShowErrorMsg('字數超過上限!');
       setTimeout(() => {
         setShowErrorMsg(false);
       }, 1000);
@@ -115,6 +122,13 @@ export default function SignupPage() {
         }, 1000);
         return;
       }
+      if (name.length > 50) {
+        setShowErrorMsg('字數超過上限!');
+        setTimeout(() => {
+          setShowErrorMsg(false);
+        }, 1000);
+        return;
+    }
       if (password !== checkPassword) {
         setShowErrorMsg('密碼與確認密碼不符!');
         setTimeout(() => {

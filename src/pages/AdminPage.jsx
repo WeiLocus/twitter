@@ -37,7 +37,7 @@ export default function AdminPage() {
   const navigate = useNavigate();
 
   const handleClick = async () => {
-    if (account.length === 0 || password.length === 0) {
+    if (account.trim().length === 0 || password.trim().length === 0) {
       setShowErrorMsg('欄位不可空白!');
       setTimeout(() => {
         setShowErrorMsg(false);
