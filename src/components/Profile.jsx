@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { ReactComponent as EmailIcon } from '../assets/Email.svg';
 import { ReactComponent as NotificationIcon } from '../assets/Notification.svg';
@@ -193,14 +193,23 @@ export default function Profile({ user, onProfileChange }) {
     useState(followerCounts);
   const [showModal, setShowModal] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const mounted = useRef(false);
 
   useEffect(() => {
-    if (isFollowed) {
+    if (mounted.current && isFollowed === true) {
       setCurrentFollowerCounts((prev) => prev + 1);
-    } else {
+    } else if (mounted.current && isFollowed === false) {
       setCurrentFollowerCounts((prev) => prev - 1);
     }
   }, [isFollowed]);
+
+  // source: https://jasonkang14.github.io/react/how-to-prevent-useeffect-on-initial-render
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   const handleShowModal = () => {
     const nextShowModal = !showModal;
@@ -277,6 +286,8 @@ export default function Profile({ user, onProfileChange }) {
                 </>
               ) : (
                 <>
+                  <span>{followerCounts}</span>個跟隨者
+                  {'   '}
                   <span>{currentFollowerCounts}</span>個跟隨者
                 </>
               )}
