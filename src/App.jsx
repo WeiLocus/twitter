@@ -1,24 +1,26 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import { GlobalStyle } from './globalStyles';
 import { UserProvider } from './contexts/UserContext';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
-import AdminPage from './pages/AdminPage';
-import AdminTweetList from './components/AdminTweetList';
-import AdminUserList from './components/AdminUserList';
-import SettingsPage from './pages/SettingsPage';
-import AdminLayout from './components/layouts/AdminLayout';
-import TweetLayout from './components/layouts/TweetLayout';
-import TweetPage from './pages/TweetPage';
-import ReplyPage from './pages/ReplyPage';
-import UserPage from './pages/UserPage';
+import { GlobalStyle } from './globalStyles';
 import {
+  AdminPage,
+  HomePage,
+  LoginPage,
+  ReplyPage,
+  SettingsPage,
+  SignupPage,
+  TweetPage,
+  UserPage,
+} from './pages';
+import {
+  AdminLayout,
+  TweetLayout,
+  AdminTweetList,
+  AdminUserList,
   UserReplyList,
   UserTweetList,
   UserLikeList,
-} from './components/UserList';
-import FollowList from './components/FollowList';
+  FollowList,
+} from './components';
 
 const basename = import.meta.env.VITE_PUBLIC_URL;
 

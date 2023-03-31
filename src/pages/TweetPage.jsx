@@ -1,12 +1,10 @@
-import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import BeatLoader from 'react-spinners/BeatLoader';
-import Header from '../components/Header';
-import TweetInput from '../components/TweetInput';
-import { TweetList } from '../components/TweetList';
-import { getTweets } from '../api/tweet';
+import styled from 'styled-components';
 import { device } from '../globalStyles';
+import { Header, TweetInput, TweetList } from '../components';
+import { getTweets } from '../api/tweet';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 60px);

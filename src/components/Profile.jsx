@@ -1,11 +1,11 @@
-import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
+import { device } from '../globalStyles.js';
+import EditModal from './index';
 import { ReactComponent as EmailIcon } from '../assets/Email.svg';
 import { ReactComponent as NotificationIcon } from '../assets/Notification.svg';
-import EditModal from './elements/EditModal';
 import { useUser } from '../contexts/UserContext';
-import { device } from '../globalStyles.js';
 
 const StyledDiv = styled.div`
   position: relative;

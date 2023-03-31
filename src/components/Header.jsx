@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { ReactComponent as GoBackIcon } from '../assets/GoBack.svg';
 import { device } from '../globalStyles';
+import { ReactComponent as GoBackIcon } from '../assets/GoBack.svg';
 import { useUser } from '../contexts/UserContext';
 
 const StyledHeader = styled.header`

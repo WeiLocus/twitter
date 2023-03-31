@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
+import styled from 'styled-components';
 import clsx from 'clsx';
+import { device, breakpoint } from '../../globalStyles.js';
 import AuthInput, { StyledInputCount } from './Input';
+import Alert from './Alert';
 import { ReactComponent as CrossIcon } from '../../assets/Cross.svg';
 import { ReactComponent as ChangeImgIcon } from '../../assets/ChangeImg.svg';
 import { useUser } from '../../contexts/UserContext';
 import { changeUserProfile } from '../../api/user';
-import Alert from './Alert';
-import { device, breakpoint } from '../../globalStyles.js';
 
 const StyledMsgDiv = styled.div`
   position: absolute;

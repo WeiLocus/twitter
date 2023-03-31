@@ -1,13 +1,10 @@
-import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
-import AuthInput from '../components/elements/Input';
+import styled from 'styled-components';
+import { device } from '../globalStyles';
+import { Header, AuthInput, AuthLinkText, Alert } from '../components';
 import { useUser } from '../contexts/UserContext';
 import { changeUserInformation } from '../api/user';
-import Alert from '../components/elements/Alert';
-import { AuthLinkText } from '../components/auth.styled';
-import { device } from '../globalStyles';
 
 const StyledDiv = styled.div`
   position: absolute;

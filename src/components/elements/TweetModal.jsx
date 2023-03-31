@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { device } from '../../globalStyles.js';
 import { ReactComponent as CrossIcon } from '../../assets/Cross.svg';
 import { ReactComponent as GoBackIcon } from '../../assets/GoBack.svg';
 import { countTimeDiff } from '../../utilities';
-import { device } from '../../globalStyles.js';
 
 const StyledDiv = styled.div`
   position: absolute;

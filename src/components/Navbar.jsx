@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { device } from '../globalStyles.js';
+import { TweetModal } from './index';
 import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
 import { ReactComponent as HomeIcon } from '../assets/Home.svg';
 import { ReactComponent as HomeBlackIcon } from '../assets/Home-black.svg';
@@ -10,8 +12,6 @@ import { ReactComponent as SettingIcon } from '../assets/Setting.svg';
 import { ReactComponent as SettingBlackIcon } from '../assets/Setting-black.svg';
 import { ReactComponent as LogoutIcon } from '../assets/Logout.svg';
 import { ReactComponent as MobileTweetIcon } from '../assets/Mobile-Tweet.svg';
-import { TweetModal } from './elements/TweetModal';
-import { device } from '../globalStyles.js';
 
 const StyledNav = styled.nav`
   width: 100%;

@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import BeatLoader from 'react-spinners/BeatLoader';
-import Header from '../components/Header';
-import TweetContent from '../components/TweetContent';
-import { ReplyList } from '../components/TweetList';
+import styled from 'styled-components';
+import { device } from '../globalStyles';
+import { Header, TweetContent, ReplyList } from '../components';
 import { useUser } from '../contexts/UserContext';
 import { getSingleTweet, getReplies, addReply } from '../api/tweet';
-import { device } from '../globalStyles';
 
 const StyledDiv = styled.div`
   height: calc(100vh - 60px);
