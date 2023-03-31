@@ -76,6 +76,7 @@ export default function SettingsPage() {
   const [checkPassword, setCheckPassword] = useState('');
   const [showErrorMsg, setShowErrorMsg] = useState('');
   const [showSuccessMsg, setShowSuccessMsg] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const nameLength = name.length;
   const navigate = useNavigate();
 
@@ -86,7 +87,9 @@ export default function SettingsPage() {
     }
   }, [navigate]);
 
-  const handleClick = async () => {
+  const handleClick = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
     if (
       account.trim().length === 0 ||
       name.trim().length === 0 ||
@@ -97,6 +100,15 @@ export default function SettingsPage() {
       setShowErrorMsg('欄位不可空白!');
       setTimeout(() => {
         setShowErrorMsg(false);
+        setIsSubmitting(false);
+      }, 1000);
+      return;
+    }
+    if (name.length > 50) {
+      setShowErrorMsg('字數超過上限!');
+      setTimeout(() => {
+        setShowErrorMsg(false);
+        setIsSubmitting(false);
       }, 1000);
       return;
     }
@@ -104,14 +116,7 @@ export default function SettingsPage() {
       setShowErrorMsg('密碼與確認密碼不符!');
       setTimeout(() => {
         setShowErrorMsg(false);
-      }, 1000);
-      return;
-    }
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setShowErrorMsg('unauthorized');
-      setTimeout(() => {
-        setShowErrorMsg(false);
+        setIsSubmitting(false);
       }, 1000);
       return;
     }
@@ -125,6 +130,7 @@ export default function SettingsPage() {
       checkPassword,
     });
     if (data && status === 200) {
+      setIsSubmitting(false);
       setShowSuccessMsg(true);
       setTimeout(() => {
         setShowSuccessMsg(false);
@@ -139,6 +145,7 @@ export default function SettingsPage() {
     };
     handleUserUpdate(newCurrentUser);
   };
+  // mobile event handler
   const handleLogoutClick = () => {
     localStorage.removeItem('token');
     navigate('/login');
@@ -203,7 +210,7 @@ export default function SettingsPage() {
         </StyledInputContainer>
         <StyledButtonDiv>
           <button type="button" onClick={handleClick}>
-            儲存
+            {isSubmitting ? '儲存中...' : '儲存'}
           </button>
         </StyledButtonDiv>
         <div className="logout">

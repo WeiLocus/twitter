@@ -71,6 +71,13 @@ export default function SignupPage() {
       }, 1000);
       return;
     }
+    if (name.length > 50) {
+      setShowErrorMsg('字數超過上限!');
+      setTimeout(() => {
+        setShowErrorMsg(false);
+      }, 1000);
+      return;
+    }
     if (password !== checkPassword) {
       setShowErrorMsg('密碼與確認密碼不符!');
       setTimeout(() => {
@@ -115,6 +122,13 @@ export default function SignupPage() {
         }, 1000);
         return;
       }
+      if (name.length > 50) {
+        setShowErrorMsg('字數超過上限!');
+        setTimeout(() => {
+          setShowErrorMsg(false);
+        }, 1000);
+        return;
+    }
       if (password !== checkPassword) {
         setShowErrorMsg('密碼與確認密碼不符!');
         setTimeout(() => {
