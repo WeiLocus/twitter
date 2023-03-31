@@ -286,8 +286,6 @@ export default function Profile({ user, onProfileChange }) {
                 </>
               ) : (
                 <>
-                  <span>{followerCounts}</span>個跟隨者
-                  {'   '}
                   <span>{currentFollowerCounts}</span>個跟隨者
                 </>
               )}
