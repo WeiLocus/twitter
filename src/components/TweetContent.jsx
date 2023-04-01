@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { device } from '../globalStyles.js';
 import { ReactComponent as CommentIcon } from '../assets/Comment.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
 import { ReactComponent as LikeBlackIcon } from '../assets/Like-black.svg';
-import { ReplyModal } from './elements/TweetModal';
-import { getConvertedTime } from '../utilities';
+import { ReplyModal } from './index';
 import { useUser } from '../contexts/UserContext';
-import { device } from '../globalStyles.js';
+import { getConvertedTime } from '../utilities';
 
 const StyledDiv = styled.div`
   padding: 1rem;

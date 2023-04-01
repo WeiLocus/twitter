@@ -1,10 +1,10 @@
-import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation, useOutletContext } from 'react-router-dom';
 import BeatLoader from 'react-spinners/BeatLoader';
+import styled from 'styled-components';
+import { device } from '../globalStyles.js';
 import { useUser } from '../contexts/UserContext.jsx';
 import { getUserFollowings, getUserFollowers } from '../api/user.js';
-import { device } from '../globalStyles.js';
 
 const StyledList = styled.ul`
   height: calc(100% - 53px);

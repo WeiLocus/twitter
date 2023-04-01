@@ -1,16 +1,16 @@
-import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
+import styled from 'styled-components';
 import {
   AuthContainer,
   AuthInputContainer,
   AuthLinkText,
   AuthLinkContainer,
-} from '../components/auth.styled';
-import AuthInput from '../components/elements/Input';
-import AuthButton from '../components/elements/Button';
-import Alert from '../components/elements/Alert';
+  AuthInput,
+  AuthButton,
+  Alert,
+} from '../components';
+import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
 import { adminLogin } from '../api/auth';
 
 // alert message container

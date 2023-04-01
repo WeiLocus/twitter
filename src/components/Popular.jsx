@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
 import BeatLoader from 'react-spinners/BeatLoader';
+import styled from 'styled-components';
 import { useUser } from '../contexts/UserContext.jsx';
 import { getTopUsers } from '../api/user.js';
 

@@ -1,8 +1,8 @@
-import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import BeatLoader from 'react-spinners/BeatLoader';
 import { useNavigate } from 'react-router-dom';
-import Header from './Header';
+import BeatLoader from 'react-spinners/BeatLoader';
+import styled from 'styled-components';
+import { Header } from './index';
 import { ReactComponent as TweetIcon } from '../assets/Mobile-Tweet.svg';
 import { ReactComponent as LikeIcon } from '../assets/Like.svg';
 import { adminGetAllUsers } from '../api/admin';

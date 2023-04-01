@@ -1,13 +1,12 @@
-import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import BeatLoader from 'react-spinners/BeatLoader';
 import { useNavigate } from 'react-router-dom';
-import Header from './Header';
+import BeatLoader from 'react-spinners/BeatLoader';
+import styled from 'styled-components';
+import { Header, Alert } from './index';
 import { StyledListItem } from './TweetList';
 import { ReactComponent as Cross } from '../assets/Cross.svg';
 import { adminGetTweets, deleteTweet } from '../api/admin';
 import { countTimeDiff } from '../utilities';
-import Alert from './elements/Alert';
 
 // follow StyledListItem style by TweetList.jsx
 const StyledTweetContainer = styled(StyledListItem)`

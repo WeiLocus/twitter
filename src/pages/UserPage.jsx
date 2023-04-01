@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, Outlet, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
 import BeatLoader from 'react-spinners/BeatLoader';
-import Header from '../components/Header';
-import Profile from '../components/Profile';
-import { useUser } from '../contexts/UserContext';
+import styled from 'styled-components';
 import { device } from '../globalStyles';
+import { Header, Profile } from '../components';
+import { useUser } from '../contexts/UserContext';
 import {
   getUserData,
   getUserTweets,

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
-import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
+import styled from 'styled-components';
+import { device, breakpoint } from '../globalStyles';
 import {
   AuthContainer,
   AuthInputContainer,
   AuthLinkText,
-} from '../components/auth.styled';
-import AuthInput from '../components/elements/Input';
-import AuthButton from '../components/elements/Button';
+  AuthInput,
+  AuthButton,
+  Alert,
+} from '../components';
+import { ReactComponent as LogoIcon } from '../assets/Logo.svg';
 import { register } from '../api/auth';
-import Alert from '../components/elements/Alert';
-import { device, breakpoint } from '../globalStyles';
 
 // alert message container
 const StyledDiv = styled.div`
@@ -128,7 +128,7 @@ export default function SignupPage() {
           setShowErrorMsg(false);
         }, 1000);
         return;
-    }
+      }
       if (password !== checkPassword) {
         setShowErrorMsg('密碼與確認密碼不符!');
         setTimeout(() => {
