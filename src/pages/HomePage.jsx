@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import BeatLoader from 'react-spinners/BeatLoader';
@@ -12,17 +12,18 @@ const StyledDiv = styled.div`
 `;
 
 export default function HomePage() {
-  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   useEffect(() => {
     setTimeout(() => {
-      setIsLoading(false);
       navigate('/login');
-    }, 3000);
+    }, 2000);
   }, [navigate]);
+
   return (
     <StyledDiv>
-      <div>{isLoading && <BeatLoader color="var(--color-theme)" />}</div>
+      <div>
+        <BeatLoader color="var(--color-theme)" />
+      </div>
     </StyledDiv>
   );
 }
